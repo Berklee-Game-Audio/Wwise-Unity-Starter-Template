@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="134">
+	<RootPaths>
+		<ProjectRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/</ProjectRoot>
+		<SourceFilesRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/.cache/Windows/</SourceFilesRoot>
+		<SoundBanksRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/Windows/</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3626155605" Language="SFX">
+			<ObjectPath>\SoundBanks\Default Work Unit\Game_Soundbank</ObjectPath>
+			<ShortName>Game_Soundbank</ShortName>
+			<Path>Game_Soundbank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore"/>
+				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense"/>
+				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="681948759" Language="SFX">
+					<ShortName>Season - Winter Late.wav</ShortName>
+					<Path>SFX/Season - Winter Late_D79FB2B7.wem</Path>
+				</File>
+				<File Id="740210912" Language="SFX">
+					<ShortName>Season - Winter Early.wav</ShortName>
+					<Path>SFX/Season - Winter Early_D79FB2B7.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

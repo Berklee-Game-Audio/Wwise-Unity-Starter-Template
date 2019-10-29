@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}" SchemaVersion="94">
+	<States>
+		<WorkUnit Name="Default Work Unit" ID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="Player_State" ID="{739D5D8D-C8BD-4652-892F-6D0A25AA689D}">
+					<ChildrenList>
+						<State Name="None" ID="{AAAB2E3A-7D51-4CAA-A03B-704335F0F360}"/>
+						<State Name="explore" ID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}"/>
+						<State Name="suspense" ID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</States>
+</WwiseDocument>

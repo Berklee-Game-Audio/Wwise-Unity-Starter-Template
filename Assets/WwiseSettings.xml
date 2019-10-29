@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<WwiseSettings>
+    <CreateWwiseGlobal>true</CreateWwiseGlobal>
+    <CreateWwiseListener>true</CreateWwiseListener>
+    <SoundbankPath>Audio/GeneratedSoundBanks</SoundbankPath>
+    <WwiseProjectPath>../../Wwise-Unity-Starter-Template/Wwise Project/Wwise Project.wproj</WwiseProjectPath>
+    <WwiseInstallationPathWindows></WwiseInstallationPathWindows>
+    <WwiseInstallationPathMac>/Applications/Audiokinetic/Wwise 2019.1.2.7018/Wwise.app</WwiseInstallationPathMac>
+</WwiseSettings>

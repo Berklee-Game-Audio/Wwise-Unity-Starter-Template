@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" SchemaVersion="94">
+	<InteractiveMusic>
+		<WorkUnit Name="Default Work Unit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" PersistMode="Standalone">
+			<ChildrenList>
+				<MusicSwitchContainer Name="New Music Switch Container" ID="{5219887F-DDCB-4FFF-AC78-0486B72CA2AF}" ShortID="848142320">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicPlaylistContainer Name="Playlist_Suspense" ID="{323A662C-4DB2-4D0C-B8FB-4406EC94E7B5}" ShortID="580607529">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Season - Winter Early" ID="{13967AFA-4384-45F5-B426-0A3AC72AE68F}" ShortID="38501513">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="108587.520833333"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Season - Winter Early" ID="{0AD45D2F-357A-47DD-AAE9-72FFA08B049A}" ShortID="570048808">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Season - Winter Early" ID="{F260DD44-B1CB-4A46-9652-8D92D4ADA99C}" ShortID="740210912">
+													<Language>SFX</Language>
+													<AudioFile>Season - Winter Early.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{47696DFA-6FB3-4010-AB95-DBA052775588}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{A604C977-15A8-402E-B3CD-834DBC70DACA}">
+													<ClipList>
+														<MusicClip Name="Season - Winter Early" ID="{4A130939-B0E2-4F81-B94F-2FB220CFAC95}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="108587.520833333"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Season - Winter Early" ID="{F260DD44-B1CB-4A46-9652-8D92D4ADA99C}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{D74AB9F2-CB98-4181-9620-26A1A80D09B5}"/>
+										<MusicCue Name="Exit Cue" ID="{87C1513D-7999-4A3F-9EE5-23D1B8A6C9AA}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="108587.520833333"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{9C4D6060-275D-422D-A654-11C2655ED5F3}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{082F4968-B611-4252-A595-EACD7DBADD9F}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{F1C97B14-32AE-4397-8EA8-FDED8130BAE7}" ShortID="698551810">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{38ADB7E3-7E78-4930-814E-ADED3448BCE5}" ShortID="830639774">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Season - Winter Early" ID="{13967AFA-4384-45F5-B426-0A3AC72AE68F}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+						<MusicPlaylistContainer Name="Playlist_Explore" ID="{A9C78791-50F0-4E84-9C83-E56076F434A3}" ShortID="413685268">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicSegment Name="Season - Winter Late" ID="{5412C794-3898-45A2-BF76-2E1552FFAE42}" ShortID="261995097">
+									<PropertyList>
+										<Property Name="EndPosition" Type="Real64" Value="69808.5833333333"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<MusicTrack Name="Season - Winter Late" ID="{86E13300-0A95-4B86-AF98-5D4DC4C34DC8}" ShortID="580854524">
+											<ReferenceList>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="Season - Winter Late" ID="{3B2DA684-EC58-4B6C-88A3-CB839568B7CA}" ShortID="681948759">
+													<Language>SFX</Language>
+													<AudioFile>Season - Winter Late.wav</AudioFile>
+												</AudioFileSource>
+											</ChildrenList>
+											<TransitionList>
+												<MusicTransition Name="Root" ID="{2D90DD4D-85F5-4AF8-917E-798FA1F9A8D9}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</TransitionList>
+											<SequenceList>
+												<MusicTrackSequence Name="" ID="{70BE15F2-1235-4BA5-AF71-357825265D43}">
+													<ClipList>
+														<MusicClip Name="Season - Winter Late" ID="{EA285919-9069-4FA3-A307-BEB7B3F42520}">
+															<PropertyList>
+																<Property Name="EndTrimOffset" Type="Real64" Value="69808.5833333333"/>
+																<Property Name="FadeInMode" Type="int16" Value="0"/>
+																<Property Name="FadeOutMode" Type="int16" Value="0"/>
+															</PropertyList>
+															<AudioSourceRef Name="Season - Winter Late" ID="{3B2DA684-EC58-4B6C-88A3-CB839568B7CA}"/>
+														</MusicClip>
+													</ClipList>
+												</MusicTrackSequence>
+											</SequenceList>
+										</MusicTrack>
+									</ChildrenList>
+									<CueList>
+										<MusicCue Name="Entry Cue" ID="{81C0D399-6494-4FCC-A3CF-ABD40A2562EA}"/>
+										<MusicCue Name="Exit Cue" ID="{19C80A2D-CF91-4F1B-A4EC-215118201738}">
+											<PropertyList>
+												<Property Name="CueType" Type="int16" Value="1"/>
+												<Property Name="TimeMs" Type="Real64" Value="69808.5833333333"/>
+											</PropertyList>
+										</MusicCue>
+									</CueList>
+								</MusicSegment>
+							</ChildrenList>
+							<TransitionList>
+								<MusicTransition Name="Root" ID="{EBD2A980-986D-4CB4-B403-923CFBE060E6}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{96514F8C-2DA5-4599-801C-4A787E360428}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</TransitionList>
+							<Playlist>
+								<MusicPlaylistItem Name="" ID="{246CD7FE-FA61-499F-A6B9-171256A774A6}" ShortID="224628029">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{AF8010CA-7119-4072-8E20-C107E4F594B5}" ShortID="593200837">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="Season - Winter Late" ID="{5412C794-3898-45A2-BF76-2E1552FFAE42}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Playlist>
+						</MusicPlaylistContainer>
+					</ChildrenList>
+					<TransitionList>
+						<MusicTransition Name="Root" ID="{5070135D-CC02-47F0-8EFD-CC530E567055}">
+							<PropertyList>
+								<Property Name="IsFolder" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<MusicTransition Name="Transition" ID="{8D38A0E4-2FB4-44A3-902B-29F5FD75774C}">
+									<TransitionInfo/>
+								</MusicTransition>
+							</ChildrenList>
+							<TransitionInfo/>
+						</MusicTransition>
+					</TransitionList>
+					<ArgumentList>
+						<ArgumentRef Name="Player_State" ID="{739D5D8D-C8BD-4652-892F-6D0A25AA689D}"/>
+					</ArgumentList>
+					<EntryList>
+						<Entry>
+							<Path>
+								<PathElementRef Name="explore" ID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Playlist_Explore" ID="{A9C78791-50F0-4E84-9C83-E56076F434A3}" WorkUnitID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="suspense" ID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Playlist_Suspense" ID="{323A662C-4DB2-4D0C-B8FB-4406EC94E7B5}" WorkUnitID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+					</EntryList>
+				</MusicSwitchContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</InteractiveMusic>
+</WwiseDocument>

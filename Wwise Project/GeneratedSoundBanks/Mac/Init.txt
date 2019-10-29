@@ -1,0 +1,15 @@
+State Group	ID	Name			Wwise Object Path	Notes
+	4071417932	Player_State			\Default Work Unit\Player_State	
+
+State	ID	Name	State Group			Notes
+	0	None	Player_State			
+	579523862	explore	Player_State			
+	1535707317	suspense	Player_State			
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+Audio Devices	ID	Name	Type				Notes
+	2317455096	No_Output	No Output			
+	3859886410	System	System			
+
