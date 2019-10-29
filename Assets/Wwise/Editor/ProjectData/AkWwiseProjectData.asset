@@ -12,14 +12,143 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dc81de0604f4c24acdb857558ecdfc, type: 3}
   m_Name: AkWwiseProjectData
   m_EditorClassIdentifier: 
-  AcousticTextureWwu: []
-  AuxBusWwu: []
-  BankWwu: []
-  EventWwu: []
-  RtpcWwu: []
-  StateWwu: []
-  SwitchWwu: []
-  TriggerWwu: []
-  ExpandedItems: []
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 9801b1f9b769054f8b5a47a28ac50113
+    GuidInternal: 
+    m_lastTime: -8586292465944775808
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 4a2ec317fd444443b2cc12e372c82307
+    GuidInternal: 
+    m_lastTime: -8586292465944775808
+    List: []
+  BankWwu:
+  - PhysicalPath: SoundBanks/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: dac3a449d5c89a43bf1e2c5b55839753
+    GuidInternal: 
+    m_lastTime: -8586292459994775808
+    List:
+    - name: Game_Soundbank
+      guid: f93298340c4491408cccd35a19a52aae
+      id: 3626155605
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Game_Soundbank
+        ObjectType: 7
+      Path: Default Work Unit/Game_Soundbank
+  EventWwu:
+  - PhysicalPath: Events/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: c6cd1bf54ee4d94fafa741d395989397
+    GuidInternal: 
+    m_lastTime: -8586292463894775808
+    List:
+    - name: Set_State_Explore
+      guid: 897e2afc8dd714448b919baa6e2928e8
+      id: 4016583417
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Set_State_Explore
+        ObjectType: 3
+      Path: Default Work Unit/Set_State_Explore
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Set_State_Suspense
+      guid: 0b1b179ca47cf04eb157356b03404fe3
+      id: 3548625176
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Set_State_Suspense
+        ObjectType: 3
+      Path: Default Work Unit/Set_State_Suspense
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Start_Game
+      guid: 935ae58e8c37f941bab1a40b856c9315
+      id: 1114964412
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Start_Game
+        ObjectType: 3
+      Path: Default Work Unit/Start_Game
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  RtpcWwu:
+  - PhysicalPath: Game Parameters/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 948454c5e6a8da4b8ca0a69f4d8c2761
+    GuidInternal: 
+    m_lastTime: -8586292465944775808
+    List: []
+  StateWwu:
+  - PhysicalPath: States/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 6a3f909a671af845bbec31ed605b83fe
+    GuidInternal: 
+    m_lastTime: -8586292464644775808
+    List:
+    - name: Player_State
+      guid: 8d5d9d73bdc85246892f6d0a25aa689d
+      id: 4071417932
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Player_State
+        ObjectType: 9
+      Path: Default Work Unit/Player_State
+      values:
+      - name: explore
+        guid: d623b84515ac9a4189b1eb2f9fab178d
+        id: 579523862
+        PathAndIcons:
+        - ElementName: explore
+          ObjectType: 8
+      - name: None
+        guid: 3a2eabaa517daa4ca03b704335f0f360
+        id: 748895195
+        PathAndIcons:
+        - ElementName: None
+          ObjectType: 8
+      - name: suspense
+        guid: 6a522706b7a42e4fa5d219a3e83ee8b6
+        id: 1535707317
+        PathAndIcons:
+        - ElementName: suspense
+          ObjectType: 8
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+  SwitchWwu:
+  - PhysicalPath: Switches/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 54be3acf718ba5459af91fbd9e94d6a9
+    GuidInternal: 
+    m_lastTime: -8586292465944775808
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers/Default Work Unit.wwu
+    ParentPhysicalPath: 
+    guid: 4df410287d275143bea8119d987e6a72
+    GuidInternal: 
+    m_lastTime: -8586292465944775808
+    List: []
+  ExpandedItems:
+  - /Wwise Project
+  - /Wwise Project/Events
+  - /Wwise Project/Events/Default Work Unit
+  - /Wwise Project/SoundBanks
+  - /Wwise Project/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
   CurrentPluginConfig: 
