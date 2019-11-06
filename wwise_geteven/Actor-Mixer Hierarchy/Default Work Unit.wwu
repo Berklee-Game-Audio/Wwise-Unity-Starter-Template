@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B3C66E06-190B-4968-9EA6-B28CFF3C1316}" SchemaVersion="94">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{B3C66E06-190B-4968-9EA6-B28CFF3C1316}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="heartbeat_double" ID="{70A0B143-3F18-46EE-875A-1E21434BCDF1}" ShortID="252747259">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A987B170-E8DA-4B46-9E8D-E237B649036A}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{4CC16DF6-2664-48AE-B31E-9BF15695BA06}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="heartbeat_double" ID="{C89F64DC-F34C-4A86-A8F2-54654E64A697}" ShortID="37692961">
+							<Language>SFX</Language>
+							<AudioFile>heartbeat_double.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="heartbeat_double" ID="{C89F64DC-F34C-4A86-A8F2-54654E64A697}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="heartbeat_single" ID="{9D72B1EC-A105-4EC5-A1C1-AD15ECE745D4}" ShortID="76878182">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A987B170-E8DA-4B46-9E8D-E237B649036A}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{4CC16DF6-2664-48AE-B31E-9BF15695BA06}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="heartbeat_single" ID="{983779B6-9A10-4E4C-8A1D-F13D9EA3A2B8}" ShortID="810582355">
+							<Language>SFX</Language>
+							<AudioFile>heartbeat_single.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="heartbeat_single" ID="{983779B6-9A10-4E4C-8A1D-F13D9EA3A2B8}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="mechanical_tick" ID="{D0D717DC-A1E8-4142-8BA7-D7CB2ECF8A11}" ShortID="384414424">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{A987B170-E8DA-4B46-9E8D-E237B649036A}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{4CC16DF6-2664-48AE-B31E-9BF15695BA06}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="mechanical_tick" ID="{871BDF38-2718-423B-A3C2-2E51F4AFACAC}" ShortID="733435735">
+							<Language>SFX</Language>
+							<AudioFile>mechanical_tick.wav</AudioFile>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="mechanical_tick" ID="{871BDF38-2718-423B-A3C2-2E51F4AFACAC}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
