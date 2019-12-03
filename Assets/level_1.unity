@@ -762,7 +762,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228766186}
-  m_Text: Cube!
+  m_Text: Set_State_Suspense
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -821,7 +821,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228766186}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.4, y: 3.6, z: -39.4}
+  m_LocalPosition: {x: 5.7, y: 3.6, z: -39.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -853,7 +853,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290753072}
-  m_Text: Sphere!
+  m_Text: Set_State_Explore
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -912,7 +912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290753072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3, y: 3.6, z: 41.4}
+  m_LocalPosition: {x: -6.3, y: 3.6, z: 41.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
