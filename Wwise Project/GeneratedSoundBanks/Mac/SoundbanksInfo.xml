@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="11" SoundbankVersion="134">
+<SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="12" SoundbankVersion="135">
 	<RootPaths>
-		<ProjectRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/</ProjectRoot>
-		<SourceFilesRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/.cache/Mac/</SourceFilesRoot>
-		<SoundBanksRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/Mac/</SoundBanksRoot>
+		<ProjectRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/</ProjectRoot>
+		<SourceFilesRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/.cache/Mac/</SourceFilesRoot>
+		<SoundBanksRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/Mac/</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>/Users/msweet/Library/Application Support/Wwise2019/Bottles/wwise/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/Mac</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/Mac</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -21,20 +21,42 @@
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
-				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game" DurationType="Infinite"/>
+				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore"/>
+				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense"/>
+				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game">
+					<IncludedMemoryFiles>
+						<File Id="681948759" Language="SFX">
+							<ShortName>Season - Winter Late.wav</ShortName>
+							<Path>SFX/Season - Winter Late_D79FB2B7.wem</Path>
+						</File>
+						<File Id="740210912" Language="SFX">
+							<ShortName>Season - Winter Early.wav</ShortName>
+							<Path>SFX/Season - Winter Early_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<SwitchContainers>
+						<SwitchContainer SwitchValue="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}">
+							<Media>
+								<File Id="681948759"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}">
+							<Media>
+								<File Id="740210912"/>
+							</Media>
+						</SwitchContainer>
+					</SwitchContainers>
+				</Event>
 			</IncludedEvents>
-			<IncludedMemoryFiles>
-				<File Id="681948759" Language="SFX">
-					<ShortName>Season - Winter Late.wav</ShortName>
-					<Path>SFX/Season - Winter Late_D79FB2B7.wem</Path>
-				</File>
-				<File Id="740210912" Language="SFX">
-					<ShortName>Season - Winter Early.wav</ShortName>
-					<Path>SFX/Season - Winter Early_D79FB2B7.wem</Path>
-				</File>
-			</IncludedMemoryFiles>
+			<StateGroups>
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None"/>
+						<State Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
+						<State Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

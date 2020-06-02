@@ -14,24 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AcousticTextureWwu:
   - PhysicalPath: Virtual Acoustics/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: 9801b1f9b769054f8b5a47a28ac50113
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292465944775808
+    m_lastTime: -8586104726954775808
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: 4a2ec317fd444443b2cc12e372c82307
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292465944775808
+    m_lastTime: -8586104726954775808
     List: []
   BankWwu:
   - PhysicalPath: SoundBanks/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: dac3a449d5c89a43bf1e2c5b55839753
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292459994775808
+    m_lastTime: -8586104726954775808
     List:
     - name: Game_Soundbank
       guid: f93298340c4491408cccd35a19a52aae
@@ -44,10 +44,10 @@ MonoBehaviour:
       Path: Default Work Unit/Game_Soundbank
   EventWwu:
   - PhysicalPath: Events/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: c6cd1bf54ee4d94fafa741d395989397
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292463894775808
+    m_lastTime: -8586104726954775808
     List:
     - name: Set_State_Explore
       guid: 897e2afc8dd714448b919baa6e2928e8
@@ -87,17 +87,17 @@ MonoBehaviour:
       minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: 948454c5e6a8da4b8ca0a69f4d8c2761
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292465944775808
+    m_lastTime: -8586104726954775808
     List: []
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: 6a3f909a671af845bbec31ed605b83fe
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292464644775808
+    m_lastTime: -8586104726954775808
     List:
     - name: Player_State
       guid: 8d5d9d73bdc85246892f6d0a25aa689d
@@ -132,23 +132,19 @@ MonoBehaviour:
       valuesInternal: []
   SwitchWwu:
   - PhysicalPath: Switches/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: 54be3acf718ba5459af91fbd9e94d6a9
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292465944775808
+    m_lastTime: -8586104726954775808
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers/Default Work Unit.wwu
-    ParentPhysicalPath: 
-    guid: 4df410287d275143bea8119d987e6a72
+    ParentPath: 
+    guid: 00000000000000000000000000000000
     GuidInternal: 
-    m_lastTime: -8586292465944775808
+    m_lastTime: -8586104726954775808
     List: []
   ExpandedItems:
   - /Wwise Project
-  - /Wwise Project/Events
-  - /Wwise Project/Events/Default Work Unit
-  - /Wwise Project/SoundBanks
-  - /Wwise Project/SoundBanks/Default Work Unit
   autoPopulateEnabled: 1
   CurrentPluginConfig: 

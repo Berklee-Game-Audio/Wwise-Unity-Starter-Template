@@ -5,13 +5,11 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if UNITY_2017_1_OR_NEWER
-
 /// @brief Defines the behavior of a \ref AkEventPlayable within a \ref AkEventTrack.
 /// \sa
 /// - \ref AkEventTrack
 /// - \ref AkEventPlayable
-//[System.Serializable]
+[System.Obsolete(AkSoundEngine.Deprecation_2019_2_0)]
 public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 {
 	private float currentDuration = -1f;
@@ -36,17 +34,40 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 		}
 	}
 
+#if UNITY_EDITOR
+	private static bool CanPostEvents
+	{
+		get { return UnityEditor.SessionState.GetBool("AkEventPlayableBehavior.CanPostEvents", true); }
+		set { UnityEditor.SessionState.SetBool("AkEventPlayableBehavior.CanPostEvents", value); }
+	}
+
+	[UnityEditor.InitializeOnLoadMethod]
+	private static void DetermineCanPostEvents()
+	{
+		UnityEditor.Compilation.CompilationPipeline.assemblyCompilationFinished += (string text, UnityEditor.Compilation.CompilerMessage[] messages) =>
+		{
+			if (!UnityEditor.EditorApplication.isPlaying)
+				CanPostEvents = false;
+		};
+
+		UnityEditor.EditorApplication.playModeStateChanged += (UnityEditor.PlayModeStateChange playMode) =>
+		{
+			if (playMode == UnityEditor.PlayModeStateChange.ExitingEditMode)
+				CanPostEvents = true;
+		};
+	}
+#endif
+
 	[System.Flags]
 	private enum Actions
 	{
 		None = 0,
 		Playback = 1 << 0,
 		Retrigger = 1 << 1,
-		//Stop = 1 << 2,
-		DelayedStop = 1 << 3,
-		Seek = 1 << 4,
-		FadeIn = 1 << 5,
-		FadeOut = 1 << 6
+		DelayedStop = 1 << 2,
+		Seek = 1 << 3,
+		FadeIn = 1 << 4,
+		FadeOut = 1 << 5
 	}
 	private Actions requiredActions;
 
@@ -68,6 +89,7 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 	public UnityEngine.GameObject eventObject;
 
 	public bool retriggerEvent;
+	private bool wasScrubbingAndRequiresRetrigger;
 	public bool StopEventAtClipEnd;
 
 	public bool overrideTrackEmitterObject;
@@ -130,6 +152,7 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 
 		if (IsScrubbing(info))
 		{
+			wasScrubbingAndRequiresRetrigger = true;
 			// If we've explicitly set the playhead, only play a small snippet.
 			requiredActions |= Actions.DelayedStop;
 		}
@@ -144,6 +167,8 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 
 	public override void OnBehaviourPause(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info)
 	{
+		wasScrubbingAndRequiresRetrigger = false;
+
 		base.OnBehaviourPause(playable, info);
 		if (eventObject != null && akEvent != null && StopEventAtClipEnd)
 		{
@@ -174,7 +199,7 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 		if ((requiredActions & Actions.Seek) != 0)
 			SeekToTime(playable);
 
-		if (retriggerEvent && (requiredActions & Actions.Retrigger) != 0)
+		if ((retriggerEvent || wasScrubbingAndRequiresRetrigger) && (requiredActions & Actions.Retrigger) != 0)
 			RetriggerEvent(playable);
 
 		if ((requiredActions & Actions.DelayedStop) != 0)
@@ -256,9 +281,7 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 
 #if UNITY_EDITOR
 		if (!UnityEditor.EditorApplication.isPlaying)
-		{
 			eventIsPlaying = false;
-		}
 #endif
 	}
 
@@ -267,8 +290,13 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 		fadeinTriggered = fadeoutTriggered = false;
 
 		uint playingID;
+
 #if UNITY_EDITOR
-		if (!UnityEditor.EditorApplication.isPlaying)
+		if (!CanPostEvents)
+		{
+			playingID = AkSoundEngine.AK_INVALID_PLAYING_ID;
+		}
+		else if (!UnityEditor.EditorApplication.isPlaying)
 		{
 			playingID = akEvent.Post(eventObject);
 		}
@@ -293,6 +321,8 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 
 	private void RetriggerEvent(UnityEngine.Playables.Playable playable)
 	{
+		wasScrubbingAndRequiresRetrigger = false;
+
 		if (!PostEvent())
 			return;
 
@@ -322,12 +352,16 @@ public class AkEventPlayableBehavior : UnityEngine.Playables.PlayableBehaviour
 		if (proportionalTime >= 1f) // Avoids Wwise "seeking beyond end of event: audio will stop" error.
 			return 1f;
 
+
+#if UNITY_EDITOR
+		if (!CanPostEvents)
+			return proportionalTime;
+#endif
+
 		if (eventIsPlaying)
-		{
 			AkSoundEngine.SeekOnEvent(akEvent.Id, eventObject, proportionalTime);
-		}
+
 		return proportionalTime;
 	}
 }
-#endif //UNITY_2017_1_OR_NEWER
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

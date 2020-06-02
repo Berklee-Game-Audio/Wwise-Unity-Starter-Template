@@ -8,12 +8,10 @@
 [UnityEngine.AddComponentMenu("Wwise/AkInitializer")]
 [UnityEngine.DisallowMultipleComponent]
 [UnityEngine.ExecuteInEditMode]
-/// This script deals with initialization, and frame updates of the Wwise audio engine.  
+/// @brief This script deals with initialization, and frame updates of the Wwise audio engine.  
 /// It is marked as \c DontDestroyOnLoad so it stays active for the life of the game, 
-/// not only one scene. You can, and probably should, modify this script to change the 
-/// initialization parameters for the sound engine. A few are already exposed in the property inspector.
-/// It must be present on one Game Object at the beginning of the game to initialize the audio properly.
-/// It must be executed BEFORE any other MonoBehaviors that use AkSoundEngine.
+/// not only one scene. Double-click the Initialization Settings entry, AkWwiseInitializationSettings, 
+/// to review and edit Wwise initialization settings.
 /// \sa
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=workingwithsdks__initialization.html" target="_blank">Initialize the Different Modules of the Sound Engine</a> (Note: This is described in the Wwise SDK documentation.)
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=namespace_a_k_1_1_sound_engine_a27257629833b9481dcfdf5e793d9d037.html#a27257629833b9481dcfdf5e793d9d037" target="_blank">AK::SoundEngine::Init()</a> (Note: This is described in the Wwise SDK documentation.)
@@ -98,7 +96,6 @@ public class AkInitializer : UnityEngine.MonoBehaviour
 	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private int defaultPoolSize = 0;
 	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private int lowerPoolSize = 0;
 	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private int streamingPoolSize = 0;
-	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private int preparePoolSize = 0;
 	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private float memoryCutoffThreshold = 0f;
 	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private int monitorPoolSize = 0;
 	[UnityEngine.HideInInspector][UnityEngine.SerializeField] private int monitorQueuePoolSize = 0;
@@ -129,18 +126,11 @@ public class AkInitializer : UnityEngine.MonoBehaviour
 
 			initializationSettings.UserSettings.m_BasePath = akInitializer.basePath;
 			initializationSettings.UserSettings.m_StartupLanguage = akInitializer.language;
-			initializationSettings.UserSettings.m_DefaultPoolSize = (uint)akInitializer.defaultPoolSize * 1024;
-			initializationSettings.UserSettings.m_LowerEnginePoolSize = (uint)akInitializer.lowerPoolSize * 1024;
-			initializationSettings.UserSettings.m_StreamManagerPoolSize = (uint)akInitializer.streamingPoolSize * 1024;
-			initializationSettings.UserSettings.m_PreparePoolSize = (uint)akInitializer.preparePoolSize * 1024;
-			initializationSettings.UserSettings.m_LowerEngineMemoryCutoffThreshold = akInitializer.memoryCutoffThreshold;
-
-			initializationSettings.AdvancedSettings.m_MonitorPoolSize = (uint)akInitializer.monitorPoolSize * 1024;
+            
 			initializationSettings.AdvancedSettings.m_MonitorQueuePoolSize = (uint)akInitializer.monitorQueuePoolSize * 1024;
 
 			initializationSettings.CallbackManagerInitializationSettings.BufferSize = akInitializer.callbackManagerBufferSize * 1024;
-
-			initializationSettings.UserSettings.m_SpatialAudioSettings.m_PoolSize = (uint)akInitializer.spatialAudioPoolSize * 1024;
+            
 			initializationSettings.UserSettings.m_SpatialAudioSettings.m_MaxSoundPropagationDepth = akInitializer.maxSoundPropagationDepth;
 			initializationSettings.UserSettings.m_SpatialAudioSettings.m_DiffractionFlags = (AkCommonUserSettings.SpatialAudioSettings.DiffractionFlags)akInitializer.diffractionFlags;
 

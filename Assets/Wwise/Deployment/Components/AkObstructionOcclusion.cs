@@ -10,6 +10,8 @@ public abstract class AkObstructionOcclusion : UnityEngine.MonoBehaviour
 	private readonly System.Collections.Generic.List<AkAudioListener> listenersToRemove =
 		new System.Collections.Generic.List<AkAudioListener>();
 
+	protected readonly System.Collections.Generic.List<AkAudioListener> currentListenerList = new System.Collections.Generic.List<AkAudioListener>();
+
 	private readonly System.Collections.Generic.Dictionary<AkAudioListener, ObstructionOcclusionValue>
 		ObstructionOcclusionValues = new System.Collections.Generic.Dictionary<AkAudioListener, ObstructionOcclusionValue>();
 
@@ -39,44 +41,28 @@ public abstract class AkObstructionOcclusion : UnityEngine.MonoBehaviour
 		fadeRate = 1 / fadeTime;
 	}
 
-	protected void UpdateObstructionOcclusionValues(System.Collections.Generic.List<AkAudioListener> listenerList)
+	protected abstract void UpdateCurrentListenerList();
+
+	private void UpdateObstructionOcclusionValues()
 	{
 		// add new listeners
-		for (var i = 0; i < listenerList.Count; ++i)
+		for (var i = 0; i < currentListenerList.Count; ++i)
 		{
-			if (!ObstructionOcclusionValues.ContainsKey(listenerList[i]))
-				ObstructionOcclusionValues.Add(listenerList[i], new ObstructionOcclusionValue());
+			if (!ObstructionOcclusionValues.ContainsKey(currentListenerList[i]))
+				ObstructionOcclusionValues.Add(currentListenerList[i], new ObstructionOcclusionValue());
 		}
 
 		// remove listeners
 		foreach (var ObsOccPair in ObstructionOcclusionValues)
 		{
-			if (!listenerList.Contains(ObsOccPair.Key))
+			if (!currentListenerList.Contains(ObsOccPair.Key))
 				listenersToRemove.Add(ObsOccPair.Key);
 		}
 
 		for (var i = 0; i < listenersToRemove.Count; ++i)
 			ObstructionOcclusionValues.Remove(listenersToRemove[i]);
-	}
 
-	protected void UpdateObstructionOcclusionValues(AkAudioListener listener)
-	{
-		if (!listener)
-			return;
-
-		// add new listeners
-		if (!ObstructionOcclusionValues.ContainsKey(listener))
-			ObstructionOcclusionValues.Add(listener, new ObstructionOcclusionValue());
-
-		// remove listeners
-		foreach (var ObsOccPair in ObstructionOcclusionValues)
-		{
-			if (listener != ObsOccPair.Key)
-				listenersToRemove.Add(ObsOccPair.Key);
-		}
-
-		for (var i = 0; i < listenersToRemove.Count; ++i)
-			ObstructionOcclusionValues.Remove(listenersToRemove[i]);
+		listenersToRemove.Clear();
 	}
 
 	private void CastRays()
@@ -106,14 +92,14 @@ public abstract class AkObstructionOcclusion : UnityEngine.MonoBehaviour
 		refreshTime += UnityEngine.Time.deltaTime;
 	}
 
-	protected abstract void UpdateObstructionOcclusionValuesForListeners();
-
 	protected abstract void SetObstructionOcclusion(
 		System.Collections.Generic.KeyValuePair<AkAudioListener, ObstructionOcclusionValue> ObsOccPair);
 
 	private void Update()
 	{
-		UpdateObstructionOcclusionValuesForListeners();
+		currentListenerList.Clear();
+		UpdateCurrentListenerList();
+		UpdateObstructionOcclusionValues();
 
 		CastRays();
 

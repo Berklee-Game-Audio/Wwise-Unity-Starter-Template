@@ -5,7 +5,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-/// Base class for the generic triggering mechanism for Wwise Integration.
+/// @brief Base class for the generic triggering mechanism for Wwise Integration.
 /// All Wwise components will use this mechanism to drive their behavior.
 /// Derive from this class to add your own triggering condition, as described in \ref unity_add_triggers
 public abstract class AkTriggerBase : UnityEngine.MonoBehaviour

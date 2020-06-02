@@ -15,6 +15,11 @@
 		get { return new AkCallbackManager.InitializationSettings(); }
 	}
 
+	public virtual string SoundBankPersistentDataPath
+	{
+		get { return null; }
+	}
+
 	public virtual string InitialLanguage
 	{
 		get { return "English(US)"; }
@@ -33,6 +38,11 @@
 	public virtual AkCommunicationSettings AkCommunicationSettings
 	{
 		get { return new AkCommunicationSettings(); }
+	}
+
+	public virtual bool UseAsyncOpen
+	{
+		get { return false; }
 	}
 }
 
@@ -185,22 +195,14 @@ public class AkCommonOutputSettings
 	}
 }
 
-public class AkSettingsValidationHandler
-{
-	public virtual void Validate() { }
-}
-
 [System.Serializable]
-public class AkCommonUserSettings : AkSettingsValidationHandler
+public class AkCommonUserSettings
 {
-	[UnityEngine.Tooltip("Path for the soundbanks. This must contain one sub folder per platform, with the same as in the Wwise project.")]
+	[UnityEngine.Tooltip("Path for the SoundBanks. This must contain one sub folder per platform, with the same as in the Wwise project.")]
 	public string m_BasePath = AkBasePathGetter.DefaultBasePath;
 
 	[UnityEngine.Tooltip("Language sub-folder used at startup.")]
 	public string m_StartupLanguage = "English(US)";
-
-	[UnityEngine.Tooltip("Prepare Pool size. This contains the banks loaded using PrepareBank (Banks decoded on load use this). Default size is 0 MB (will not allocate a Prepare Pool), and minimal size if 8096 bytes. This should be adjusted for your needs.")]
-	public uint m_PreparePoolSize = 0;
 
 	[UnityEngine.Tooltip("CallbackManager buffer size. The size of the buffer used per-frame to transfer callback data. Default size is 4 KB, but you should increase this, if required.")]
 	public int m_CallbackManagerBufferSize = AkCallbackManager.InitializationSettings.DefaultBufferSize;
@@ -208,23 +210,8 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 	[UnityEngine.Tooltip("Enable Wwise engine logging. This is used to turn on/off the logging of the Wwise engine.")]
 	public bool m_EngineLogging = AkCallbackManager.InitializationSettings.DefaultIsLoggingEnabled;
 
-	[UnityEngine.Tooltip("Maximum number of memory pools. A memory pool is required for each loaded bank.")]
-	public uint m_MaximumNumberOfMemoryPools = 32;
-
-	public void CopyTo(AkMemSettings settings)
-	{
-		settings.uMaxNumPools = m_MaximumNumberOfMemoryPools;
-	}
-
 	[UnityEngine.Tooltip("Maximum number of automation paths for positioning sounds.")]
 	public uint m_MaximumNumberOfPositioningPaths = 255;
-
-	[UnityEngine.Tooltip("Size of the default memory pool.")]
-	public uint m_DefaultPoolSize = 16 * 1024 * 1024;
-
-	[UnityEngine.Tooltip("The percentage of occupied memory where the sound engine should enter in Low memory Mode.")]
-	[UnityEngine.Range(0, 1)]
-	public float m_MemoryCutoffThreshold = 1.0f;
 
 	[UnityEngine.Tooltip("Size of the command queue.")]
 	public uint m_CommandQueueSize = 256 * 1024;
@@ -237,7 +224,11 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 
 	protected static string GetPluginPath()
 	{
-#if UNITY_EDITOR || UNITY_ANDROID || UNITY_WSA
+#if UNITY_EDITOR_WIN
+		return System.IO.Path.Combine(UnityEngine.Application.dataPath, "Wwise", "Deployment", "Plugins", "Windows", "x86_64", "DSP");
+#elif UNITY_EDITOR_OSX
+		return System.IO.Path.Combine(UnityEngine.Application.dataPath, "Wwise", "Deployment", "Plugins", "Mac", "DSP");
+#elif UNITY_ANDROID || UNITY_WSA
 		return null;
 #elif PLATFORM_LUMIN
 		var dataPath = UnityEngine.Application.dataPath;
@@ -252,8 +243,6 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 	public virtual void CopyTo(AkInitSettings settings)
 	{
 		settings.uMaxNumPaths = m_MaximumNumberOfPositioningPaths;
-		settings.uDefaultPoolSize = m_DefaultPoolSize;
-		settings.fDefaultPoolRatioThreshold = m_MemoryCutoffThreshold;
 		settings.uCommandQueueSize = m_CommandQueueSize;
 		settings.uNumSamplesPerFrame = m_SamplesPerFrame;
 		m_MainOutputSettings.CopyTo(settings.settingsMainOutput);
@@ -269,27 +258,14 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 		settings.fStreamingLookAheadRatio = m_StreamingLookAheadRatio;
 	}
 
-	[UnityEngine.Tooltip("Size of memory pool for small objects of Stream Manager. Small objects are the Stream Manager instance, devices, stream objects, user stream names, pending transfers, buffer records, pending open commands, and so on. Ideally, this pool should never run out of memory, because it may cause undesired I/O transfer cancellation, and even major CPU spikes. I/O memory should be bound by the size of each device's I/O pool instead.")]
-	public uint m_StreamManagerPoolSize = 64 * 1024;
-
 	public void CopyTo(AkStreamMgrSettings settings)
 	{
-		settings.uMemorySize = m_StreamManagerPoolSize;
 	}
 
-	public virtual void CopyTo(AkDeviceSettings settings)
-	{
-	}
+	public virtual void CopyTo(AkDeviceSettings settings) { }
 
 	[UnityEngine.Tooltip("Sampling Rate. Default is 48000 Hz. Use 24000hz for low quality. Any positive reasonable sample rate is supported; however, be careful setting a custom value. Using an odd or really low sample rate may cause the sound engine to malfunction.")]
 	public uint m_SampleRate = 48000;
-
-	[UnityEngine.Tooltip("Lower Engine default memory pool size.")]
-	public uint m_LowerEnginePoolSize = 16 * 1024 * 1024;
-
-	[UnityEngine.Tooltip("The percentage of occupied memory where the sound engine should enter in Low memory mode.")]
-	[UnityEngine.Range(0, 1)]
-	public float m_LowerEngineMemoryCutoffThreshold = 1;
 
 	[UnityEngine.Tooltip("Number of refill buffers in voice buffer. Set to 2 for double-buffered, defaults to 4.")]
 	public ushort m_NumberOfRefillsInVoice = 4;
@@ -299,17 +275,12 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 #if !UNITY_PS4 && !UNITY_XBOXONE
 		settings.uSampleRate = m_SampleRate;
 #endif
-		settings.uLEngineDefaultPoolSize = m_LowerEnginePoolSize;
-		settings.fLEngineDefaultPoolRatioThreshold = m_LowerEngineMemoryCutoffThreshold;
 		settings.uNumRefillsInVoice = m_NumberOfRefillsInVoice;
 	}
 
 	[System.Serializable]
 	public class SpatialAudioSettings
 	{
-		[UnityEngine.Tooltip("Desired spatial audio memory pool size.")]
-		public uint m_PoolSize = 4 * 1024 * 1024;
-
 		[UnityEngine.Tooltip("Maximum number of portals that sound can propagate through.")]
 		[UnityEngine.Range(0, AkSoundEngine.AK_MAX_SOUND_PROPAGATION_DEPTH)]
 		public uint m_MaxSoundPropagationDepth = AkSoundEngine.AK_MAX_SOUND_PROPAGATION_DEPTH;
@@ -327,6 +298,34 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 
 		[UnityEngine.Tooltip("Distance (in game units) that an emitter or listener has to move to trigger a recalculation of reflections/diffraction. Larger values can reduce the CPU load at the cost of reduced accuracy.")]
 		public float m_MovementThreshold = 1.0f;
+
+		[UnityEngine.Tooltip("The number of primary rays used in stochastic ray casting.")]
+		/// The number of primary rays used in stochastic ray casting.
+		public uint m_NumberOfPrimaryRays = 100;
+
+		[UnityEngine.Range(0, 4)]
+		[UnityEngine.Tooltip("The maximum number of reflections that will be processed for a sound path before it reaches the listener.")]
+		[UnityEngine.Serialization.FormerlySerializedAs("m_ReflectionsOrder")]
+		/// The maximum number of reflections that will be processed for a sound path before it reaches the listener.
+		/// Valid range: 1-4.
+		public uint m_MaxReflectionOrder = 1;
+
+		[UnityEngine.Tooltip("Length of the rays that are cast inside Spatial Audio. Effectively caps the maximum length of an individual segment in a reflection or diffraction path.")]
+        /// Length of the rays that are cast inside Spatial Audio. Effectively caps the maximum length of an individual segment in a reflection or diffraction path.
+        public float m_MaxPathLength = 10000.0f;
+
+		[UnityEngine.Tooltip("Enable computation of diffraction along reflection paths.")]
+        [UnityEngine.Serialization.FormerlySerializedAs("m_EnableDiffraction")]
+        /// Enable computation of diffraction along reflection paths.
+        public bool m_EnableDiffractionOnReflections = true;
+
+		[UnityEngine.Tooltip("Enable direct path diffraction. Diffraction must be enabled for a source in the authoring tool positioning tab.")]
+		/// Enable direct path diffraction.
+		public bool m_EnableDirectPathDiffraction = true;
+
+		[UnityEngine.Tooltip("Enable modeling of transmission of sound through walls.")]
+		/// Enable modeling of transmission of sound through walls.
+		public bool m_EnableTransmission = true;
 	}
 
 	[UnityEngine.Tooltip("Spatial audio common settings.")]
@@ -334,27 +333,35 @@ public class AkCommonUserSettings : AkSettingsValidationHandler
 
 	public virtual void CopyTo(AkSpatialAudioInitSettings settings)
 	{
-		settings.uPoolSize = m_SpatialAudioSettings.m_PoolSize;
 		settings.uMaxSoundPropagationDepth = m_SpatialAudioSettings.m_MaxSoundPropagationDepth;
 		settings.uDiffractionFlags = (uint)m_SpatialAudioSettings.m_DiffractionFlags;
 		settings.fMovementThreshold = m_SpatialAudioSettings.m_MovementThreshold;
+		settings.uNumberOfPrimaryRays = m_SpatialAudioSettings.m_NumberOfPrimaryRays;
+		settings.uMaxReflectionOrder = m_SpatialAudioSettings.m_MaxReflectionOrder;
+		settings.fMaxPathLength = m_SpatialAudioSettings.m_MaxPathLength;
+		settings.bEnableDiffractionOnReflection = m_SpatialAudioSettings.m_EnableDiffractionOnReflections;
+		settings.bEnableDirectPathDiffraction = m_SpatialAudioSettings.m_EnableDirectPathDiffraction;
+		settings.bEnableTransmission = m_SpatialAudioSettings.m_EnableTransmission;
 	}
 
-	public virtual void CopyTo(AkUnityPlatformSpecificSettings settings)
-	{
-	}
+	public virtual void CopyTo(AkUnityPlatformSpecificSettings settings) { }
 
-	public override void Validate()
+	public virtual void Validate()
 	{
-		if (m_PreparePoolSize > 0 && m_PreparePoolSize < 8096)
+		if (m_SpatialAudioSettings.m_MovementThreshold < 0.0f)
 		{
-			m_PreparePoolSize = 8096;
+			m_SpatialAudioSettings.m_MovementThreshold = 0.0f;
+		}
+
+		if (m_SpatialAudioSettings.m_MaxPathLength < 0.0f)
+		{
+			m_SpatialAudioSettings.m_MaxPathLength = 0.0f;
 		}
 	}
 }
 
 [System.Serializable]
-public class AkCommonAdvancedSettings : AkSettingsValidationHandler
+public class AkCommonAdvancedSettings
 {
 	[UnityEngine.Tooltip("Size of memory pool for I/O (for automatic streams). It is passed directly to AK::MemoryMgr::CreatePool(), after having been rounded down to a multiple of uGranularity.")]
 	public uint m_IOMemorySize = 2 * 1024 * 1024;
@@ -376,17 +383,11 @@ public class AkCommonAdvancedSettings : AkSettingsValidationHandler
 		settings.uMaxCachePinnedBytes = m_MaximumPinnedBytesInCache;
 	}
 
-	[UnityEngine.Tooltip("Memory pool where data allocated by AK::SoundEngine::PrepareEvent() and AK::SoundEngine::PrepareGameSyncs() will be done.")]
-	public int m_PrepareEventMemoryPoolID = AkSoundEngine.AK_INVALID_POOL_ID;
-
 	[UnityEngine.Tooltip("Set to true to enable AK::SoundEngine::PrepareGameSync usage.")]
 	public bool m_EnableGameSyncPreparation = false;
 
 	[UnityEngine.Tooltip("Number of quanta ahead when continuous containers should instantiate a new voice before which next sounds should start playing. This look-ahead time allows I/O to occur, and is especially useful to reduce the latency of continuous containers with trigger rate or sample-accurate transitions.")]
 	public uint m_ContinuousPlaybackLookAhead = 1;
-
-	[UnityEngine.Tooltip("Size of the monitoring pool. This parameter is not used in Release build.")]
-	public uint m_MonitorPoolSize = 256 * 1024;
 
 	[UnityEngine.Tooltip("Size of the monitoring queue pool. This parameter is not used in Release build.")]
 	public uint m_MonitorQueuePoolSize = 64 * 1024;
@@ -394,30 +395,34 @@ public class AkCommonAdvancedSettings : AkSettingsValidationHandler
 	[UnityEngine.Tooltip("Amount of time to wait for hardware devices to trigger an audio interrupt. If there is no interrupt after that time, the sound engine will revert to silent mode and continue operating until the hardware finally comes back.")]
 	public uint m_MaximumHardwareTimeoutMs = 1000;
 
+	[UnityEngine.Tooltip("Debug setting: Enable checks for out-of-range (and NAN) floats in the processing code. Do not enable in any normal usage, this setting uses a lot of CPU. Will print error messages in the log if invalid values are found at various point in the pipeline. Contact AK Support with the new error messages for more information.")]
+	public bool m_DebugOutOfRangeCheckEnabled = false;
+
+	[UnityEngine.Tooltip("Debug setting: Only used when bDebugOutOfRangeCheckEnabled is true. This defines the maximum values samples can have. Normal audio must be contained within +1/-1. This limit should be set higher to allow temporary or short excursions out of range. Default is 16.")]
+	public float m_DebugOutOfRangeLimit = 16.0f;
+
 	public virtual void CopyTo(AkInitSettings settings)
 	{
-		settings.uPrepareEventMemoryPoolID = m_PrepareEventMemoryPoolID;
 		settings.bEnableGameSyncPreparation = m_EnableGameSyncPreparation;
 		settings.uContinuousPlaybackLookAhead = m_ContinuousPlaybackLookAhead;
-		settings.uMonitorPoolSize = m_MonitorPoolSize;
 		settings.uMonitorQueuePoolSize = m_MonitorQueuePoolSize;
 		settings.uMaxHardwareTimeoutMs = m_MaximumHardwareTimeoutMs;
+		settings.bDebugOutOfRangeCheckEnabled = m_DebugOutOfRangeCheckEnabled;
+		settings.fDebugOutOfRangeLimit = m_DebugOutOfRangeLimit;
 	}
 
-	public virtual void CopyTo(AkPlatformInitSettings settings)
-	{
-	}
+	public virtual void CopyTo(AkPlatformInitSettings settings) { }
 
 	[System.Serializable]
 	public class SpatialAudioSettings
 	{
-        [UnityEngine.Tooltip("Multiplier that is applied to the distance attenuation of diffracted sounds (sounds that are in the 'shadow region') to simulate the phenomenon where by diffracted sound waves decay faster than incident sound waves.")]
-        [UnityEngine.Range(1.0f, 3.0f)]
-        public float m_DiffractionShadowAttenuationFactor = 2.0f;
+		[UnityEngine.Tooltip("Multiplier that is applied to the distance attenuation of diffracted sounds (sounds that are in the 'shadow region') to simulate the phenomenon where by diffracted sound waves decay faster than incident sound waves.")]
+		[UnityEngine.Range(1.0f, 3.0f)]
+		public float m_DiffractionShadowAttenuationFactor = 1.0f;
 
 		[UnityEngine.Tooltip("Interpolation angle, in degrees, over which the \"Diffraction Shadow Attenuation Factor\" is applied.")]
-        [UnityEngine.Range(0.1f, 90.0f)]
-        public float m_DiffractionShadowDegrees = 30.0f;
+		[UnityEngine.Range(0.1f, 180.0f)]
+		public float m_DiffractionShadowDegrees = 30.0f;
 	}
 
 	[UnityEngine.Tooltip("Spatial audio advanced settings.")]
@@ -425,23 +430,27 @@ public class AkCommonAdvancedSettings : AkSettingsValidationHandler
 
 	public virtual void CopyTo(AkSpatialAudioInitSettings settings)
 	{
-        settings.fDiffractionShadowAttenFactor = m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor;
+		settings.fDiffractionShadowAttenFactor = m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor;
 		settings.fDiffractionShadowDegrees = m_SpatialAudioSettings.m_DiffractionShadowDegrees;
 	}
 
-	public virtual void CopyTo(AkUnityPlatformSpecificSettings settings)
-	{
-	}
+	public virtual void CopyTo(AkUnityPlatformSpecificSettings settings) { }
 
 	[UnityEngine.Tooltip("The state of the \"in_bRenderAnyway\" argument passed to the AkSoundEngine.Suspend() function when the \"OnApplicationFocus\" Unity callback is received with \"false\" as its argument.")]
 	public bool m_RenderDuringFocusLoss;
 
-	public override void Validate()
+	[UnityEngine.Tooltip("Sets the sub-folder underneath UnityEngine.Application.persistentDataPath that will be used as the SoundBank base path. This is useful when the Init.bnk needs to be downloaded. Setting this to an empty string uses the typical SoundBank base path resolution. Setting this to \".\" uses UnityEngine.Application.persistentDataPath.")]
+	public string m_SoundBankPersistentDataPath;
+
+	[UnityEngine.Tooltip("Use Async Open in the low-level IO hook.")]
+	public bool m_UseAsyncOpen = false;
+
+	public virtual void Validate()
 	{
 		if (m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor <= 0.0f)
 		{
 			UnityEngine.Debug.LogWarning("WwiseUnity: m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor must be greater than zero. Value was reset to the default (2.0)");
-			m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor = 2.0f;
+			m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor = 1.0f;
 		}
 
 		if (m_SpatialAudioSettings.m_DiffractionShadowDegrees <= 0.0f)
@@ -453,7 +462,7 @@ public class AkCommonAdvancedSettings : AkSettingsValidationHandler
 }
 
 [System.Serializable]
-public class AkCommonCommSettings : AkSettingsValidationHandler
+public class AkCommonCommSettings
 {
 	[UnityEngine.Tooltip("Size of the communication pool.")]
 	public uint m_PoolSize = 256 * 1024;
@@ -493,6 +502,8 @@ public class AkCommonCommSettings : AkSettingsValidationHandler
 
 		settings.szAppNetworkName = networkName;
 	}
+
+	public virtual void Validate() { }
 }
 
 public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
@@ -509,20 +520,21 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 		{
 			var settings = base.AkInitializationSettings;
 			var userSettings = GetUserSettings();
-			userSettings.CopyTo(settings.memSettings);
 			userSettings.CopyTo(settings.deviceSettings);
 			userSettings.CopyTo(settings.streamMgrSettings);
 			userSettings.CopyTo(settings.initSettings);
 			userSettings.CopyTo(settings.platformSettings);
 			userSettings.CopyTo(settings.musicSettings);
 			userSettings.CopyTo(settings.unityPlatformSpecificSettings);
-			settings.preparePoolSize = userSettings.m_PreparePoolSize;
 
 			var advancedSettings = GetAdvancedSettings();
 			advancedSettings.CopyTo(settings.deviceSettings);
 			advancedSettings.CopyTo(settings.initSettings);
 			advancedSettings.CopyTo(settings.platformSettings);
 			advancedSettings.CopyTo(settings.unityPlatformSpecificSettings);
+
+			settings.useAsyncOpen = advancedSettings.m_UseAsyncOpen;
+
 			return settings;
 		}
 	}
@@ -552,6 +564,11 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 		get { return GetUserSettings().m_StartupLanguage; }
 	}
 
+	public override string SoundBankPersistentDataPath
+	{
+		get { return GetAdvancedSettings().m_SoundBankPersistentDataPath; }
+	}
+
 	public override bool RenderDuringFocusLoss
 	{
 		get { return GetAdvancedSettings().m_RenderDuringFocusLoss; }
@@ -560,6 +577,11 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 	public override string SoundbankPath
 	{
 		get { return GetUserSettings().m_BasePath; }
+	}
+
+	public override bool UseAsyncOpen
+	{
+		get { return GetAdvancedSettings().m_UseAsyncOpen; }
 	}
 
 	public override AkCommunicationSettings AkCommunicationSettings

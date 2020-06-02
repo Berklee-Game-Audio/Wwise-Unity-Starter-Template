@@ -7,7 +7,7 @@
 
 [UnityEngine.AddComponentMenu("Wwise/AkRoomPortalObstruction")]
 [UnityEngine.RequireComponent(typeof(AkRoomPortal))]
-/// @brief Obstructs/Occludes the spatial audio portal of the current game object from the spatial audio listener if at least one object is between them.
+/// @brief Completely obstructs the spatial audio portal of the current game object from the spatial audio listener if at least one object is between them.
 /// @details If no spatial audio listener has been registered, there will be no obstruction.
 public class AkRoomPortalObstruction : AkObstructionOcclusion
 {
@@ -19,9 +19,9 @@ public class AkRoomPortalObstruction : AkObstructionOcclusion
 		m_portal = GetComponent<AkRoomPortal>();
 	}
 
-	protected override void UpdateObstructionOcclusionValuesForListeners()
+	protected override void UpdateCurrentListenerList()
 	{
-		UpdateObstructionOcclusionValues(AkSpatialAudioListener.TheSpatialAudioListener);
+		currentListenerList.Add(AkSpatialAudioListener.TheSpatialAudioListener);
 	}
 
 	protected override void SetObstructionOcclusion(

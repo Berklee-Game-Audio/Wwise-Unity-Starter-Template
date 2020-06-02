@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="WorkUnit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" SchemaVersion="94">
+<WwiseDocument Type="WorkUnit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" SchemaVersion="97">
 	<InteractiveMusic>
 		<WorkUnit Name="Default Work Unit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" PersistMode="Standalone">
 			<ChildrenList>
@@ -43,9 +43,12 @@
 												</Reference>
 											</ReferenceList>
 											<ChildrenList>
-												<AudioFileSource Name="Season - Winter Early" ID="{F260DD44-B1CB-4A46-9652-8D92D4ADA99C}" ShortID="740210912">
+												<AudioFileSource Name="Season - Winter Early" ID="{F260DD44-B1CB-4A46-9652-8D92D4ADA99C}">
 													<Language>SFX</Language>
 													<AudioFile>Season - Winter Early.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="740210912"/>
+													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
 											<TransitionList>
@@ -142,9 +145,12 @@
 												</Reference>
 											</ReferenceList>
 											<ChildrenList>
-												<AudioFileSource Name="Season - Winter Late" ID="{3B2DA684-EC58-4B6C-88A3-CB839568B7CA}" ShortID="681948759">
+												<AudioFileSource Name="Season - Winter Late" ID="{3B2DA684-EC58-4B6C-88A3-CB839568B7CA}">
 													<Language>SFX</Language>
 													<AudioFile>Season - Winter Late.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="681948759"/>
+													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
 											<TransitionList>

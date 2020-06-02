@@ -8,12 +8,12 @@
 [UnityEngine.AddComponentMenu("Wwise/AkEnvironment")]
 [UnityEngine.RequireComponent(typeof(UnityEngine.Collider))]
 [UnityEngine.ExecuteInEditMode]
-/// @brief Use this component to define a reverb zone.  This needs to be added to a collider object to work properly. \ref unity_use_AkEvironment_AkEvironmentPortal
-/// @details This component can be attached to any collider.  You can specify a roll-off to fade-in/out of the reverb.  
+/// @brief Use this component to define a reverb zone. This needs to be added to a collider object to work properly. See \ref unity_use_AkEnvironment_AknEvironmentPortal.
+/// @details This component can be attached to any collider. You can specify a roll-off to fade-in/out of the reverb.  
 /// The reverb parameters will be defined in the Wwise project, by the sound designer.  All AkGameObj that are 
 /// "environment"-aware will receive a send value when entering the attached collider.
 /// \sa
-/// - \ref unity_use_AkEvironment_AkEvironmentPortal
+/// - \ref unity_use_AkEnvironment_AkEnvironmentPortal
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=integrating__elements__environments.html" target="_blank">Integrating Environments and Game-defined Auxiliary Sends</a> (Note: This is described in the Wwise SDK documentation.)
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=namespace_a_k_1_1_sound_engine_a18f56e8e0e881c4efb9080545efbb233.html#a18f56e8e0e881c4efb9080545efbb233" target="_blank">AK::SoundEngine::SetGameObjectAuxSendValues</a> (Note: This is described in the Wwise SDK documentation.)
 public class AkEnvironment : UnityEngine.MonoBehaviour
@@ -42,11 +42,6 @@ public class AkEnvironment : UnityEngine.MonoBehaviour
 	//smaller number has a higher priority
 	public int priority = 0;
 
-	public float GetAuxSendValueForPosition(UnityEngine.Vector3 in_position)
-	{
-		return 1;
-	}
-
 	public void Awake()
 	{
 #if UNITY_EDITOR
@@ -61,7 +56,7 @@ public class AkEnvironment : UnityEngine.MonoBehaviour
 		Collider = GetComponent<UnityEngine.Collider>();
 	}
 
-	/// Sorts AkEnvironment's based on their priorities.
+	/// @brief Sorts AkEnvironments based on their priorities.
 	public class AkEnvironment_CompareByPriority : System.Collections.Generic.IComparer<AkEnvironment>
 	{
 		public virtual int Compare(AkEnvironment a, AkEnvironment b)
@@ -71,7 +66,8 @@ public class AkEnvironment : UnityEngine.MonoBehaviour
 		}
 	}
 
-	/// The selection algorithm is as follow: 
+	/// @brief Sorts AkEnvironments based on the selection algorithm.
+	/// The selection algorithm is as follows: 
 	/// -# Environments have priorities.
 	/// -# Environments have a "Default" flag. This flag effectively says that this environment will be bumped out if any other is present.
 	/// -# Environments have an "Exclude Other" flag. This flag will tell that this env is not overlappable with others. So, only one (the highest priority) should be selected.
