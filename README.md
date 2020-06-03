@@ -8,6 +8,10 @@ Optimized for Unity Version:
 Optimized for Wwise Version: 
 2019.2.0.7216
 
+Video Tutorials:
+https://www.youtube.com/watch?v=NVyCF5SY63o
+https://www.youtube.com/watch?v=1i0SBLdZbZg
+
 READ BELOW FOR MAC OS CATALINA USERS ONLY:
 Make sure you've applied the updates for the latest version 10.15.5 with the supplementary
 update.  In addition Catalina has security settings which don't allow Unity to properly 
