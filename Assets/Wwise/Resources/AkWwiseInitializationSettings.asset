@@ -16,19 +16,15 @@ MonoBehaviour:
   - Mac
   - Windows
   PlatformSettingsList:
-  - {fileID: 11400000, guid: cac54f1f59342489fbbfdb25048de26b, type: 2}
-  - {fileID: 11400000, guid: dad4ff1a5c9de40f8abba83ef8c090a7, type: 2}
+  - {fileID: 11400000, guid: f40217fea55d74f73a5a9d0597eff295, type: 2}
+  - {fileID: 11400000, guid: d8adaa06e90b54dc7a1df24112d275ca, type: 2}
   InvalidReferencePlatforms: []
   UserSettings:
     m_BasePath: Audio/GeneratedSoundBanks
     m_StartupLanguage: English(US)
-    m_PreparePoolSize: 0
     m_CallbackManagerBufferSize: 4096
     m_EngineLogging: 1
-    m_MaximumNumberOfMemoryPools: 32
     m_MaximumNumberOfPositioningPaths: 255
-    m_DefaultPoolSize: 16777216
-    m_MemoryCutoffThreshold: 1
     m_CommandQueueSize: 262144
     m_SamplesPerFrame: 1024
     m_MainOutputSettings:
@@ -40,31 +36,35 @@ MonoBehaviour:
         m_ChannelMask: 0
         m_NumberOfChannels: 0
     m_StreamingLookAheadRatio: 1
-    m_StreamManagerPoolSize: 65536
     m_SampleRate: 48000
-    m_LowerEnginePoolSize: 16777216
-    m_LowerEngineMemoryCutoffThreshold: 1
     m_NumberOfRefillsInVoice: 4
     m_SpatialAudioSettings:
-      m_PoolSize: 4194304
       m_MaxSoundPropagationDepth: 8
       m_DiffractionFlags: -1
       m_MovementThreshold: 1
+      m_NumberOfPrimaryRays: 100
+      m_MaxReflectionOrder: 1
+      m_MaxPathLength: 10000
+      m_EnableDiffractionOnReflections: 1
+      m_EnableDirectPathDiffraction: 1
+      m_EnableTransmission: 1
   AdvancedSettings:
     m_IOMemorySize: 2097152
     m_TargetAutoStreamBufferLengthMs: 380
     m_UseStreamCache: 0
     m_MaximumPinnedBytesInCache: 4294967295
-    m_PrepareEventMemoryPoolID: -1
     m_EnableGameSyncPreparation: 0
     m_ContinuousPlaybackLookAhead: 1
-    m_MonitorPoolSize: 262144
     m_MonitorQueuePoolSize: 65536
     m_MaximumHardwareTimeoutMs: 1000
+    m_DebugOutOfRangeCheckEnabled: 0
+    m_DebugOutOfRangeLimit: 16
     m_SpatialAudioSettings:
       m_DiffractionShadowAttenuationFactor: 2
       m_DiffractionShadowDegrees: 30
     m_RenderDuringFocusLoss: 0
+    m_SoundBankPersistentDataPath: 
+    m_UseAsyncOpen: 0
   CommsSettings:
     m_PoolSize: 262144
     m_DiscoveryBroadcastPort: 24024

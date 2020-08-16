@@ -102,7 +102,9 @@ public class AkPluginActivator
 			{ PluginID.iZTrashMultibandDistortion, "iZTrashMultibandDistortionFX" },
 			{ PluginID.McDSPFutzBox, "McDSPFutzBoxFX" },
 			{ PluginID.McDSPLimiter, "McDSPLimiterFX" },
-			{ PluginID.ResonanceAudio, "ResonanceAudioFX" }
+			{ PluginID.ResonanceAudio, "ResonanceAudioFX" },
+			{ PluginID.IgniterLive, "IgniterLiveSource" },
+			{ PluginID.IgniterLiveSynth, "IgniterLiveSource" }
 		};
 
 	static AkPluginActivator()
@@ -1073,7 +1075,9 @@ void *_pluginName_##_fp = (void*)&_pluginName_##Registration;
 		iZTrashMultibandDistortion = 0x91033,
 		McDSPFutzBox = 0x6E1003,
 		McDSPLimiter = 0x671003,
-		ResonanceAudio = 0x641103
+		ResonanceAudio = 0x641103,
+		IgniterLive = 0x5110D2,
+		IgniterLiveSynth = 0x5210D2
 	}
 
 	private class AkPluginInfo

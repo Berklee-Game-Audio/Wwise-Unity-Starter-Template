@@ -225,9 +225,28 @@ public class AkCommonUserSettings
 	protected static string GetPluginPath()
 	{
 #if UNITY_EDITOR_WIN
-		return System.IO.Path.Combine(UnityEngine.Application.dataPath, "Wwise", "Deployment", "Plugins", "Windows", "x86_64", "DSP");
+		return System.IO.Path.Combine(UnityEngine.Application.dataPath, @"Wwise\Deployment\Plugins\Windows\x86_64\DSP");
 #elif UNITY_EDITOR_OSX
-		return System.IO.Path.Combine(UnityEngine.Application.dataPath, "Wwise", "Deployment", "Plugins", "Mac", "DSP");
+		return System.IO.Path.Combine(UnityEngine.Application.dataPath, @"Wwise/Deployment/Plugins/Mac/DSP");
+#elif UNITY_STANDALONE_WIN
+		string potentialPath = System.IO.Path.Combine(UnityEngine.Application.dataPath, "Plugins" + System.IO.Path.DirectorySeparatorChar);
+		string architectureName = "x86";
+#if UNITY_64
+		architectureName += "_64";
+#endif
+		if(System.IO.File.Exists(System.IO.Path.Combine(potentialPath, "AkSoundEngine.dll")))
+		{
+			return potentialPath;
+		}
+		else if(System.IO.File.Exists(System.IO.Path.Combine(potentialPath, architectureName, "AkSoundEngine.dll")))
+		{
+			return System.IO.Path.Combine(potentialPath, architectureName);
+		}
+		else
+		{
+			UnityEngine.Debug.Log("Cannot find Wwise plugin path");
+			return null;
+		}
 #elif UNITY_ANDROID || UNITY_WSA
 		return null;
 #elif PLATFORM_LUMIN
@@ -235,6 +254,8 @@ public class AkCommonUserSettings
 		var find = "Data";
 		var index = dataPath.LastIndexOf(find);
 		return index == -1 ? dataPath : dataPath.Remove(index, find.Length).Insert(index, "bin");
+#elif UNITY_STADIA
+		return System.IO.Path.Combine(UnityEngine.Application.dataPath, ".." + System.IO.Path.DirectorySeparatorChar);
 #else
 		return System.IO.Path.Combine(UnityEngine.Application.dataPath, "Plugins" + System.IO.Path.DirectorySeparatorChar);
 #endif
@@ -247,6 +268,7 @@ public class AkCommonUserSettings
 		settings.uNumSamplesPerFrame = m_SamplesPerFrame;
 		m_MainOutputSettings.CopyTo(settings.settingsMainOutput);
 		settings.szPluginDLLPath = GetPluginPath();
+		UnityEngine.Debug.Log("WwiseUnity: Setting Plugin DLL path to: " + (settings.szPluginDLLPath == null ? "NULL" : settings.szPluginDLLPath));
 	}
 
 	[UnityEngine.Tooltip("Multiplication factor for all streaming look-ahead heuristic values.")]
@@ -594,7 +616,7 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 		}
 	}
 
-	#region parameter validation
+#region parameter validation
 #if UNITY_EDITOR
 	void OnValidate()
 	{
@@ -603,6 +625,6 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 		GetCommsSettings().Validate();
 	}
 #endif
-	#endregion
+#endregion
 }
 

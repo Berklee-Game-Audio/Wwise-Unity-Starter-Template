@@ -45,7 +45,19 @@ public static class AkWwiseProjectInfo
 					if (dataExists)
 						UnityEngine.Debug.LogWarning("WwiseUnity: Unable to load asset at <" + dataAbsolutePath + ">.");
 					else
-						UnityEditor.AssetDatabase.CreateAsset(m_Data, DataAssetPath);
+					{
+#if UNITY_2019_3_OR_LATER
+						if (UnityEditor.EditorSettings.assetPipelineMode == UnityEditor.AssetPipelineMode.Version2)
+						{
+							UnityEditor.EditorApplication.delayCall += () => UnityEditor.AssetDatabase.CreateAsset(m_Data, DataAssetPath);
+						}
+						else
+#else
+						{
+							UnityEditor.AssetDatabase.CreateAsset(m_Data, DataAssetPath);
+						}
+#endif
+					}
 				}
 			}
 			catch (System.Exception e)

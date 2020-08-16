@@ -9,7 +9,8 @@ public abstract class AkTriggerHandler : UnityEngine.MonoBehaviour
 {
 	public const int AWAKE_TRIGGER_ID = 1151176110;
 	public const int START_TRIGGER_ID = 1281810935;
-	public const int DESTROY_TRIGGER_ID = unchecked((int) 3936390293);
+	public const int DESTROY_TRIGGER_ID = unchecked((int)3936390293);
+	public const int ON_ENABLE_TRIGGER_ID = -320808462;
 
 	///Since our mask is a 32 bits integer, we can't have more than 32 triggers
 	public const int MAX_NB_TRIGGERS = 32;
@@ -20,8 +21,7 @@ public abstract class AkTriggerHandler : UnityEngine.MonoBehaviour
 	private bool didDestroy;
 
 	///List containing the enabled triggers.
-	public System.Collections.Generic.List<int>
-		triggerList = new System.Collections.Generic.List<int> { START_TRIGGER_ID };
+	public System.Collections.Generic.List<int> triggerList = new System.Collections.Generic.List<int> { START_TRIGGER_ID };
 
 	///This property is usefull only when used with colliders.  When enabled, the target of the action will be the other colliding object.  When disabled, it will be the current object.
 	public bool useOtherObject = false;
@@ -30,21 +30,16 @@ public abstract class AkTriggerHandler : UnityEngine.MonoBehaviour
 
 	protected virtual void Awake()
 	{
-#if UNITY_EDITOR
-		if (UnityEditor.BuildPipeline.isBuildingPlayer)
-			return;
-#endif
-
 		RegisterTriggers(triggerList, HandleEvent);
-
-		//Call the Handle event function if registered to the Awake Trigger
-		if (triggerList.Contains(AWAKE_TRIGGER_ID))
-			HandleEvent(null);
 	}
 
 	protected virtual void Start()
 	{
-		//Call the Handle event function if registered to the Start Trigger
+#if UNITY_EDITOR
+		if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating)
+			return;
+#endif
+
 		if (triggerList.Contains(START_TRIGGER_ID))
 			HandleEvent(null);
 	}
@@ -58,63 +53,77 @@ public abstract class AkTriggerHandler : UnityEngine.MonoBehaviour
 	public void DoDestroy()
 	{
 		UnregisterTriggers(triggerList, HandleEvent);
-
 		didDestroy = true;
-
-#if UNITY_EDITOR
-		if (UnityEditor.BuildPipeline.isBuildingPlayer)
-			return;
-#endif
-
-		if (triggerList.Contains(DESTROY_TRIGGER_ID))
-			HandleEvent(null);
 	}
 
 	protected void RegisterTriggers(System.Collections.Generic.List<int> in_triggerList, AkTriggerBase.Trigger in_delegate)
 	{
-		//Register to the appropriate triggers
+#if UNITY_EDITOR
+		if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating)
+			return;
+#endif
+
 		foreach (uint triggerID in in_triggerList)
 		{
+			switch  (triggerID)
+			{
+				case AWAKE_TRIGGER_ID:
+				case START_TRIGGER_ID:
+				case unchecked((uint)DESTROY_TRIGGER_ID):
+				case unchecked((uint)ON_ENABLE_TRIGGER_ID):
+					continue;
+			}
+
 			var triggerName = string.Empty;
 			if (triggerTypes.TryGetValue(triggerID, out triggerName))
 			{
-				// These special triggers are handled differently
-				if (triggerName == "Awake" || triggerName == "Start" || triggerName == "Destroy")
-					continue;
-
 				var trigger = (AkTriggerBase)GetComponent(System.Type.GetType(triggerName));
 				if (trigger == null)
 					trigger = (AkTriggerBase)gameObject.AddComponent(System.Type.GetType(triggerName));
-
 				trigger.triggerDelegate += in_delegate;
 			}
 		}
+
+		if (in_triggerList.Contains(AWAKE_TRIGGER_ID))
+			in_delegate(null);
+
+		if (in_triggerList.Contains(ON_ENABLE_TRIGGER_ID))
+			in_delegate(null);
 	}
 
-	protected void UnregisterTriggers(System.Collections.Generic.List<int> in_triggerList,
-		AkTriggerBase.Trigger in_delegate)
+	protected void UnregisterTriggers(System.Collections.Generic.List<int> in_triggerList, AkTriggerBase.Trigger in_delegate)
 	{
-		//Unregister all the triggers and delete them if no one else is registered to them
+#if UNITY_EDITOR
+		if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating)
+			return;
+#endif
+
 		foreach (uint triggerID in in_triggerList)
 		{
+			switch (triggerID)
+			{
+				case AWAKE_TRIGGER_ID:
+				case START_TRIGGER_ID:
+				case unchecked((uint)DESTROY_TRIGGER_ID):
+				case unchecked((uint)ON_ENABLE_TRIGGER_ID):
+					continue;
+			}
+
 			var triggerName = string.Empty;
 			if (triggerTypes.TryGetValue(triggerID, out triggerName))
 			{
-				// These special triggers are handled differently
-				if (triggerName == "Awake" || triggerName == "Start" || triggerName == "Destroy")
-					continue;
-
-				var trigger = (AkTriggerBase) GetComponent(System.Type.GetType(triggerName));
-
+				var trigger = (AkTriggerBase)GetComponent(System.Type.GetType(triggerName));
 				if (trigger != null)
 				{
 					trigger.triggerDelegate -= in_delegate;
-
 					if (trigger.triggerDelegate == null)
 						Destroy(trigger);
 				}
 			}
 		}
+
+		if (in_triggerList.Contains(DESTROY_TRIGGER_ID))
+			in_delegate(null);
 	}
 }
 
@@ -146,7 +155,7 @@ public abstract class AkDragDropTriggerHandler : AkTriggerHandler
 	protected override void Start()
 	{
 #if UNITY_EDITOR
-		if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating || !UnityEditor.EditorApplication.isPlaying)
+		if (!UnityEditor.EditorApplication.isPlaying)
 			return;
 #endif
 

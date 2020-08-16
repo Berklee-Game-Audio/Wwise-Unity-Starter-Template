@@ -166,9 +166,12 @@ public class AkRoom : AkTriggerHandler
 			return null;
 		}
 
-		public int Count => rooms.Count;
+		public int Count { get { return rooms.Count; } }
 
-		public void Clear() => rooms.Clear();
+		public void Clear()
+		{
+			rooms.Clear();
+		}
 
 		public void Add(AkRoom room)
 		{

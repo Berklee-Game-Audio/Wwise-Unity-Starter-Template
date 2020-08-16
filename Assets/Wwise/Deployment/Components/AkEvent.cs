@@ -77,10 +77,7 @@ public class AkEvent : AkDragDropTriggerHandler
 	{
 #if UNITY_EDITOR
 		if (UnityEditor.BuildPipeline.isBuildingPlayer || AkUtilities.IsMigrating || !UnityEditor.EditorApplication.isPlaying)
-		{
-			base.Start();
 			return;
-		}
 #endif
 
 		if (useCallbacks)

@@ -1,4 +1,5 @@
 #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
+#if !AK_DISABLE_TIMELINE
 
 [UnityEngine.Timeline.TrackColor(0.32f, 0.13f, 0.13f)]
 // Specifies the type of Playable Asset this track manages
@@ -41,4 +42,5 @@ public class AkRTPCTrack : UnityEngine.Timeline.TrackAsset
 	}
 }
 
+#endif // !AK_DISABLE_TIMELINE
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

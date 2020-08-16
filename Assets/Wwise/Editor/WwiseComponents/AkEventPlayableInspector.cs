@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+#if !AK_DISABLE_TIMELINE
 
 //////////////////////////////////////////////////////////////////////
 //
@@ -193,4 +194,5 @@ public class AkEventPlayableInspector : UnityEditor.Editor
 	}
 }
 
+#endif // !AK_DISABLE_TIMELINE
 #endif //#if UNITY_EDITOR

@@ -111,10 +111,6 @@ public class AkRoomPortal : AkTriggerHandler
 		RegisterTriggers(closePortalTriggerList, ClosePortal);
 
 		base.Awake();
-
-		//Call the ClosePortal function if registered to the Awake Trigger
-		if (closePortalTriggerList.Contains(AWAKE_TRIGGER_ID))
-			ClosePortal(null);
 	}
 
 	protected override void Start()
@@ -143,9 +139,6 @@ public class AkRoomPortal : AkTriggerHandler
 		base.OnDestroy();
 
 		UnregisterTriggers(closePortalTriggerList, ClosePortal);
-
-		if (closePortalTriggerList.Contains(DESTROY_TRIGGER_ID))
-			ClosePortal(null);
 	}
 
 	private void OnEnable()

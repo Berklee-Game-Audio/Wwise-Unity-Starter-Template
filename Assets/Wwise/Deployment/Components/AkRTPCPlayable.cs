@@ -1,5 +1,5 @@
 #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
-
+#if !AK_DISABLE_TIMELINE
 //--------------------------------------------------------------------------------------------
 // The representation of the Timeline Clip
 //--------------------------------------------------------------------------------------------
@@ -79,5 +79,5 @@ public class AkRTPCPlayableBehaviour : UnityEngine.Playables.PlayableBehaviour
 		base.ProcessFrame(playable, info, playerData);
 	}
 }
-
+#endif // !AK_DISABLE_TIMELINE
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

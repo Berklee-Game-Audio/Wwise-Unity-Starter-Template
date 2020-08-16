@@ -358,20 +358,43 @@ namespace AK.Wwise.TreeView
 			RemoveMargins(m_skinUnselected.button);
 			RemoveMargins(m_skinUnselected.toggle);
 
-			if (UnityEngine.Application.HasProLicense())
+			if (UnityEditor.EditorPrefs.GetInt("UserSkin") == 1)
 			{
+				// Dark theme
+				var darkBgColor = new UnityEngine.Color(51.0f / 255.0f, 51.0f / 255.0f, 51.0f / 255.0f);
 				SetTextColor(m_skinUnselected.button, UnityEngine.Color.white);
 				SetTextColor(m_skinUnselected.toggle, UnityEngine.Color.white);
+				SetBackgroundColor(m_skinUnselected.button, darkBgColor);
+				SetBackgroundColor(m_skinUnselected.toggle, darkBgColor);
 			}
 			else
 			{
+				// Light theme
+				var lightBgColor = new UnityEngine.Color(165.0f / 255.0f, 165.0f / 255.0f, 165.0f / 255.0f);
 				SetTextColor(m_skinUnselected.button, UnityEngine.Color.black);
 				SetTextColor(m_skinUnselected.toggle, UnityEngine.Color.black);
+				SetBackgroundColor(m_skinUnselected.button, lightBgColor);
+				SetBackgroundColor(m_skinUnselected.toggle, lightBgColor);
 			}
 		}
 
 		private void SetBackground(UnityEngine.GUIStyle style, UnityEngine.Texture2D texture)
 		{
+			style.active.background = texture;
+			style.focused.background = texture;
+			style.hover.background = texture;
+			style.normal.background = texture;
+			style.onActive.background = texture;
+			style.onFocused.background = texture;
+			style.onHover.background = texture;
+			style.onNormal.background = texture;
+		}
+
+		private void SetBackgroundColor(UnityEngine.GUIStyle style, UnityEngine.Color color)
+		{
+			var texture = new UnityEngine.Texture2D(1, 1);
+			texture.SetPixel(0, 0, color);
+			texture.Apply();
 			style.active.background = texture;
 			style.focused.background = texture;
 			style.hover.background = texture;

@@ -1,4 +1,5 @@
 ﻿#if !(UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
+#if !AK_DISABLE_TIMELINE
 
 //////////////////////////////////////////////////////////////////////
 //
@@ -31,4 +32,5 @@ public class AkTimelineEventTrack : UnityEngine.Timeline.TrackAsset
 		return playable;
 	}
 }
+#endif // !AK_DISABLE_TIMELINE
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

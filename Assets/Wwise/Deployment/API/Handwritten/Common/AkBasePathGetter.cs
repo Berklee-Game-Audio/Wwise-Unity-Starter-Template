@@ -156,7 +156,7 @@ public partial class AkBasePathGetter
 	/// <returns>The full path to the sound banks for use within the Editor.</returns>
 	private static string GetPlatformBasePathEditor(string platformName)
 	{
-		var Settings = WwiseSettings.LoadSettings();
+		var Settings = AkWwiseEditorSettings.Instance;
 		var WwiseProjectFullPath = AkUtilities.GetFullPath(UnityEngine.Application.dataPath, Settings.WwiseProjectPath);
 		var SoundBankDest = AkUtilities.GetWwiseSoundBankDestinationFolder(platformName, WwiseProjectFullPath);
 
@@ -173,35 +173,40 @@ public partial class AkBasePathGetter
 			SoundBankDest = string.Empty;
 		}
 
-		if (string.IsNullOrEmpty(SoundBankDest))
+		if (LogWarnings)
 		{
-			if (LogWarnings)
-				UnityEngine.Debug.LogWarning("WwiseUnity: The platform SoundBank subfolder within the Wwise project could not be found.");
-
-			return null;
-		}
-
-		try
-		{
-			// Verify if there are banks in there
-			var di = new System.IO.DirectoryInfo(SoundBankDest);
-			var foundBanks = di.GetFiles("*.bnk", System.IO.SearchOption.AllDirectories);
-			if (foundBanks.Length == 0)
+			if (string.IsNullOrEmpty(SoundBankDest))
 			{
+				UnityEngine.Debug.LogWarning("WwiseUnity: The platform SoundBank subfolder within the Wwise project could not be found.");
 				return null;
 			}
 
-			if (!SoundBankDest.Contains(platformName))
+			try
 			{
-				if (LogWarnings)
-					UnityEngine.Debug.LogWarning("WwiseUnity: The platform SoundBank subfolder does not match your platform name. You will need to create a custom platform name getter for your game. See section \"Using Wwise Custom Platforms in Unity\" of the Wwise Unity integration documentation for more information");
-			}
+				// Verify if there are banks in there
+				var di = new System.IO.DirectoryInfo(SoundBankDest);
+				var foundBanks = di.GetFiles("*.bnk", System.IO.SearchOption.AllDirectories);
+				if (foundBanks.Length == 0)
+				{
+					return null;
+				}
 
-			return SoundBankDest;
+				if (!SoundBankDest.Contains(platformName))
+				{
+					if (LogWarnings)
+						UnityEngine.Debug.LogWarning("WwiseUnity: The platform SoundBank subfolder does not match your platform name. You will need to create a custom platform name getter for your game. See section \"Using Wwise Custom Platforms in Unity\" of the Wwise Unity integration documentation for more information");
+				}
+
+				return SoundBankDest;
+			}
+			catch
+			{
+				return null;
+			}
 		}
-		catch
+		else
 		{
-			return null;
+			return SoundBankDest;
 		}
 	}
 #endif

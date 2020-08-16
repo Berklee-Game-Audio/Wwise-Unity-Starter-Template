@@ -1,4 +1,5 @@
-﻿[System.Obsolete(AkSoundEngine.Deprecation_2019_2_0)]
+﻿#if !AK_DISABLE_TIMELINE
+[System.Obsolete(AkSoundEngine.Deprecation_2019_2_0)]
 [UnityEditor.CustomEditor(typeof(AkRTPCTrack))]
 public class AkRTPCTrackInspector : UnityEditor.Editor
 {
@@ -23,3 +24,4 @@ public class AkRTPCTrackInspector : UnityEditor.Editor
 		serializedObject.ApplyModifiedProperties();
 	}
 }
+#endif //!AK_DISABLE_TIMELINE

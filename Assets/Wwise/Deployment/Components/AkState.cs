@@ -6,6 +6,7 @@
 //////////////////////////////////////////////////////////////////////
 
 [UnityEngine.AddComponentMenu("Wwise/AkState")]
+[UnityEngine.DefaultExecutionOrder(-20)]
 /// @brief This will call \c AkSoundEngine.SetState() whenever the selected Unity event is triggered. For example this component could be set on a Unity collider to trigger when an object enters it.
 /// \sa 
 /// - <a href="https://www.audiokinetic.com/library/edge/?source=SDK&id=soundengine__states.html" target="_blank">Integration Details - States</a> (Note: This is described in the Wwise SDK documentation.)

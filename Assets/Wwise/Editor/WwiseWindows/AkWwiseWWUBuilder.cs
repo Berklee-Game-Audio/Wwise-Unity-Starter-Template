@@ -216,7 +216,16 @@ public class AkWwiseWWUBuilder
 						}
 						in_currentPathInProj = System.IO.Path.Combine(in_currentPathInProj, reader.GetAttribute("Name"));
 						in_pathAndIcons.AddLast(new AkWwiseProjectData.PathElement(reader.GetAttribute("Name"), objType));
-						AddElementToList(in_currentPathInProj, reader, in_type, in_pathAndIcons, wwuIndex);
+						bool IsEmptyElement = reader.IsEmptyElement; // Need to cache this because AddElementToList advances the reader.
+						AddElementToList(in_currentPathInProj, reader, in_type, in_pathAndIcons, wwuIndex, objType);
+						if(IsEmptyElement)
+						{
+							// This element has no children, step out of it immediately
+							// Remove the folder/bus from the path
+							in_currentPathInProj = in_currentPathInProj.Remove(in_currentPathInProj.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
+							in_pathAndIcons.RemoveLast();
+							// Reader was already advanced by AddElementToList
+						}
 					}
 					else if (reader.NodeType == System.Xml.XmlNodeType.EndElement &&
 							 (reader.Name.Equals("Folder") || reader.Name.Equals("Bus") || reader.Name.Equals("AuxBus")))
@@ -629,7 +638,7 @@ public class AkWwiseWWUBuilder
 	}
 
 	private static void AddElementToList(string in_currentPathInProj, System.Xml.XmlReader in_reader, AssetType in_type,
-		System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement> in_pathAndIcons, int in_wwuIndex)
+		System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement> in_pathAndIcons, int in_wwuIndex, WwiseObjectType in_LeafType = WwiseObjectType.None)
 	{
 		switch (in_type.Type)
 		{
@@ -642,6 +651,7 @@ public class AkWwiseWWUBuilder
 			case WwiseObjectType.Trigger:
 			case WwiseObjectType.AcousticTexture:
 				{
+					var LeafType = in_LeafType == WwiseObjectType.None ? in_type.Type : in_LeafType;
 					var name = in_reader.GetAttribute("Name");
 					var valueToAdd = in_type.Type == WwiseObjectType.Event ? new AkWwiseProjectData.Event() : new AkWwiseProjectData.AkInformation();
 					valueToAdd.Name = name;
@@ -650,7 +660,7 @@ public class AkWwiseWWUBuilder
 
 					FlagForInsertion(valueToAdd, in_type.Type);
 
-					switch (in_type.Type)
+					switch (LeafType)
 					{
 						case WwiseObjectType.AuxBus:
 						case WwiseObjectType.Bus:
@@ -698,41 +708,59 @@ public class AkWwiseWWUBuilder
 			case WwiseObjectType.StateGroup:
 			case WwiseObjectType.SwitchGroup:
 				{
-					var XmlElement = System.Xml.Linq.XNode.ReadFrom(in_reader) as System.Xml.Linq.XElement;
-					var ChildrenList = System.Xml.Linq.XName.Get("ChildrenList");
-					var ChildrenElement = XmlElement.Element(ChildrenList);
-					if (ChildrenElement != null)
+					var valueToAdd = new AkWwiseProjectData.GroupValue();
+					if (in_LeafType == WwiseObjectType.Folder)
 					{
-						var name = XmlElement.Attribute("Name").Value;
-						var valueToAdd = new AkWwiseProjectData.GroupValue
-						{
-							Name = name,
-							Guid = new System.Guid(XmlElement.Attribute("ID").Value),
-							Path = System.IO.Path.Combine(in_currentPathInProj, name),
-							PathAndIcons = new System.Collections.Generic.List<AkWwiseProjectData.PathElement>(in_pathAndIcons),
-						};
-						valueToAdd.PathAndIcons.Add(new AkWwiseProjectData.PathElement(name, in_type.Type));
+						valueToAdd.Name = in_reader.GetAttribute("Name");
+						valueToAdd.Guid = new System.Guid(in_reader.GetAttribute("ID"));
+						valueToAdd.PathAndIcons = new System.Collections.Generic.List<AkWwiseProjectData.PathElement>(in_pathAndIcons);
+						valueToAdd.Path = in_currentPathInProj;
 
 						FlagForInsertion(valueToAdd, in_type.Type);
-
-						var ChildElem = System.Xml.Linq.XName.Get(in_type.ChildElementName);
-						foreach (var element in ChildrenElement.Elements(ChildElem))
+						in_reader.Read();
+					}
+					else
+					{
+						var XmlElement = System.Xml.Linq.XNode.ReadFrom(in_reader) as System.Xml.Linq.XElement;
+						var ChildrenList = System.Xml.Linq.XName.Get("ChildrenList");
+						var ChildrenElement = XmlElement.Element(ChildrenList);
+						if (ChildrenElement != null)
 						{
-							if (element.Name != in_type.ChildElementName)
-								continue;
+							var name = XmlElement.Attribute("Name").Value;
+							valueToAdd.Name = name;
+							valueToAdd.Guid = new System.Guid(XmlElement.Attribute("ID").Value);
+							valueToAdd.Path = System.IO.Path.Combine(in_currentPathInProj, name);
+							valueToAdd.PathAndIcons = new System.Collections.Generic.List<AkWwiseProjectData.PathElement>(in_pathAndIcons);
+							valueToAdd.PathAndIcons.Add(new AkWwiseProjectData.PathElement(name, in_type.Type));
 
-							var elementName = element.Attribute("Name").Value;
-							var childValue = new AkWwiseProjectData.AkBaseInformation
+							FlagForInsertion(valueToAdd, in_type.Type);
+
+							var ChildElem = System.Xml.Linq.XName.Get(in_type.ChildElementName);
+							foreach (var element in ChildrenElement.Elements(ChildElem))
 							{
-								Name = elementName,
-								Guid = new System.Guid(element.Attribute("ID").Value),
-							};
-							childValue.PathAndIcons.Add(new AkWwiseProjectData.PathElement(elementName, in_type.ChildType));
-							valueToAdd.values.Add(childValue);
+								if (element.Name != in_type.ChildElementName)
+									continue;
 
-							FlagForInsertion(childValue, in_type.ChildType);
+								var elementName = element.Attribute("Name").Value;
+								var childValue = new AkWwiseProjectData.AkBaseInformation
+								{
+									Name = elementName,
+									Guid = new System.Guid(element.Attribute("ID").Value),
+								};
+								childValue.PathAndIcons.Add(new AkWwiseProjectData.PathElement(elementName, in_type.ChildType));
+								valueToAdd.values.Add(childValue);
+
+								FlagForInsertion(childValue, in_type.ChildType);
+							}
 						}
+						else
+						{
+							valueToAdd = null;
+						}
+					}
 
+					if (valueToAdd != null)
+					{
 						switch (in_type.Type)
 						{
 							case WwiseObjectType.StateGroup:

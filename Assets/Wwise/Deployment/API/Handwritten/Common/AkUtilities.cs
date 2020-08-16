@@ -438,7 +438,6 @@ public partial class AkUtilities
 	// Reconcile a base path and a relative path to give a full path without any ".."
 	public static string GetFullPath(string BasePath, string RelativePath)
 	{
-		string tmpString;
 		if (string.IsNullOrEmpty(BasePath))
 			return "";
 
@@ -450,10 +449,7 @@ public partial class AkUtilities
 		if (System.IO.Path.GetPathRoot(RelativePath) != "")
 			return RelativePath.Replace(wrongSeparatorChar, System.IO.Path.DirectorySeparatorChar);
 
-		tmpString = System.IO.Path.Combine(BasePath, RelativePath);
-		tmpString = System.IO.Path.GetFullPath(new System.Uri(tmpString).LocalPath);
-
-		return tmpString.Replace(wrongSeparatorChar, System.IO.Path.DirectorySeparatorChar);
+		return System.IO.Path.GetFullPath(System.IO.Path.Combine(BasePath, RelativePath));
 	}
 
 	public static bool DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)

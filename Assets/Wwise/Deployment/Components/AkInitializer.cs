@@ -8,6 +8,7 @@
 [UnityEngine.AddComponentMenu("Wwise/AkInitializer")]
 [UnityEngine.DisallowMultipleComponent]
 [UnityEngine.ExecuteInEditMode]
+[UnityEngine.DefaultExecutionOrder(-100)]
 /// @brief This script deals with initialization, and frame updates of the Wwise audio engine.  
 /// It is marked as \c DontDestroyOnLoad so it stays active for the life of the game, 
 /// not only one scene. Double-click the Initialization Settings entry, AkWwiseInitializationSettings, 

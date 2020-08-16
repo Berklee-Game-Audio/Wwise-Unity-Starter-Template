@@ -21,8 +21,16 @@
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore"/>
-				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense"/>
+				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore">
+					<ActionSetState>
+						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense">
+					<ActionSetState>
+						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
+					</ActionSetState>
+				</Event>
 				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game">
 					<IncludedMemoryFiles>
 						<File Id="681948759" Language="SFX">
@@ -46,9 +54,18 @@
 							</Media>
 						</SwitchContainer>
 					</SwitchContainers>
+					<ActionSetState>
+						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
+					</ActionSetState>
 				</Event>
 			</IncludedEvents>
 			<StateGroups>
+				<StateGroup Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense">
+					<States/>
+				</StateGroup>
 				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State">
 					<States>
 						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None"/>
