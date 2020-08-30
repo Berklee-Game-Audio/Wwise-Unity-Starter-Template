@@ -3,7 +3,7 @@
 Unity template which allows composers to test Wwise Projects
 
 Optimized for Unity Version: 
-2019.4.2f1
+2020.1.3f1
 
 Optimized for Wwise Version: 
 2019.2.4.7329
