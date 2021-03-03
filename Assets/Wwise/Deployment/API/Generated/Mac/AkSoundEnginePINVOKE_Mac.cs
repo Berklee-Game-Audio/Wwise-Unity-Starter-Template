@@ -1760,8 +1760,10 @@ class AkSoundEnginePINVOKE {
   public static extern global::System.IntPtr CSharp_new_AkDiffractionPathInfo();
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_delete_AkDiffractionPathInfo")]
   public static extern void CSharp_delete_AkDiffractionPathInfo(global::System.IntPtr jarg1);
-  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_new_AkRoomParams")]
-  public static extern global::System.IntPtr CSharp_new_AkRoomParams();
+  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_new_AkRoomParams__SWIG_0")]
+  public static extern global::System.IntPtr CSharp_new_AkRoomParams__SWIG_0();
+  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_new_AkRoomParams__SWIG_1")]
+  public static extern global::System.IntPtr CSharp_new_AkRoomParams__SWIG_1(global::System.IntPtr jarg1);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkRoomParams_Up_set")]
   public static extern void CSharp_AkRoomParams_Up_set(global::System.IntPtr jarg1, UnityEngine.Vector3 jarg2);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkRoomParams_Up_get")]
@@ -1946,6 +1948,10 @@ class AkSoundEnginePINVOKE {
   public static extern void CSharp_AkCommunicationSettings_uNotificationPort_set(global::System.IntPtr jarg1, ushort jarg2);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkCommunicationSettings_uNotificationPort_get")]
   public static extern ushort CSharp_AkCommunicationSettings_uNotificationPort_get(global::System.IntPtr jarg1);
+  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkCommunicationSettings_commSystem_set")]
+  public static extern void CSharp_AkCommunicationSettings_commSystem_set(global::System.IntPtr jarg1, int jarg2);
+  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkCommunicationSettings_commSystem_get")]
+  public static extern int CSharp_AkCommunicationSettings_commSystem_get(global::System.IntPtr jarg1);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkCommunicationSettings_bInitSystemLib_set")]
   public static extern void CSharp_AkCommunicationSettings_bInitSystemLib_set(global::System.IntPtr jarg1, bool jarg2);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkCommunicationSettings_bInitSystemLib_get")]

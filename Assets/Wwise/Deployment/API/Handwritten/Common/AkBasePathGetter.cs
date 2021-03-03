@@ -30,39 +30,7 @@ public partial class AkBasePathGetter
 		if (!string.IsNullOrEmpty(platformSubDir))
 			return platformSubDir;
 
-#if UNITY_EDITOR_WIN || (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_WSA
-		platformSubDir = "Windows";
-#elif UNITY_EDITOR_OSX || (UNITY_STANDALONE_OSX && !UNITY_EDITOR)
-		platformSubDir = "Mac";
-#elif UNITY_STANDALONE_LINUX
-		platformSubDir = "Linux";
-#elif UNITY_XBOXONE
-		platformSubDir = "XboxOne";
-#elif UNITY_IOS || UNITY_TVOS
-		platformSubDir = "iOS";
-#elif UNITY_ANDROID
-		platformSubDir = "Android";
-#elif PLATFORM_LUMIN
-		platformSubDir = "Lumin";
-#elif UNITY_PS4
-		platformSubDir = "PS4";
-#elif UNITY_WP_8_1
-		platformSubDir = "WindowsPhone";
-#elif UNITY_SWITCH
-		platformSubDir = "Switch";
-#elif UNITY_STADIA
-		platformSubDir = "Stadia";
-#elif UNITY_PSP2
-#if AK_ARCH_VITA_SW || !AK_ARCH_VITA_HW
-		platformSubDir = "VitaSW";
-#else
-		platformSubDir = "VitaHW";
-#endif
-#else
-		platformSubDir = "Undefined platform sub-folder";
-#endif
-
-		return platformSubDir;
+		return DefaultPlatformName;
 	}
 }
 

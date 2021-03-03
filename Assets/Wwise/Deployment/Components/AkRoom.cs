@@ -123,6 +123,9 @@ public class AkRoom : AkTriggerHandler
 
 		AkRoomManager.RegisterRoomUpdate(this);
 
+		// stop sounds applied to the room game object
+		AkSoundEngine.StopAll(gameObject);
+
 		RoomCount--;
 		AkSoundEngine.RemoveRoom(GetID());
 	}
@@ -137,10 +140,15 @@ public class AkRoom : AkTriggerHandler
 		AkRoomAwareManager.ObjectExitedRoom(in_other, this);
 	}
 
-	public override void HandleEvent(UnityEngine.GameObject in_gameObject)
+	public void PostRoomTone()
 	{
 		if (roomToneEvent.IsValid())
 			AkSoundEngine.PostEventOnRoom(roomToneEvent.Id, GetID());
+	}
+
+	public override void HandleEvent(UnityEngine.GameObject in_gameObject)
+	{
+		PostRoomTone();
 	}
 
 	public class PriorityList

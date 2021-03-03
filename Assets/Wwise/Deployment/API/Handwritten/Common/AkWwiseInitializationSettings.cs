@@ -48,11 +48,8 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 	{
 		"UserSettings.m_BasePath",
 		"UserSettings.m_StartupLanguage",
-		"UserSettings.m_CallbackManagerBufferSize",
 		"UserSettings.m_EngineLogging",
-		"UserSettings.m_MaximumNumberOfMemoryPools",
 		"UserSettings.m_MaximumNumberOfPositioningPaths",
-		"UserSettings.m_DefaultPoolSize",
 		"UserSettings.m_MemoryCutoffThreshold",
 		"UserSettings.m_CommandQueueSize",
 		"UserSettings.m_SamplesPerFrame",
@@ -63,12 +60,8 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 		"UserSettings.m_MainOutputSettings.m_ChannelConfig.m_ChannelMask",
 		"UserSettings.m_MainOutputSettings.m_ChannelConfig.m_NumberOfChannels",
 		"UserSettings.m_StreamingLookAheadRatio",
-		"UserSettings.m_StreamManagerPoolSize",
 		"UserSettings.m_SampleRate",
-		"UserSettings.m_LowerEnginePoolSize",
-		"UserSettings.m_LowerEngineMemoryCutoffThreshold",
 		"UserSettings.m_NumberOfRefillsInVoice",
-		"UserSettings.m_SpatialAudioSettings.m_PoolSize",
 		"UserSettings.m_SpatialAudioSettings.m_MaxSoundPropagationDepth",
 		"UserSettings.m_SpatialAudioSettings.m_DiffractionFlags",
 		"UserSettings.m_SpatialAudioSettings.m_MovementThreshold",
@@ -88,10 +81,8 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 		"AdvancedSettings.m_TargetAutoStreamBufferLengthMs",
 		"AdvancedSettings.m_UseStreamCache",
 		"AdvancedSettings.m_MaximumPinnedBytesInCache",
-		"AdvancedSettings.m_PrepareEventMemoryPoolID",
 		"AdvancedSettings.m_EnableGameSyncPreparation",
 		"AdvancedSettings.m_ContinuousPlaybackLookAhead",
-		"AdvancedSettings.m_MonitorPoolSize",
 		"AdvancedSettings.m_MonitorQueuePoolSize",
 		"AdvancedSettings.m_MaximumHardwareTimeoutMs",
 		"AdvancedSettings.m_SpatialAudioSettings.m_DiffractionShadowAttenuationFactor",
@@ -290,9 +281,10 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 
 		UnityEngine.Debug.LogFormat("WwiseUnity: Wwise(R) SDK Version {0}.", AkSoundEngine.WwiseVersion);
 
-		if (AkSoundEngine.Init(ActivePlatformSettings.AkInitializationSettings) != AKRESULT.AK_Success)
+		var initResult = AkSoundEngine.Init(ActivePlatformSettings.AkInitializationSettings);
+		if (initResult != AKRESULT.AK_Success)
 		{
-			UnityEngine.Debug.LogError("WwiseUnity: Failed to initialize the sound engine. Abort.");
+			UnityEngine.Debug.LogError($"WwiseUnity: Failed to initialize the sound engine. Reason: {initResult}");
 			AkSoundEngine.Term();
 			return false;
 		}

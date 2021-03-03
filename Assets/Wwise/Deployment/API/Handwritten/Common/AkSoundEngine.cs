@@ -37,29 +37,6 @@ public partial class AkSoundEngine
 	{
 		return System.Runtime.InteropServices.Marshal.PtrToStringUni(ptr);
 	}
-
-	/// <summary>
-	///     Converts "AkOSChar*" C-strings to C# strings.
-	/// </summary>
-	/// <param name="ptr">"AkOSChar*" memory pointer passed to C# as an IntPtr.</param>
-	/// <returns>Converted string.</returns>
-	public static string StringFromIntPtrOSString(System.IntPtr ptr)
-	{
-		//return System.Runtime.InteropServices.Marshal.PtrToStringAuto(ptr);
-#if UNITY_WSA
-		return StringFromIntPtrWString(ptr);
-#elif UNITY_EDITOR
-		if (System.IO.Path.DirectorySeparatorChar == '/')
-			return StringFromIntPtrString(ptr);
-
-		return StringFromIntPtrWString(ptr);
-#elif UNITY_STANDALONE_WIN || UNITY_XBOXONE
-		return StringFromIntPtrWString(ptr);
-#else
-		return StringFromIntPtrString(ptr);
-#endif
-	}
-
 	#endregion
 
 	#region GameObject Hash Function

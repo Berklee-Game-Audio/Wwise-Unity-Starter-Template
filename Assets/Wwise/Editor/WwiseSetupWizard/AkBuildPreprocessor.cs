@@ -1,4 +1,6 @@
 ﻿#if UNITY_EDITOR
+using System.Collections.Generic;
+
 public partial class AkBuildPreprocessor
 {
 	/// <summary>
@@ -8,6 +10,8 @@ public partial class AkBuildPreprocessor
 	/// <param name="platformName">The custom platform name.</param>
 	static partial void GetCustomPlatformName(ref string platformName, UnityEditor.BuildTarget target);
 
+	public static Dictionary<UnityEditor.BuildTarget, string> BuildTargetToPlatformName = new Dictionary<UnityEditor.BuildTarget, string>();
+
 	private static string GetPlatformName(UnityEditor.BuildTarget target)
 	{
 		var platformSubDir = string.Empty;
@@ -15,48 +19,10 @@ public partial class AkBuildPreprocessor
 		if (!string.IsNullOrEmpty(platformSubDir))
 			return platformSubDir;
 
-		switch (target)
+		if (BuildTargetToPlatformName.ContainsKey(target))
 		{
-			case UnityEditor.BuildTarget.Android:
-				return "Android";
-
-			case UnityEditor.BuildTarget.iOS:
-			case UnityEditor.BuildTarget.tvOS:
-				return "iOS";
-
-#if !UNITY_2019_2_OR_NEWER
-			case UnityEditor.BuildTarget.StandaloneLinux:
-			case UnityEditor.BuildTarget.StandaloneLinuxUniversal:
-#endif
-			case UnityEditor.BuildTarget.StandaloneLinux64:
-				return "Linux";
-
-			case UnityEditor.BuildTarget.StandaloneOSX:
-				return "Mac";
-
-			case (UnityEditor.BuildTarget)39: // UnityEditor.BuildTarget.Lumin
-				return "Lumin";
-				
-			case UnityEditor.BuildTarget.PS4:
-				return "PS4";
-
-			case UnityEditor.BuildTarget.StandaloneWindows:
-			case UnityEditor.BuildTarget.StandaloneWindows64:
-			case UnityEditor.BuildTarget.WSAPlayer:
-				return "Windows";
-
-			case UnityEditor.BuildTarget.XboxOne:
-				return "XboxOne";
-
-			case UnityEditor.BuildTarget.Switch:
-				return "Switch";
-
-#if UNITY_2019_3_OR_NEWER
-			case UnityEditor.BuildTarget.Stadia:
-				return "Stadia";
-#endif
+			return BuildTargetToPlatformName[target];
 		}
-
 		return target.ToString();
 	}
 }

@@ -196,16 +196,13 @@ public class AkCommonOutputSettings
 }
 
 [System.Serializable]
-public class AkCommonUserSettings
+public partial class AkCommonUserSettings
 {
 	[UnityEngine.Tooltip("Path for the SoundBanks. This must contain one sub folder per platform, with the same as in the Wwise project.")]
 	public string m_BasePath = AkBasePathGetter.DefaultBasePath;
 
 	[UnityEngine.Tooltip("Language sub-folder used at startup.")]
 	public string m_StartupLanguage = "English(US)";
-
-	[UnityEngine.Tooltip("CallbackManager buffer size. The size of the buffer used per-frame to transfer callback data. Default size is 4 KB, but you should increase this, if required.")]
-	public int m_CallbackManagerBufferSize = AkCallbackManager.InitializationSettings.DefaultBufferSize;
 
 	[UnityEngine.Tooltip("Enable Wwise engine logging. This is used to turn on/off the logging of the Wwise engine.")]
 	public bool m_EngineLogging = AkCallbackManager.InitializationSettings.DefaultIsLoggingEnabled;
@@ -292,11 +289,11 @@ public class AkCommonUserSettings
 	[UnityEngine.Tooltip("Number of refill buffers in voice buffer. Set to 2 for double-buffered, defaults to 4.")]
 	public ushort m_NumberOfRefillsInVoice = 4;
 
+	partial void SetSampleRate(AkPlatformInitSettings settings);
+
 	public virtual void CopyTo(AkPlatformInitSettings settings)
 	{
-#if !UNITY_PS4 && !UNITY_XBOXONE
-		settings.uSampleRate = m_SampleRate;
-#endif
+		SetSampleRate(settings);
 		settings.uNumRefillsInVoice = m_NumberOfRefillsInVoice;
 	}
 
@@ -506,6 +503,9 @@ public class AkCommonCommSettings
 	[UnityEngine.Tooltip("The name used to identify this game within the authoring application. Leave empty to use \"UnityEngine.Application.productName\".")]
 	public string m_NetworkName;
 
+	[UnityEngine.Tooltip("HTCS communication can only be used with a Nintendo Switch Development Build")]
+	public AkCommunicationSettings.AkCommSystem m_commSystem = AkCommunicationSettings.AkCommSystem.AkCommSystem_Socket;
+
 	public virtual void CopyTo(AkCommunicationSettings settings)
 	{
 		settings.uPoolSize = m_PoolSize;
@@ -513,6 +513,7 @@ public class AkCommonCommSettings
 		settings.uCommandPort = m_CommandPort;
 		settings.uNotificationPort = m_NotificationPort;
 		settings.bInitSystemLib = m_InitializeSystemComms;
+		settings.commSystem = m_commSystem;
 
 		string networkName = m_NetworkName;
 		if (string.IsNullOrEmpty(networkName))
@@ -576,8 +577,7 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 	{
 		get
 		{
-			var userSettings = GetUserSettings();
-			return new AkCallbackManager.InitializationSettings { BufferSize = userSettings.m_CallbackManagerBufferSize, IsLoggingEnabled = userSettings.m_EngineLogging };
+			return new AkCallbackManager.InitializationSettings { IsLoggingEnabled = GetUserSettings().m_EngineLogging };
 		}
 	}
 

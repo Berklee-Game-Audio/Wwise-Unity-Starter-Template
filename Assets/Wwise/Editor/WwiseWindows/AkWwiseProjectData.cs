@@ -261,6 +261,7 @@ public class AkWwiseProjectData : UnityEngine.ScriptableObject
 	public class WorkUnit : System.IComparable
 	{
 		public string PhysicalPath;
+		public System.Collections.Generic.List<PathElement> PathAndIcons = new System.Collections.Generic.List<PathElement>();
 
 		[UnityEngine.Serialization.FormerlySerializedAs("ParentPhysicalPath")]
 		public string ParentPath;

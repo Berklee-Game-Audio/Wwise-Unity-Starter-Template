@@ -60,10 +60,18 @@ public class AkCommunicationSettings : global::System.IDisposable {
   public ushort uNotificationPort { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_uNotificationPort_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_uNotificationPort_get(swigCPtr); } 
   }
 
+  public AkCommunicationSettings.AkCommSystem commSystem { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_commSystem_set(swigCPtr, (int)value); }  get { return (AkCommunicationSettings.AkCommSystem)AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_commSystem_get(swigCPtr); } 
+  }
+
   public bool bInitSystemLib { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_bInitSystemLib_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_bInitSystemLib_get(swigCPtr); } 
   }
 
   public string szAppNetworkName { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_szAppNetworkName_set(swigCPtr, value); }  get { return AkSoundEngine.StringFromIntPtrString(AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_szAppNetworkName_get(swigCPtr)); } 
+  }
+
+  public enum AkCommSystem {
+    AkCommSystem_Socket,
+    AkCommSystem_HTCS
   }
 
 }

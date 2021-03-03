@@ -177,7 +177,7 @@ public class AkRoomPortal : AkTriggerHandler
 			return;
 
 		// compute halfExtents and divide the local z extent by 2
-		var halfExtentZ = portalCollider.size.z * transform.localScale.z / 2;
+		var halfExtentZ = portalCollider.size.z / 2;
 
 		// move the center backward
 		FillRoomList(UnityEngine.Vector3.forward * -halfExtentZ, roomList[0]);
@@ -239,21 +239,34 @@ public class AkRoomPortal : AkTriggerHandler
 		}
 
 		// color faces
-		var faceCenterPos = new UnityEngine.Vector3[4];
+		var faceCenterPos = new UnityEngine.Vector3[6];
 		faceCenterPos[0] = UnityEngine.Vector3.Scale(new UnityEngine.Vector3(0.5f, 0.0f, 0.0f), sizeMultiplier);
 		faceCenterPos[1] = UnityEngine.Vector3.Scale(new UnityEngine.Vector3(0.0f, 0.5f, 0.0f), sizeMultiplier);
 		faceCenterPos[2] = UnityEngine.Vector3.Scale(new UnityEngine.Vector3(-0.5f, 0.0f, 0.0f), sizeMultiplier);
 		faceCenterPos[3] = UnityEngine.Vector3.Scale(new UnityEngine.Vector3(0.0f, -0.5f, 0.0f), sizeMultiplier);
+		faceCenterPos[4] = UnityEngine.Vector3.Scale(new UnityEngine.Vector3(0.0f, 0.0f, 0.5f), sizeMultiplier);
+		faceCenterPos[5] = UnityEngine.Vector3.Scale(new UnityEngine.Vector3(0.0f, 0.0f, -0.5f), sizeMultiplier);
 
-		var faceSize = new UnityEngine.Vector3[4];
+		var faceSize = new UnityEngine.Vector3[6];
 		faceSize[0] = new UnityEngine.Vector3(0, 1, 1);
 		faceSize[1] = new UnityEngine.Vector3(1, 0, 1);
 		faceSize[2] = faceSize[0];
 		faceSize[3] = faceSize[1];
+		faceSize[4] = new UnityEngine.Vector3(1, 1, 0);
+		faceSize[5] = faceSize[4];
 
 		UnityEngine.Gizmos.color = new UnityEngine.Color32(255, 204, 0, 100);
 		for (var i = 0; i < 4; i++)
+		{
 			UnityEngine.Gizmos.DrawCube(faceCenterPos[i] + centreOffset, UnityEngine.Vector3.Scale(faceSize[i], sizeMultiplier));
+		}
+
+		if (!portalActive)
+        {
+			UnityEngine.Gizmos.color = new UnityEngine.Color32(255, 204, 0, 30);
+			UnityEngine.Gizmos.DrawCube(faceCenterPos[4] + centreOffset, UnityEngine.Vector3.Scale(faceSize[4], sizeMultiplier));
+			UnityEngine.Gizmos.DrawCube(faceCenterPos[5] + centreOffset, UnityEngine.Vector3.Scale(faceSize[5], sizeMultiplier));
+		}
 
 		// draw line in the center of the portal
 		var CornerCenterPos = faceCenterPos;

@@ -3,6 +3,9 @@
 ///@brief (DEPRECATED) This script is deprecated as of 2019.2. Early reflections, Diffraction and Room Reverb can all be enabled per sound in the Sound Property Editor of the Authoring.
 /// @details Some functionalities were moved to different components. See the AkEarlyReflections and AkSpatialAudioDebugDraw components for more details.
 public class AkSpatialAudioEmitter : UnityEngine.MonoBehaviour
+#if UNITY_EDITOR
+	, AK.Wwise.IMigratable
+#endif
 {
 	[UnityEngine.Header("Early Reflections")]
 	[UnityEngine.Tooltip("(DEPRECATED) As of 2019.2, the early reflections auxiliary bus can be set per sound, in the Authoring tool, or per game object, with the AkEarlyReflections component.")]
@@ -192,21 +195,14 @@ public class AkSpatialAudioEmitter : UnityEngine.MonoBehaviour
 	}
 
 	#region WwiseMigration
-	private static System.Collections.Generic.List<AkSpatialAudioEmitter> emitterComponents = 
-		new System.Collections.Generic.List<AkSpatialAudioEmitter>();
+	bool AK.Wwise.IMigratable.Migrate(UnityEditor.SerializedObject obj)
+    {
+		if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.NewScriptableObjectFolder_v2019_2_0))
+			return false;
 
-	public void Migrate18()
-	{
-		emitterComponents.Add(this);
-	}
+		UnityEditor.Undo.AddComponent<AkRoomAwareObject>(gameObject);
 
-	public static void PostMigration18()
-	{
-		foreach (AkSpatialAudioEmitter emitter in emitterComponents)
-		{
-			UnityEditor.Undo.AddComponent<AkRoomAwareObject>(emitter.gameObject);
-		}
-		emitterComponents.Clear();
+		return true;
 	}
 	#endregion
 #endif

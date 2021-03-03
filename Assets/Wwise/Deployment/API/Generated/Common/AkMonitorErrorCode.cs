@@ -107,6 +107,7 @@ public enum AkMonitorErrorCode {
   ErrorCode_HwVoicesDecodeBatchFailed,
   ErrorCode_HwVoiceLimitReached,
   ErrorCode_HwVoiceInitFailed,
+  ErrorCode_SpatialAudio_ReflectionBusError,
   Num_ErrorCodes
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

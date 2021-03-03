@@ -45,7 +45,10 @@ public class AkRoomParams : global::System.IDisposable {
     }
   }
 
-  public AkRoomParams() : this(AkSoundEnginePINVOKE.CSharp_new_AkRoomParams(), true) {
+  public AkRoomParams() : this(AkSoundEnginePINVOKE.CSharp_new_AkRoomParams__SWIG_0(), true) {
+  }
+
+  public AkRoomParams(AkRoomParams in_rhs) : this(AkSoundEnginePINVOKE.CSharp_new_AkRoomParams__SWIG_1(AkRoomParams.getCPtr(in_rhs)), true) {
   }
 
   public UnityEngine.Vector3 Up { set { AkSoundEnginePINVOKE.CSharp_AkRoomParams_Up_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkRoomParams_Up_get(swigCPtr); } 

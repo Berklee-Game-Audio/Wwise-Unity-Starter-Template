@@ -147,9 +147,10 @@ public class AkWwiseWWUBuilder
 
 			wwu.ParentPath = in_currentPathInProj;
 			wwu.PhysicalPath = WwuPhysicalPath;
+			wwu.PathAndIcons = new System.Collections.Generic.List<AkWwiseProjectData.PathElement>(in_pathAndIcons);
 			wwu.Guid = System.Guid.Empty;
 			wwu.LastTime = System.IO.File.GetLastWriteTime(in_workUnit.FullName);
-
+			
 			using (var reader = System.Xml.XmlReader.Create(in_workUnit.FullName))
 			{
 				reader.MoveToContent();
@@ -183,11 +184,8 @@ public class AkWwiseWWUBuilder
 							var newWorkUnit = new System.IO.FileInfo(newWorkUnitPath);
 
 							// Parse the referenced Work Unit
-							if (m_WwuToProcess.Contains(newWorkUnit.FullName))
-							{
-								RecurseWorkUnit(in_type, newWorkUnit, in_currentPathInProj, in_currentPhysicalPath, in_pathAndIcons,
-									WwuPhysicalPath);
-							}
+							RecurseWorkUnit(in_type, newWorkUnit, in_currentPathInProj, in_currentPhysicalPath, in_pathAndIcons,
+								WwuPhysicalPath);
 						}
 						else
 						{
@@ -524,6 +522,7 @@ public class AkWwiseWWUBuilder
 			}
 		}
 
+		UnityEditor.EditorUtility.SetDirty(AkWwiseProjectInfo.GetData());
 		UnityEditor.EditorUtility.ClearProgressBar();
 	}
 
@@ -783,7 +782,7 @@ public class AkWwiseWWUBuilder
 
 	private bool CreateWorkUnit(string in_relativePath, string in_wwuType, string in_fullPath)
 	{
-		var ParentID = string.Empty;
+		var ParentID = string.Empty;	
 		try
 		{
 			using (var reader = System.Xml.XmlReader.Create(in_fullPath))
@@ -825,34 +824,36 @@ public class AkWwiseWWUBuilder
 			}
 
 			var list = AkWwiseProjectInfo.GetData().GetWwuListByString(in_wwuType);
-
-			System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement> PathAndIcons = null;
+			var PathAndIcons = new System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement>();
 			string PathInProj = string.Empty;
 			AkWwiseProjectData.WorkUnit wwu = null;
-			//search for the parent and save its physical path
-			for (var i = 0; i < list.Count; i++)
+
+			if (parentGuid != System.Guid.Empty)
 			{
-				wwu = list[i] as AkWwiseProjectData.WorkUnit;
-				if (wwu.Guid.Equals(parentGuid))
+				for (var i = 0; i < list.Count; i++)
 				{
-					PathInProj = GetWwuPathAndIcons(wwu.PhysicalPath, in_wwuType, in_relativePath, out PathAndIcons);
-					break;
-				}
-				else
-				{
-					var WwuChildren = wwu.GetChildrenArrayList();
-					foreach(AkWwiseProjectData.AkInformation child in WwuChildren)
+					wwu = list[i] as AkWwiseProjectData.WorkUnit;
+					if (wwu.Guid.Equals(parentGuid))
 					{
-						if (child.Guid.Equals(parentGuid))
+						PathInProj = wwu.ParentPath;
+						PathAndIcons = new System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement>(wwu.PathAndIcons);
+						break;
+					}
+					else
+					{
+						var WwuChildren = wwu.GetChildrenArrayList();
+						foreach(AkWwiseProjectData.AkInformation child in WwuChildren)
 						{
-							PathInProj = child.Path;
-							PathAndIcons = new System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement>(child.PathAndIcons);
+							if (child.Guid.Equals(parentGuid))
+							{
+								PathInProj = child.Path;
+								PathAndIcons = new System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement>(child.PathAndIcons);
 							break;
+							}
 						}
 					}
 				}
 			}
-
 			if (!string.IsNullOrEmpty(PathInProj))
 			{
 				RecurseWorkUnit(AssetType.Create(in_wwuType), new System.IO.FileInfo(in_fullPath), PathInProj,
@@ -887,43 +888,6 @@ public class AkWwiseWWUBuilder
 		//Parse the work unit file
 		RecurseWorkUnit(AssetType.Create(in_wwuType), new System.IO.FileInfo(in_wwuFullPath), currentPathInProj,
 			in_relativePath.Remove(in_relativePath.LastIndexOf(System.IO.Path.DirectorySeparatorChar)), PathAndIcons);
-	}
-
-	private string GetWwuPathAndIcons(
-		  string in_parentRelativePhysicalPath
-		, string in_wwuType
-		, string in_relativePhysicalPath
-		, out System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement> out_PathAndIcons
-	)
-	{
-		var wwuRelPath = in_parentRelativePhysicalPath;
-		var currentPathInProj = string.Empty;
-		out_PathAndIcons = new System.Collections.Generic.LinkedList<AkWwiseProjectData.PathElement>();
-
-		while (!wwuRelPath.Equals(string.Empty))
-		{
-			//Add work unit name to the hierarchy
-			var wwuName = System.IO.Path.GetFileNameWithoutExtension(wwuRelPath);
-			currentPathInProj = System.IO.Path.Combine(wwuName, currentPathInProj);
-			//Add work unit icon to the hierarchy
-			out_PathAndIcons.AddFirst(new AkWwiseProjectData.PathElement(wwuName, WwiseObjectType.WorkUnit));
-
-			//Get the physical path of the parent work unit if any
-			var list = AkWwiseProjectInfo.GetData().GetWwuListByString(in_wwuType);
-			var index = list.BinarySearch(new AkWwiseProjectData.WorkUnit { PhysicalPath = wwuRelPath });
-			wwuRelPath = (list[index] as AkWwiseProjectData.WorkUnit).ParentPath;
-		}
-
-		//Add physical folders to the hierarchy if the work unit isn't in the root folder
-		var physicalPath = in_relativePhysicalPath.Split(System.IO.Path.DirectorySeparatorChar);
-		for (var i = physicalPath.Length - 2; i > 0; i--)
-		{
-			out_PathAndIcons.AddFirst(
-				new AkWwiseProjectData.PathElement(physicalPath[i], WwiseObjectType.PhysicalFolder));
-			currentPathInProj = System.IO.Path.Combine(physicalPath[i], currentPathInProj);
-		}
-
-		return currentPathInProj;
 	}
 
 	public class AssetType

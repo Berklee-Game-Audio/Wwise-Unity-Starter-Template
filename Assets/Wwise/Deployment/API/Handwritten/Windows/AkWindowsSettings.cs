@@ -1,4 +1,14 @@
-﻿public class AkWindowsSettings : AkWwiseInitializationSettings.PlatformSettings
+﻿#if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN
+public partial class AkCommonUserSettings
+{
+	partial void SetSampleRate(AkPlatformInitSettings settings)
+	{
+		settings.uSampleRate = m_SampleRate;
+	}
+}
+#endif
+
+public class AkWindowsSettings : AkWwiseInitializationSettings.PlatformSettings
 {
 #if UNITY_EDITOR
 	[UnityEditor.InitializeOnLoadMethod]

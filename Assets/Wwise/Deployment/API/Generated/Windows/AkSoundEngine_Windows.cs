@@ -1937,6 +1937,7 @@ public partial class AkSoundEngine {
   public const int AK_DEFAULT_REFLECTIONS_ORDER = (1);
   public const double AK_SA_EPSILON = (0.001);
   public const double AK_SA_DIFFRACTION_EPSILON = (0.002);
+  public const double AK_SA_DIFFRACTION_DOT_EPSILON = (0.000002);
   public const double AK_SA_PLANE_THICKNESS_RATIO = (0.005);
 }
 #endif // #if (UNITY_STANDALONE_WIN && !UNITY_EDITOR) || UNITY_EDITOR_WIN

@@ -75,6 +75,7 @@ public enum AKRESULT {
   AK_DeviceNotFound = 93,
   AK_PlayingIDNotFound = 94,
   AK_InvalidFloatValue = 95,
-  AK_FileFormatMismatch = 96
+  AK_FileFormatMismatch = 96,
+  AK_NoDistinctListener = 97
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
