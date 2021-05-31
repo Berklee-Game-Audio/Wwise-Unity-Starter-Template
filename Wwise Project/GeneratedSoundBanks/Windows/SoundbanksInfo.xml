@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="135">
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
 		<ProjectRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/</ProjectRoot>
 		<SourceFilesRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/.cache/Windows/</SourceFilesRoot>
@@ -11,16 +11,21 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="2851187059">
+		<SoundBank Id="1355168291" Language="SFX" Hash="411981502">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3626155605" Language="SFX" Hash="2947601712">
+		<SoundBank Id="3626155605" Language="SFX" Hash="930158015">
 			<ObjectPath>\SoundBanks\Default Work Unit\Game_Soundbank</ObjectPath>
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
 			<IncludedEvents>
+				<Event Id="4037201921" Name="empty_event" ObjectPath="\Events\Default Work Unit\empty_event">
+					<ActionSetState>
+						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
+					</ActionSetState>
+				</Event>
 				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore">
 					<ActionSetState>
 						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
@@ -58,7 +63,11 @@
 						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
 					</ActionSetState>
 				</Event>
+				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All"/>
 			</IncludedEvents>
+			<GameParameters>
+				<GameParameter Id="3677180323" Name="health" ObjectPath="\Game Parameters\Default Work Unit\health"/>
+			</GameParameters>
 			<StateGroups>
 				<StateGroup Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore">
 					<States/>

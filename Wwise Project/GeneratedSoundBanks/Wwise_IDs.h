@@ -13,9 +13,11 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID EMPTY_EVENT = 4037201921U;
         static const AkUniqueID SET_STATE_EXPLORE = 4016583417U;
         static const AkUniqueID SET_STATE_SUSPENSE = 3548625176U;
         static const AkUniqueID START_GAME = 1114964412U;
+        static const AkUniqueID STOP_ALL = 452547817U;
     } // namespace EVENTS
 
     namespace STATES
@@ -33,6 +35,11 @@ namespace AK
         } // namespace PLAYER_STATE
 
     } // namespace STATES
+
+    namespace GAME_PARAMETERS
+    {
+        static const AkUniqueID HEALTH = 3677180323U;
+    } // namespace GAME_PARAMETERS
 
     namespace BANKS
     {

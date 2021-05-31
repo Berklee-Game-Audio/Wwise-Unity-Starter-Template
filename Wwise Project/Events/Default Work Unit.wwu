@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="WorkUnit" ID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" SchemaVersion="97">
+<WwiseDocument Type="WorkUnit" ID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" SchemaVersion="103">
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" PersistMode="Standalone">
 			<ChildrenList>
@@ -49,6 +49,31 @@
 									<ObjectRef Name="suspense" ID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
 								</Reference>
 							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="empty_event" ID="{105640D3-6E38-4100-9588-A5A7230C6AB5}">
+					<ChildrenList>
+						<Action Name="" ID="{EAFAA9A9-A951-4A8A-8D79-2BBC65F07E38}" ShortID="287452999">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="suspense" ID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_All" ID="{5A08717E-E926-4BE1-9661-3952CEACDD26}">
+					<ChildrenList>
+						<Action Name="" ID="{B28F364E-EC50-4F21-B896-AD71F42C7652}" ShortID="1038419767">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="3"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList/>
 						</Action>
 					</ChildrenList>
 				</Event>

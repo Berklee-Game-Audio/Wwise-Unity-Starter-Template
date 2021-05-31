@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WwiseDocument Type="WorkUnit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" SchemaVersion="97">
+<WwiseDocument Type="WorkUnit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" SchemaVersion="103">
 	<InteractiveMusic>
 		<WorkUnit Name="Default Work Unit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" PersistMode="Standalone">
 			<ChildrenList>
 				<MusicSwitchContainer Name="New Music Switch Container" ID="{5219887F-DDCB-4FFF-AC78-0486B72CA2AF}" ShortID="848142320">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>1</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
@@ -26,6 +33,39 @@
 								<MusicSegment Name="Season - Winter Early" ID="{13967AFA-4384-45F5-B426-0A3AC72AE68F}" ShortID="38501513">
 									<PropertyList>
 										<Property Name="EndPosition" Type="Real64" Value="108587.520833333"/>
+										<Property Name="Lowpass" Type="int16">
+											<RTPCList>
+												<RTPC Name="" ID="{BF1A19FB-834B-422B-9832-EA576EABD35A}" ShortID="437721005">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="health" ID="{B89800CD-1561-40C4-9A06-2D18E9BD148F}" WorkUnitID="{C5548494-A8E6-4BDA-8CA0-A69F4D8C2761}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{8C82BDFA-70E2-445A-892C-42998EC50151}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>100</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>33.98907</XPos>
+																<YPos>-2</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -59,31 +99,53 @@
 													<TransitionInfo/>
 												</MusicTransition>
 											</TransitionList>
-											<SequenceList>
-												<MusicTrackSequence Name="" ID="{A604C977-15A8-402E-B3CD-834DBC70DACA}">
-													<ClipList>
-														<MusicClip Name="Season - Winter Early" ID="{4A130939-B0E2-4F81-B94F-2FB220CFAC95}">
-															<PropertyList>
-																<Property Name="EndTrimOffset" Type="Real64" Value="108587.520833333"/>
-																<Property Name="FadeInMode" Type="int16" Value="0"/>
-																<Property Name="FadeOutMode" Type="int16" Value="0"/>
-															</PropertyList>
-															<AudioSourceRef Name="Season - Winter Early" ID="{F260DD44-B1CB-4A46-9652-8D92D4ADA99C}"/>
-														</MusicClip>
-													</ClipList>
-												</MusicTrackSequence>
-											</SequenceList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{A604C977-15A8-402E-B3CD-834DBC70DACA}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="Season - Winter Early" ID="{4A130939-B0E2-4F81-B94F-2FB220CFAC95}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="108587.520833333"/>
+																						<Property Name="FadeInMode" Type="int16" Value="0"/>
+																						<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="Season - Winter Early" ID="{F260DD44-B1CB-4A46-9652-8D92D4ADA99C}"/>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
 										</MusicTrack>
 									</ChildrenList>
-									<CueList>
-										<MusicCue Name="Entry Cue" ID="{D74AB9F2-CB98-4181-9620-26A1A80D09B5}"/>
-										<MusicCue Name="Exit Cue" ID="{87C1513D-7999-4A3F-9EE5-23D1B8A6C9AA}">
-											<PropertyList>
-												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="108587.520833333"/>
-											</PropertyList>
-										</MusicCue>
-									</CueList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{D74AB9F2-CB98-4181-9620-26A1A80D09B5}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{87C1513D-7999-4A3F-9EE5-23D1B8A6C9AA}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="108587.520833333"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
 								</MusicSegment>
 							</ChildrenList>
 							<TransitionList>
@@ -99,6 +161,7 @@
 									<TransitionInfo/>
 								</MusicTransition>
 							</TransitionList>
+							<ObjectLists/>
 							<Playlist>
 								<MusicPlaylistItem Name="" ID="{F1C97B14-32AE-4397-8EA8-FDED8130BAE7}" ShortID="698551810">
 									<PropertyList>
@@ -161,31 +224,53 @@
 													<TransitionInfo/>
 												</MusicTransition>
 											</TransitionList>
-											<SequenceList>
-												<MusicTrackSequence Name="" ID="{70BE15F2-1235-4BA5-AF71-357825265D43}">
-													<ClipList>
-														<MusicClip Name="Season - Winter Late" ID="{EA285919-9069-4FA3-A307-BEB7B3F42520}">
-															<PropertyList>
-																<Property Name="EndTrimOffset" Type="Real64" Value="69808.5833333333"/>
-																<Property Name="FadeInMode" Type="int16" Value="0"/>
-																<Property Name="FadeOutMode" Type="int16" Value="0"/>
-															</PropertyList>
-															<AudioSourceRef Name="Season - Winter Late" ID="{3B2DA684-EC58-4B6C-88A3-CB839568B7CA}"/>
-														</MusicClip>
-													</ClipList>
-												</MusicTrackSequence>
-											</SequenceList>
+											<ObjectLists>
+												<ObjectList Name="Sequences">
+													<Reference>
+														<Local>
+															<MusicTrackSequence Name="" ID="{70BE15F2-1235-4BA5-AF71-357825265D43}">
+																<ObjectLists>
+																	<ObjectList Name="Clips">
+																		<Reference>
+																			<Local>
+																				<MusicClip Name="Season - Winter Late" ID="{EA285919-9069-4FA3-A307-BEB7B3F42520}">
+																					<PropertyList>
+																						<Property Name="EndTrimOffset" Type="Real64" Value="69808.5833333333"/>
+																						<Property Name="FadeInMode" Type="int16" Value="0"/>
+																						<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																					</PropertyList>
+																					<AudioSourceRef Name="Season - Winter Late" ID="{3B2DA684-EC58-4B6C-88A3-CB839568B7CA}"/>
+																				</MusicClip>
+																			</Local>
+																		</Reference>
+																	</ObjectList>
+																</ObjectLists>
+															</MusicTrackSequence>
+														</Local>
+													</Reference>
+												</ObjectList>
+											</ObjectLists>
 										</MusicTrack>
 									</ChildrenList>
-									<CueList>
-										<MusicCue Name="Entry Cue" ID="{81C0D399-6494-4FCC-A3CF-ABD40A2562EA}"/>
-										<MusicCue Name="Exit Cue" ID="{19C80A2D-CF91-4F1B-A4EC-215118201738}">
-											<PropertyList>
-												<Property Name="CueType" Type="int16" Value="1"/>
-												<Property Name="TimeMs" Type="Real64" Value="69808.5833333333"/>
-											</PropertyList>
-										</MusicCue>
-									</CueList>
+									<ObjectLists>
+										<ObjectList Name="Cues">
+											<Reference>
+												<Local>
+													<MusicCue Name="Entry Cue" ID="{81C0D399-6494-4FCC-A3CF-ABD40A2562EA}"/>
+												</Local>
+											</Reference>
+											<Reference>
+												<Local>
+													<MusicCue Name="Exit Cue" ID="{19C80A2D-CF91-4F1B-A4EC-215118201738}">
+														<PropertyList>
+															<Property Name="CueType" Type="int16" Value="1"/>
+															<Property Name="TimeMs" Type="Real64" Value="69808.5833333333"/>
+														</PropertyList>
+													</MusicCue>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
 								</MusicSegment>
 							</ChildrenList>
 							<TransitionList>
@@ -201,6 +286,7 @@
 									<TransitionInfo/>
 								</MusicTransition>
 							</TransitionList>
+							<ObjectLists/>
 							<Playlist>
 								<MusicPlaylistItem Name="" ID="{246CD7FE-FA61-499F-A6B9-171256A774A6}" ShortID="224628029">
 									<PropertyList>
@@ -255,6 +341,7 @@
 							<TransitionInfo/>
 						</MusicTransition>
 					</TransitionList>
+					<ObjectLists/>
 					<ArgumentList>
 						<ArgumentRef Name="Player_State" ID="{739D5D8D-C8BD-4652-892F-6D0A25AA689D}"/>
 					</ArgumentList>

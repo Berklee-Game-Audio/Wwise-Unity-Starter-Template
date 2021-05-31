@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" SchemaVersion="97">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Start_Game" ID="{8EE55A93-378C-41F9-BAB1-A40B856C9315}">
+					<ChildrenList>
+						<Action Name="" ID="{12784661-1914-4C23-B597-2A947AADAE4F}" ShortID="734646908">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="New Music Switch Container" ID="{5219887F-DDCB-4FFF-AC78-0486B72CA2AF}" WorkUnitID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{0654FCB6-D69C-4455-A7FF-78B698FA8F8C}" ShortID="935566204">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="explore" ID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_State_Explore" ID="{FC2A7E89-D78D-4414-8B91-9BAA6E2928E8}">
+					<ChildrenList>
+						<Action Name="" ID="{148C8076-84F8-403F-B01A-17900C5B504A}" ShortID="399137663">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="explore" ID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Set_State_Suspense" ID="{9C171B0B-7CA4-4EF0-B157-356B03404FE3}">
+					<ChildrenList>
+						<Action Name="" ID="{A1C0D43C-DA97-4975-A2E9-8E24CAA669C7}" ShortID="213402142">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="suspense" ID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="empty_event" ID="{105640D3-6E38-4100-9588-A5A7230C6AB5}">
+					<ChildrenList>
+						<Action Name="" ID="{EAFAA9A9-A951-4A8A-8D79-2BBC65F07E38}" ShortID="287452999">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="22"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="suspense" ID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_All" ID="{5A08717E-E926-4BE1-9661-3952CEACDD26}">
+					<ChildrenList>
+						<Action Name="" ID="{B28F364E-EC50-4F21-B896-AD71F42C7652}" ShortID="1038419767">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="3"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList/>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
