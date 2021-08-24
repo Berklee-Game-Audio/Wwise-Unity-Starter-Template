@@ -1676,6 +1676,10 @@ class AkSoundEnginePINVOKE {
   public static extern void CSharp_AkChannelConfig_SetAmbisonic(global::System.IntPtr jarg1, uint jarg2);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkChannelConfig_SetObject")]
   public static extern void CSharp_AkChannelConfig_SetObject(global::System.IntPtr jarg1);
+  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkChannelConfig_SetSameAsMainMix")]
+  public static extern void CSharp_AkChannelConfig_SetSameAsMainMix(global::System.IntPtr jarg1);
+  [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkChannelConfig_SetSameAsPassthrough")]
+  public static extern void CSharp_AkChannelConfig_SetSameAsPassthrough(global::System.IntPtr jarg1);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkChannelConfig_IsValid")]
   public static extern bool CSharp_AkChannelConfig_IsValid(global::System.IntPtr jarg1);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkChannelConfig_Serialize")]

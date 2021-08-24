@@ -46,18 +46,24 @@ public class AkWwiseXMLBuilder
 				FullSoundbankPath = System.IO.Path.Combine(UnityEngine.Application.streamingAssetsPath, AkWwiseEditorSettings.Instance.SoundbankPath);
 
 				if (!System.IO.Directory.Exists(FullSoundbankPath))
+				{
+					UnityEngine.Debug.Log("WwiseUnity: Could not open SoundbanksInfo.xml, generated SoundBanks path does not exist: " + FullSoundbankPath);
 					return false;
+				}
 
 				var foundFiles = System.IO.Directory.GetFiles(FullSoundbankPath, "SoundbanksInfo.xml", System.IO.SearchOption.AllDirectories);
 				if (foundFiles.Length == 0)
+				{
+					UnityEngine.Debug.Log("WwiseUnity: Could not find SoundbanksInfo.xml in directory: " + FullSoundbankPath);
 					return false;
-
+				}
 				filename = foundFiles[0];
 			}
 
 			var time = System.IO.File.GetLastWriteTime(filename);
 			if (time <= s_LastParsed)
 			{
+				UnityEngine.Debug.Log("WwiseUnity: Skipping parsing of SoundbanksInfo.xml because it has not changed.");
 				return false;
 			}
 
@@ -77,8 +83,9 @@ public class AkWwiseXMLBuilder
 
 			return bChanged;
 		}
-		catch
+		catch (System.Exception e)
 		{
+			UnityEngine.Debug.Log("WwiseUnity: Exception occured while parsing SoundbanksInfo.xml: " + e.ToString());
 			return false;
 		}
 	}
@@ -101,7 +108,26 @@ public class AkWwiseXMLBuilder
 
 	private static float GetFloatFromString(string s)
 	{
-		return string.Compare(s, "Infinite") == 0 ? UnityEngine.Mathf.Infinity : float.Parse(s);
+		if (string.Compare(s, "Infinite") == 0)
+		{
+			return UnityEngine.Mathf.Infinity;
+		}
+		else
+		{
+			System.Globalization.CultureInfo CultInfo = System.Globalization.CultureInfo.CurrentCulture.Clone() as System.Globalization.CultureInfo;
+			CultInfo.NumberFormat.NumberDecimalSeparator = ".";
+			CultInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+			float Result;
+			if(float.TryParse(s, System.Globalization.NumberStyles.Float, CultInfo, out Result))
+			{
+				return Result;
+			}
+			else
+			{
+				UnityEngine.Debug.Log("WwiseUnity: Could not parse float number " + s);
+				return 0.0f;
+			}
+		}
 	}
 
 	private static bool SerialiseEventData(System.Xml.XmlNode node)
@@ -109,11 +135,13 @@ public class AkWwiseXMLBuilder
 		var maxAttenuationAttribute = node.Attributes["MaxAttenuation"];
 		var durationMinAttribute = node.Attributes["DurationMin"];
 		var durationMaxAttribute = node.Attributes["DurationMax"];
+		var name = node.Attributes["Name"].InnerText;
 		if (maxAttenuationAttribute == null && durationMinAttribute == null && durationMaxAttribute == null)
+		{
 			return false;
+		}
 
 		var bChanged = false;
-		var name = node.Attributes["Name"].Value;
 		foreach (var wwu in AkWwiseProjectInfo.GetData().EventWwu)
 		{
 			var eventData = wwu.Find(name);
@@ -122,7 +150,7 @@ public class AkWwiseXMLBuilder
 
 			if (maxAttenuationAttribute != null)
 			{
-				var maxAttenuation = float.Parse(maxAttenuationAttribute.Value);
+				var maxAttenuation = GetFloatFromString(maxAttenuationAttribute.InnerText);
 				if (eventData.maxAttenuation != maxAttenuation)
 				{
 					eventData.maxAttenuation = maxAttenuation;
@@ -132,7 +160,7 @@ public class AkWwiseXMLBuilder
 
 			if (durationMinAttribute != null)
 			{
-				var minDuration = GetFloatFromString(durationMinAttribute.Value);
+				var minDuration = GetFloatFromString(durationMinAttribute.InnerText);
 				if (eventData.minDuration != minDuration)
 				{
 					eventData.minDuration = minDuration;
@@ -142,7 +170,7 @@ public class AkWwiseXMLBuilder
 
 			if (durationMaxAttribute != null)
 			{
-				var maxDuration = GetFloatFromString(durationMaxAttribute.Value);
+				var maxDuration = GetFloatFromString(durationMaxAttribute.InnerText);
 				if (eventData.maxDuration != maxDuration)
 				{
 					eventData.maxDuration = maxDuration;

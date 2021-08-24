@@ -77,6 +77,7 @@ public enum AKRESULT {
   AK_InvalidFloatValue = 95,
   AK_FileFormatMismatch = 96,
   AK_NoDistinctListener = 97,
-  AK_ACP_Error = 98
+  AK_ACP_Error = 98,
+  AK_ResourceInUse = 99
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

@@ -71,7 +71,7 @@ public class AkRoomInspector : UnityEditor.Editor
 				gameObject.GetComponent<UnityEngine.SphereCollider>() != null ||
 				gameObject.GetComponent<UnityEngine.CapsuleCollider>() != null ||
 				gameObject.GetComponent<UnityEngine.MeshCollider>() != null ||
-				gameObject.GetComponent<AkSurfaceReflector>() != null)
+				(gameObject.GetComponent<AkSurfaceReflector>() != null && gameObject.GetComponent<AkSurfaceReflector>().enabled))
 				bSupported = true;
 
 			if (bSupported == false)
@@ -81,7 +81,7 @@ public class AkRoomInspector : UnityEditor.Editor
 				using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
 				{
 					UnityEditor.EditorGUILayout.HelpBox(
-						"Wet Transmission is currently only supported with box, sphere, capsule and mesh colliders, or if the game object also has an enabled AkSurfaceReflector component.",
+						"Associating a geometry with this room for wet transmission is currently only supported with box, sphere, capsule and mesh colliders, or if the game object also has an enabled AkSurfaceReflector component.",
 						UnityEditor.MessageType.Warning);
 				}
 			}

@@ -16,7 +16,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3626155605" Language="SFX" Hash="930158015">
+		<SoundBank Id="3626155605" Language="SFX" Hash="3255374131">
 			<ObjectPath>\SoundBanks\Default Work Unit\Game_Soundbank</ObjectPath>
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
@@ -69,17 +69,17 @@
 				<GameParameter Id="3677180323" Name="health" ObjectPath="\Game Parameters\Default Work Unit\health"/>
 			</GameParameters>
 			<StateGroups>
-				<StateGroup Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore">
+				<StateGroup Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore" GUID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}">
 					<States/>
 				</StateGroup>
-				<StateGroup Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense">
+				<StateGroup Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense" GUID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}">
 					<States/>
 				</StateGroup>
-				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State">
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{739D5D8D-C8BD-4652-892F-6D0A25AA689D}">
 					<States>
-						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None"/>
-						<State Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
-						<State Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None" GUID="{AAAB2E3A-7D51-4CAA-A03B-704335F0F360}"/>
+						<State Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore" GUID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}"/>
+						<State Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense" GUID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}"/>
 					</States>
 				</StateGroup>
 			</StateGroups>

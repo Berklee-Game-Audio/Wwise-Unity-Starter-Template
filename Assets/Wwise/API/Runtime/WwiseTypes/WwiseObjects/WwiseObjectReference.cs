@@ -114,7 +114,7 @@ public abstract class WwiseObjectReference : UnityEngine.ScriptableObject
 	{
 		var id = AkUtilities.ShortIDGenerator.Compute(name);
 		var changed = false;
-		if (wwiseObjectReference.objectName == name && wwiseObjectReference.id == id)
+		if (wwiseObjectReference.objectName != name || wwiseObjectReference.id != id)
 			changed = true;
 
 		wwiseObjectReference.objectName = name;

@@ -67,6 +67,7 @@ public class AkPluginActivator
 		{
 			{ PluginID.AkAudioInput, "AkAudioInputSource" },
 			{ PluginID.AkCompressor, "AkCompressorFX" },
+			{ PluginID.AkRouterMixer, "AkRouterMixerFX" },
 			{ PluginID.AkConvolutionReverb, "AkConvolutionReverbFX" },
 			{ PluginID.AkDelay, "AkDelayFX" },
 			{ PluginID.AkExpander, "AkExpanderFX" },
@@ -94,7 +95,7 @@ public class AkPluginActivator
 			{ PluginID.AkTimeStretch, "AkTimeStretchFX" },
 			{ PluginID.AkTremolo, "AkTremoloFX" },
 			{ PluginID.AuroHeadphone, "AuroHeadphoneFX" },
-			{ PluginID.CrankcaseAudioREVModelPlayer, "CrankcaseAudioREVModelPlayerFX" },
+			{ PluginID.CrankcaseAudioREVModelPlayer, "CrankcaseAudioREVModelPlayerSource" },
 			{ PluginID.iZHybridReverb, "iZHybridReverbFX" },
 			{ PluginID.iZTrashBoxModeler, "iZTrashBoxModelerFX" },
 			{ PluginID.iZTrashDelay, "iZTrashDelayFX" },
@@ -103,6 +104,7 @@ public class AkPluginActivator
 			{ PluginID.iZTrashFilters, "iZTrashFiltersFX" },
 			{ PluginID.iZTrashMultibandDistortion, "iZTrashMultibandDistortionFX" },
 			{ PluginID.MasteringSuite, "MasteringSuiteFX" },
+			{ PluginID.AkImpacterSource, "AkImpacterSource" },
 			{ PluginID.McDSPFutzBox, "McDSPFutzBoxFX" },
 			{ PluginID.McDSPLimiter, "McDSPLimiterFX" },
 			{ PluginID.ResonanceAudioRenderer, "ResonanceAudioFX" },
@@ -613,6 +615,10 @@ public class AkPluginActivator
 			case "tvOS":
 				pluginDSPPlatform = "iOS";
 				break;
+			case "XboxOneGC":
+				pluginDSPPlatform = "XboxOne";
+				break;
+
 		}
 
 		if (!s_PerPlatformPlugins.ContainsKey(pluginDSPPlatform))
@@ -1031,6 +1037,7 @@ void *_pluginName_##_fp = (void*)&_pluginName_##Registration;
 	{
 		// Built-in plugins
 		AkCompressor = 0x006C0003, //Wwise Compressor
+		AkRouterMixer = 0x00AC0006, //Wwise RouterMixer
 		AkDelay = 0x006A0003, //Delay
 		AkExpander = 0x006D0003, //Wwise Expander
 		AkGain = 0x008B0003, //Gain
@@ -1087,6 +1094,7 @@ void *_pluginName_##_fp = (void*)&_pluginName_##Registration;
 		iZTrashFilters = 0x61033,
 		iZTrashMultibandDistortion = 0x91033,
 		MasteringSuite = 0xBA0003,
+		AkImpacterSource = 0xB80002,
 		McDSPFutzBox = 0x6E1003,
 		McDSPLimiter = 0x671003,
 		ResonanceAudioRenderer = 0x641103,

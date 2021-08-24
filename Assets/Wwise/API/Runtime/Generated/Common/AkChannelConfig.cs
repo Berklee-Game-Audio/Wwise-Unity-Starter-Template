@@ -72,6 +72,10 @@ public class AkChannelConfig : global::System.IDisposable {
 
   public void SetObject() { AkSoundEnginePINVOKE.CSharp_AkChannelConfig_SetObject(swigCPtr); }
 
+  public void SetSameAsMainMix() { AkSoundEnginePINVOKE.CSharp_AkChannelConfig_SetSameAsMainMix(swigCPtr); }
+
+  public void SetSameAsPassthrough() { AkSoundEnginePINVOKE.CSharp_AkChannelConfig_SetSameAsPassthrough(swigCPtr); }
+
   public bool IsValid() { return AkSoundEnginePINVOKE.CSharp_AkChannelConfig_IsValid(swigCPtr); }
 
   public uint Serialize() { return AkSoundEnginePINVOKE.CSharp_AkChannelConfig_Serialize(swigCPtr); }

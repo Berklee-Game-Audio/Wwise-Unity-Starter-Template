@@ -23,6 +23,20 @@ public class AkWwiseWWUBuilder
 	private int m_currentWwuCnt;
 	private int m_totWwuCnt = 1;
 
+	static AkWwiseWWUBuilder()
+	{
+		// This method gets called from InitializeOnLoad and uses the AkWwiseProjectInfo later on so it needs to check if it can run right now
+		InitializeWwiseProjectData();
+
+		UnityEditor.EditorApplication.playModeStateChanged += (UnityEditor.PlayModeStateChange playMode) =>
+		{
+			if (playMode == UnityEditor.PlayModeStateChange.EnteredEditMode)
+			{
+				RestartWWUWatcher();
+			}
+		};
+	}
+
 	private static void Tick()
 	{
 		isTicking = true;
@@ -280,17 +294,6 @@ public class AkWwiseWWUBuilder
 	{
 		if (AkWwiseProjectInfo.GetData().autoPopulateEnabled)
 			StartWWUWatcher();
-	}
-
-	static AkWwiseWWUBuilder()
-	{
-		InitializeWwiseProjectData();
-
-		UnityEditor.EditorApplication.playModeStateChanged += (UnityEditor.PlayModeStateChange playMode) =>
-		{
-			if (playMode == UnityEditor.PlayModeStateChange.EnteredEditMode)
-				RestartWWUWatcher();
-		};
 	}
 
 	private static System.Collections.Generic.Dictionary<WwiseObjectType, System.Collections.Generic.List<AkWwiseProjectData.AkBaseInformation>> _WwiseObjectsToRemove

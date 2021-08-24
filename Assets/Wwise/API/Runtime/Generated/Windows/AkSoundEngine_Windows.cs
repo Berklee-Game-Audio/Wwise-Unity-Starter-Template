@@ -1156,6 +1156,7 @@ public partial class AkSoundEngine {
   public const int AKCODECID_MEMORYMGR_DUMP = (21);
   public const int AKPLUGINID_METER = (129);
   public const int AKPLUGINID_RECORDER = (132);
+  public const int AKPLUGINID_IMPACTER = (184);
   public const int AKPLUGINID_SYSTEM_OUTPUT_META = (900);
   public const int AKEXTENSIONID_SPATIALAUDIO = (800);
   public const int AKEXTENSIONID_INTERACTIVEMUSIC = (801);

@@ -33,8 +33,8 @@ public enum AkCallbackType {
   AK_EnableGetMusicPlayPosition = 0x200000,
   AK_EnableGetSourceStreamBuffering = 0x400000,
   AK_Monitoring = 0x20000000,
-  AK_AudioSourceChange = 0x23000000,
   AK_Bank = 0x40000000,
-  AK_AudioInterruption = 0x22000000
+  AK_AudioInterruption = 0x22000000,
+  AK_AudioSourceChange = 0x23000000
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
