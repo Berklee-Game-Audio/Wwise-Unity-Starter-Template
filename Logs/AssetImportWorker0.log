@@ -1,0 +1,172 @@
+Using pre-set license
+
+ COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+/Users/michaelsweet/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+53632
+Successfully changed project path to: /Users/michaelsweet/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template
+/Users/michaelsweet/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 79.28 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.13f1 (71691879b7f5)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/michaelsweet/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Assets
+GfxDevice: creating device client; threaded=0
+2021-08-25 11:26:38.936 Unity[62120:1359214] LG Ultra HD preferred device: AMD Radeon Pro 5500M (high power)
+2021-08-25 11:26:38.936 Unity[62120:1359214] Metal devices available: 2
+2021-08-25 11:26:38.936 Unity[62120:1359214] 0: AMD Radeon Pro 5500M (high power)
+2021-08-25 11:26:38.936 Unity[62120:1359214] 1: Intel(R) UHD Graphics 630 (low power)
+2021-08-25 11:26:38.937 Unity[62120:1359214] Using device AMD Radeon Pro 5500M (high power)
+Initializing Metal device caps: AMD Radeon Pro 5500M
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = '/Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56120
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Registered in 0.000724 seconds.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 29.87 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.681 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.005638 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.53 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Refreshing native plugins compatible for Editor in 0.47 ms, found 2 plugins.
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/advapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/advapi32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/advapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/advapi32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/Kernel32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libKernel32
+Mono: successfully reloaded assembly
+- Completed reload, in  1.844 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launching external process: /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.01 seconds
+Refreshing native plugins compatible for Editor in 0.58 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1503 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 131.4 MB.
+System memory in use after: 131.5 MB.
+
+Unloading 64 unused Assets to reduce memory usage. Loaded Objects now: 1904.
+Total: 2.368517 ms (FindLiveObjects: 0.159989 ms CreateObjectMapping: 0.080355 ms MarkObjects: 2.059167 ms  DeleteObjects: 0.067926 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/level_1.unity
+  artifactKey: Guid(48f30124b6ffa4af8bfc295e99a9550a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/level_1.unity using Guid(48f30124b6ffa4af8bfc295e99a9550a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '058c6c62dfb7b69dee4792487a1519d9') in 0.012129 seconds 
+  Import took 0.014147 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004524 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.57 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Refreshing native plugins compatible for Editor in 0.51 ms, found 2 plugins.
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/advapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/advapi32
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.dylib
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.so
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll.bundle
+Fallback handler could not load library /Applications/Unity/Hub/Editor/2020.3.13f1/Unity.app/Contents/Frameworks/Mono/lib/libadvapi32.dll
+Mono: successfully reloaded assembly
+- Completed reload, in  1.192 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.69 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1497 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 131.6 MB.
+System memory in use after: 131.7 MB.
+
+Unloading 55 unused Assets to reduce memory usage. Loaded Objects now: 1906.
+Total: 2.162807 ms (FindLiveObjects: 0.136476 ms CreateObjectMapping: 0.043581 ms MarkObjects: 1.958992 ms  DeleteObjects: 0.022896 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
