@@ -6,6 +6,9 @@ State	ID	Name	State Group			Notes
 	748895195	None	Player_State			
 	1535707317	suspense	Player_State			
 
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	4179668880	master_volume			\Default Work Unit\master_volume	
+
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 

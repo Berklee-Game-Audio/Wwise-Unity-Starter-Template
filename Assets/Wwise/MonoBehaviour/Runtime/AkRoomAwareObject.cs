@@ -63,7 +63,7 @@ public class AkRoomAwareObject : UnityEngine.MonoBehaviour
 
 	private void SetGameObjectInRoom(AkRoom room)
 	{
-		AkSoundEngine.SetGameObjectInRoom(gameObject, room == null ? AkRoom.INVALID_ROOM_ID : room.GetID());
+		AkSoundEngine.SetGameObjectInRoom(gameObject, AkRoom.GetAkRoomID(room));
 	}
 
 	/// <summary>

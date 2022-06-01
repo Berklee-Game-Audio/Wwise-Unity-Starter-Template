@@ -44,7 +44,7 @@ public class AkMemBankLoader : UnityEngine.MonoBehaviour
 	/// Load a SoundBank from WWW object
 	public void LoadNonLocalizedBank(string in_bankFilename)
 	{
-		var bankPath = "file://" + System.IO.Path.Combine(AkBasePathGetter.SoundBankBasePath, in_bankFilename);
+		var bankPath = "file://" + System.IO.Path.Combine(AkBasePathGetter.Get().SoundBankBasePath, in_bankFilename);
 		DoLoadBank(bankPath);
 	}
 
@@ -52,7 +52,7 @@ public class AkMemBankLoader : UnityEngine.MonoBehaviour
 	public void LoadLocalizedBank(string in_bankFilename)
 	{
 		var bankPath = "file://" + System.IO.Path.Combine(
-			               System.IO.Path.Combine(AkBasePathGetter.SoundBankBasePath, AkSoundEngine.GetCurrentLanguage()),
+			               System.IO.Path.Combine(AkBasePathGetter.Get().SoundBankBasePath, AkSoundEngine.GetCurrentLanguage()),
 			               in_bankFilename);
 		DoLoadBank(bankPath);
 	}

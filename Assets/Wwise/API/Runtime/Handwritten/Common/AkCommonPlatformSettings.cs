@@ -44,6 +44,16 @@
 	{
 		get { return false; }
 	}
+
+	public virtual uint MemoryAllocationSizeLimit
+	{
+		get { return 0; }
+	}
+
+	public virtual uint MemoryDebugLevel
+	{
+		get { return 0; }
+	}
 }
 
 [System.Serializable]
@@ -435,7 +445,7 @@ public class AkCommonAdvancedSettings
 		settings.uMonitorQueuePoolSize = m_MonitorQueuePoolSize;
 		settings.uMaxHardwareTimeoutMs = m_MaximumHardwareTimeoutMs;
 		settings.bDebugOutOfRangeCheckEnabled = m_DebugOutOfRangeCheckEnabled;
-		settings.fDebugOutOfRangeLimit = m_DebugOutOfRangeLimit;
+		settings.fDebugOutOfRangeLimit = m_DebugOutOfRangeLimit;		
 	}
 
 	public virtual void CopyTo(AkPlatformInitSettings settings) { }
@@ -450,6 +460,12 @@ public class AkCommonAdvancedSettings
 
 	[UnityEngine.Tooltip("Use Async Open in the low-level IO hook.")]
 	public bool m_UseAsyncOpen = false;
+
+	[UnityEngine.Tooltip("Maximum amount of memory that Wwise can use. Use 0 for unlimited memory.")]
+	public uint m_MemoryAllocationSizeLimit = 0;
+
+	[UnityEngine.Tooltip("Memory allocator debug level. For use under Audiokinetic Support supervision.")]
+	public uint m_MemoryDebugLevel = 0;
 }
 
 [System.Serializable]
@@ -529,7 +545,8 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 			advancedSettings.CopyTo(settings.unityPlatformSpecificSettings);
 
 			settings.useAsyncOpen = advancedSettings.m_UseAsyncOpen;
-
+			settings.uMemAllocationSizeLimit = advancedSettings.m_MemoryAllocationSizeLimit;
+			settings.uMemDebugLevel = advancedSettings.m_MemoryDebugLevel;
 			return settings;
 		}
 	}
@@ -575,6 +592,16 @@ public abstract class AkCommonPlatformSettings : AkBasePlatformSettings
 	public override bool UseAsyncOpen
 	{
 		get { return GetAdvancedSettings().m_UseAsyncOpen; }
+	}
+
+	public override uint MemoryAllocationSizeLimit
+	{
+		get { return GetAdvancedSettings().m_MemoryAllocationSizeLimit; }
+	}
+
+	public override uint MemoryDebugLevel
+	{
+		get { return GetAdvancedSettings().m_MemoryDebugLevel; }
 	}
 
 	public override AkCommunicationSettings AkCommunicationSettings

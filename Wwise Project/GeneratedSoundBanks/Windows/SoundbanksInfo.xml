@@ -11,32 +11,41 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="411981502">
+		<SoundBank Id="1355168291" Language="SFX" Hash="1163563043">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
+			<GameParameters>
+				<GameParameter Id="4179668880" Name="master_volume" ObjectPath="\Game Parameters\Default Work Unit\master_volume"/>
+			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="3626155605" Language="SFX" Hash="3255374131">
+		<SoundBank Id="3626155605" Language="SFX" Hash="2540576173">
 			<ObjectPath>\SoundBanks\Default Work Unit\Game_Soundbank</ObjectPath>
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="4037201921" Name="empty_event" ObjectPath="\Events\Default Work Unit\empty_event" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000">
+				<Event Id="754369548" Name="Play_Stinger" ObjectPath="\Events\Default Work Unit\Play_Stinger">
+					<IncludedMemoryFiles>
+						<File Id="633351571" Language="SFX">
+							<ShortName>new_stinger_1.wav</ShortName>
+							<Path>SFX/new_stinger_1_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
 					<ActionSetState>
 						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000">
+				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore">
 					<ActionSetState>
 						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000">
+				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense">
 					<ActionSetState>
 						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game" DurationType="Infinite">
+				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game">
 					<IncludedMemoryFiles>
 						<File Id="681948759" Language="SFX">
 							<ShortName>Season - Winter Late.wav</ShortName>
@@ -47,23 +56,8 @@
 							<Path>SFX/Season - Winter Early_D79FB2B7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
-					<SwitchContainers>
-						<SwitchContainer SwitchValue="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}">
-							<Media>
-								<File Id="681948759"/>
-							</Media>
-						</SwitchContainer>
-						<SwitchContainer SwitchValue="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}">
-							<Media>
-								<File Id="740210912"/>
-							</Media>
-						</SwitchContainer>
-					</SwitchContainers>
-					<ActionSetState>
-						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
-					</ActionSetState>
 				</Event>
-				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All"/>
 			</IncludedEvents>
 			<GameParameters>
 				<GameParameter Id="3677180323" Name="health" ObjectPath="\Game Parameters\Default Work Unit\health"/>

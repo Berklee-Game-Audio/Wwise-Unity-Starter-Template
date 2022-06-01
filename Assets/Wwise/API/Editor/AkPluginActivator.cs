@@ -222,6 +222,20 @@ public class AkPluginActivator
 		return path.Substring(indexOfPluginFolder + WwisePluginFolder.Length + 1).Split('/');
 	}
 
+	private static List<UnityEditor.PluginImporter> GetWwisePluginImporters()
+	{
+		UnityEditor.PluginImporter[] pluginImporters = UnityEditor.PluginImporter.GetAllImporters();
+		List<UnityEditor.PluginImporter> wwisePlugins = new List<UnityEditor.PluginImporter>();
+		foreach (var pluginImporter in pluginImporters)
+		{
+			if (pluginImporter.assetPath.Contains("Wwise/API/"))
+			{
+				wwisePlugins.Add(pluginImporter);
+			}
+		}
+		return wwisePlugins;
+	}
+
 	private static void SetupStaticPluginRegistration(UnityEditor.BuildTarget target)
 	{
 		if (!RequiresStaticPluginRegistration(target))
@@ -230,7 +244,7 @@ public class AkPluginActivator
 		string deploymentTargetName = GetPluginDeploymentPlatformName(target);
 
 		var staticPluginRegistration = new StaticPluginRegistration(target);
-		var importers = UnityEditor.PluginImporter.GetAllImporters();
+		var importers = GetWwisePluginImporters();
 		foreach (var pluginImporter in importers)
 		{
 			var splitPath = GetPluginInfoFromPath(pluginImporter.assetPath);
@@ -323,7 +337,7 @@ public class AkPluginActivator
 			SetupStaticPluginRegistration(target);
 		}
 
-		var importers = UnityEditor.PluginImporter.GetAllImporters();
+		var importers = GetWwisePluginImporters();
 		foreach (var pluginImporter in importers)
 		{
 			var splitPath = GetPluginInfoFromPath(pluginImporter.assetPath);
@@ -502,7 +516,7 @@ public class AkPluginActivator
 
 	public static void ActivatePluginsForEditor()
 	{
-		var importers = UnityEditor.PluginImporter.GetAllImporters();
+		var importers = GetWwisePluginImporters();
 		var ChangedSomeAssets = false;
 
 		foreach (var pluginImporter in importers)
@@ -589,8 +603,7 @@ public class AkPluginActivator
 
 	public static void DeactivateAllPlugins()
 	{
-		var importers = UnityEditor.PluginImporter.GetAllImporters();
-
+		var importers = GetWwisePluginImporters();
 		foreach (var pluginImporter in importers)
 		{
 			if (pluginImporter.assetPath.IndexOf(WwisePluginFolder, System.StringComparison.OrdinalIgnoreCase) == -1)
@@ -928,7 +941,7 @@ public class AkPluginActivator
 					}
 					else
 					{
-						UnityEngine.Debug.LogErrorFormat("WwiseUnity: Could not find '{0}', required for building plugin.", WwisePluginFolder + GetWwisePluginRelativeDSPFolder() + headerFilename);
+						UnityEngine.Debug.LogErrorFormat("WwiseUnity: Could not find '{0}', required for building plugin.", fullPath);
 					}
 				}
 			}

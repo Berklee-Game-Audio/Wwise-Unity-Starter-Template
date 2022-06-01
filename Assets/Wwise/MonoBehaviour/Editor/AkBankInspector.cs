@@ -49,8 +49,7 @@ public class AkBankInspector : AkBaseInspector
 				return;
 
 			var bank = target as AkBank;
-			AkBasePathGetter.EvaluateGamePaths();
-			var decodedBankPath = System.IO.Path.Combine(AkBasePathGetter.DecodedBankFullPath, bank.data.Name + ".bnk");
+			var decodedBankPath = System.IO.Path.Combine(AkBasePathGetter.Get().DecodedBankFullPath, bank.data.Name + ".bnk");
 
 			try
 			{

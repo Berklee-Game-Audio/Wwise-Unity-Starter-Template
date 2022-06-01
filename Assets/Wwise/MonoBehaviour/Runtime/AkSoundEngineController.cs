@@ -32,11 +32,23 @@ public class AkSoundEngineController
 		{
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.pauseStateChanged -= OnPauseStateChanged;
-			UnityEditor.EditorApplication.update -= LateUpdate;
+			DisableEditorLateUpdate();
 #endif
 			ms_Instance = null;
 		}
 	}
+
+#if UNITY_EDITOR
+	public void EnableEditorLateUpdate()
+	{
+		UnityEditor.EditorApplication.update += LateUpdate;
+	}
+
+	public void DisableEditorLateUpdate()
+	{
+		UnityEditor.EditorApplication.update -= LateUpdate;
+	}
+#endif
 
 	public void LateUpdate()
 	{
@@ -69,14 +81,18 @@ public class AkSoundEngineController
 
 	public void Init(AkInitializer akInitializer)
 	{
-		// Only initialize the room mamanger during play.
+		// Only initialize the room manager during play.
 		bool initRoomManager = true;
 #if UNITY_EDITOR
 		if (!UnityEditor.EditorApplication.isPlaying)
+		{
 			initRoomManager = false;
+		}
 #endif
 		if (initRoomManager)
+		{
 			AkRoomManager.Init();
+		}
 
 		if (akInitializer == null)
 		{
@@ -121,9 +137,8 @@ public class AkSoundEngineController
 #if UNITY_EDITOR
 			if (GetInitSettingsInstance().ResetSoundEngine(UnityEngine.Application.isPlaying || UnityEditor.BuildPipeline.isBuildingPlayer))
 			{
-				UnityEditor.EditorApplication.update += LateUpdate;
+				EnableEditorLateUpdate();
 			}
-
 
 			if (UnityEditor.EditorApplication.isPaused && UnityEngine.Application.isPlaying)
 			{
@@ -132,7 +147,7 @@ public class AkSoundEngineController
 #else
 			UnityEngine.Debug.LogError("WwiseUnity: Sound engine is already initialized.");
 #endif
-				return;
+			return;
 		}
 
 #if UNITY_EDITOR
@@ -145,7 +160,7 @@ public class AkSoundEngineController
 
 #if UNITY_EDITOR
 		OnEnableEditorListener(akInitializer.gameObject);
-		UnityEditor.EditorApplication.update += LateUpdate;
+		EnableEditorLateUpdate();
 #endif
 	}
 

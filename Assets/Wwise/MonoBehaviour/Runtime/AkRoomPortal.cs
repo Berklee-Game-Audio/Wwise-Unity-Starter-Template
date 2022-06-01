@@ -67,7 +67,7 @@ public class AkRoomPortal : AkTriggerHandler
 				UnityEngine.Mathf.Abs(extentVector.x),
 				UnityEngine.Mathf.Abs(extentVector.y),
 				UnityEngine.Mathf.Abs(extentVector.z));
-			AkSoundEngine.SetRoomPortal(GetID(), portalTransform, extent, active, frontRoomID, backRoomID);
+			AkSoundEngine.SetRoomPortal(GetID(), frontRoomID, backRoomID, portalTransform, extent, active, name);
 			portalSet = true;
 		}
 		else

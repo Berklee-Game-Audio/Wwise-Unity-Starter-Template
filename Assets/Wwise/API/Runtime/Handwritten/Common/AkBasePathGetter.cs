@@ -40,6 +40,7 @@ public partial class AkBasePathGetter
 public partial class AkBasePathGetter
 {
 	public static readonly string DefaultBasePath = System.IO.Path.Combine("Audio", "GeneratedSoundBanks");
+	private const string DecodedBankFolder = "DecodedBanks";
 
 	private static bool LogWarnings_Internal = true;
 	public static bool LogWarnings
@@ -136,7 +137,6 @@ public partial class AkBasePathGetter
 	{
 		return System.IO.Path.Combine(GetWwiseProjectPath(), "GeneratedSoundBanks");
 	}
-	
 
 	/// <summary>
 	///     Determines the platform base path for use within the Editor.
@@ -199,7 +199,18 @@ public partial class AkBasePathGetter
 	}
 #endif
 
-	public static void EvaluateGamePaths()
+	private static AkBasePathGetter Instance;
+	public static AkBasePathGetter Get()
+	{
+		if (Instance == null)
+		{
+			Instance = new AkBasePathGetter();
+			Instance.EvaluateGamePaths();
+		}
+		return Instance;
+	}
+
+	public void EvaluateGamePaths()
 	{
 #if UNITY_SWITCH && !UNITY_EDITOR
 		// Calling Application.persistentDataPath crashes Switch
@@ -223,6 +234,7 @@ public partial class AkBasePathGetter
 		{
 			tempSoundBankBasePath = GetPlatformBasePath();
 
+#if !AK_WWISE_ADDRESSABLES //Don't log this if we're using addressables
 #if !UNITY_EDITOR && UNITY_ANDROID
 			// Can't use File.Exists on Android, assume banks are there
 			var InitBnkFound = true;
@@ -230,7 +242,6 @@ public partial class AkBasePathGetter
 			var InitBnkFound = System.IO.File.Exists(System.IO.Path.Combine(tempSoundBankBasePath, "Init.bnk"));
 #endif
 			
-#if !AK_WWISE_ADDRESSABLES && UNITY_ADDRESSBLES //Don't log this if we're using addressables
 			if (string.IsNullOrEmpty(tempSoundBankBasePath) || !InitBnkFound)
 			{
 				if (LogWarnings)
@@ -262,13 +273,11 @@ public partial class AkBasePathGetter
 		DecodedBankFullPath = tempDecodedBankFullPath;
 	}
 
-	public static string SoundBankBasePath { get; private set; }
+	public string SoundBankBasePath { get; private set; }
 
-	public static string PersistentDataPath { get; private set; }
+	public string PersistentDataPath { get; private set; }
 
-	private const string DecodedBankFolder = "DecodedBanks";
-
-	public static string DecodedBankFullPath { get; private set; }
+	public string DecodedBankFullPath { get; private set; }
 }
 
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

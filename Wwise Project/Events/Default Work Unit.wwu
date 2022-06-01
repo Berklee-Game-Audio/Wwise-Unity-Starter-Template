@@ -12,16 +12,6 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
-						<Action Name="" ID="{0654FCB6-D69C-4455-A7FF-78B698FA8F8C}" ShortID="935566204">
-							<PropertyList>
-								<Property Name="ActionType" Type="int16" Value="22"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="explore" ID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}" WorkUnitID="{9A903F6A-1A67-45F8-BBEC-31ED605B83FE}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Set_State_Explore" ID="{FC2A7E89-D78D-4414-8B91-9BAA6E2928E8}">
@@ -52,9 +42,16 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="empty_event" ID="{105640D3-6E38-4100-9588-A5A7230C6AB5}">
+				<Event Name="Play_Stinger" ID="{105640D3-6E38-4100-9588-A5A7230C6AB5}">
 					<ChildrenList>
-						<Action Name="" ID="{EAFAA9A9-A951-4A8A-8D79-2BBC65F07E38}" ShortID="287452999">
+						<Action Name="" ID="{97B17BF6-F414-4E4C-82F5-DC6B0312EC6C}" ShortID="1062880030">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="new_stinger_1" ID="{9360E672-413E-4E63-866F-E823465F482B}" WorkUnitID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{45EE66F9-C289-4B08-A8E5-387A844590A8}" ShortID="786787494">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="22"/>
 							</PropertyList>

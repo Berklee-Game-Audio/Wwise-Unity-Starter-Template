@@ -13,7 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID EMPTY_EVENT = 4037201921U;
+        static const AkUniqueID PLAY_STINGER = 754369548U;
         static const AkUniqueID SET_STATE_EXPLORE = 4016583417U;
         static const AkUniqueID SET_STATE_SUSPENSE = 3548625176U;
         static const AkUniqueID START_GAME = 1114964412U;
@@ -39,6 +39,7 @@ namespace AK
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID HEALTH = 3677180323U;
+        static const AkUniqueID MASTER_VOLUME = 4179668880U;
     } // namespace GAME_PARAMETERS
 
     namespace BANKS

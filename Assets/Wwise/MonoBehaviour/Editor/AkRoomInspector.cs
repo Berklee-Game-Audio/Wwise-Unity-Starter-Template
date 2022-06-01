@@ -52,6 +52,8 @@ public class AkRoomInspector : UnityEditor.Editor
 			m_PostEventHandlerInspector.OnGUI();
 			UnityEditor.EditorGUILayout.PropertyField(roomToneEvent);
 			UnityEditor.EditorGUILayout.PropertyField(roomToneAuxSend);
+
+			TriggerCheck(m_AkRoom);
 		}
 
 		AkRoomAwareObjectInspector.RigidbodyCheck(m_AkRoom.gameObject);
@@ -84,6 +86,20 @@ public class AkRoomInspector : UnityEditor.Editor
 						"Associating a geometry with this room for wet transmission is currently only supported with box, sphere, capsule and mesh colliders, or if the game object also has an enabled AkSurfaceReflector component.",
 						UnityEditor.MessageType.Warning);
 				}
+			}
+		}
+	}
+
+	public static void TriggerCheck(AkRoom room)
+	{
+		if (room.triggerList.Contains(AkTriggerHandler.DESTROY_TRIGGER_ID) ||
+			room.triggerList.Contains(AkTriggerHandler.ON_DISABLE_TRIGGER_ID))
+		{
+			using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
+			{
+				UnityEditor.EditorGUILayout.HelpBox(
+					"Room tones will only be posted on active and enabled gameobjects; it is not possible to post room tones on disable and on destroy.",
+					UnityEditor.MessageType.Warning);
 			}
 		}
 	}

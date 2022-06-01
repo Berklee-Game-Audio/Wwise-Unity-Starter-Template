@@ -4,6 +4,13 @@
 		<WorkUnit Name="Default Work Unit" ID="{DC4B232E-95B7-4788-8718-AFA2CC6B42E9}" PersistMode="Standalone">
 			<ChildrenList>
 				<MusicSwitchContainer Name="New Music Switch Container" ID="{5219887F-DDCB-4FFF-AC78-0486B72CA2AF}" ShortID="848142320">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>1</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
@@ -296,6 +303,258 @@
 								</MusicPlaylistItem>
 							</Playlist>
 						</MusicPlaylistContainer>
+						<MusicSegment Name="new_stinger_1" ID="{9360E672-413E-4E63-866F-E823465F482B}" ShortID="636735358">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="7400"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="new_stinger_1" ID="{D8520D9C-8525-4353-83BF-2CF4BE98B8D0}" ShortID="512427391">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="new_stinger_1" ID="{403BCCF7-08C3-448C-9FF5-66FDF68B4BC9}">
+											<Language>SFX</Language>
+											<AudioFile>new_stinger_1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="633351571"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<TransitionList>
+										<MusicTransition Name="Root" ID="{ADE2272A-0529-4C11-91FB-92E946DAE0E0}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</TransitionList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{064C55AF-85CE-44A2-A86C-6D890362E6B0}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="new_stinger_1" ID="{3BF47403-E4E1-4C72-AD55-FD66BD0B93D4}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="7400"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="new_stinger_1" ID="{403BCCF7-08C3-448C-9FF5-66FDF68B4BC9}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{271B9817-7612-4555-A7F9-BDE155E0CC27}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{D0E2563E-1C49-4711-81E4-663C17CC28FA}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="7400"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="new_stinger_2" ID="{795781EA-3C26-4E01-A4DF-D45F23C57722}" ShortID="873571932">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="6049.70833333333"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="new_stinger_2" ID="{9D2992C6-9C66-45CD-94F5-88A41DC03366}" ShortID="102832846">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="new_stinger_2" ID="{46CDD539-9117-438E-86FA-7A88D67022F5}">
+											<Language>SFX</Language>
+											<AudioFile>new_stinger_2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="300330073"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<TransitionList>
+										<MusicTransition Name="Root" ID="{C91EDBFE-8B21-48A9-8BF1-CF0880C07FC4}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</TransitionList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{ED88DE41-4381-46D8-A935-CA7B0891B95A}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="new_stinger_2" ID="{48D0BAB3-5007-459F-999B-755840C4963A}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="6049.70833333333"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="new_stinger_2" ID="{46CDD539-9117-438E-86FA-7A88D67022F5}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{F86A0AD3-C170-4425-85B7-1E7F47962E01}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{519B3C69-ACCB-4263-8654-129FE38A3F89}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="6049.70833333333"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="new_stinger_3" ID="{7AC0D6D6-A0EF-4F5E-83B9-1D757F628D70}" ShortID="949509392">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="7742.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{0725BC87-C095-46DC-A369-7A555A13239F}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="new_stinger_3" ID="{10E6D1FB-4C99-4FB5-A3E1-82585FCECC0B}" ShortID="962950112">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{17C32E4A-44FD-4344-B2CC-12E372C82307}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="new_stinger_3" ID="{62981FEB-A417-481E-BF98-0679AED999CD}">
+											<Language>SFX</Language>
+											<AudioFile>new_stinger_3.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="481897049"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<TransitionList>
+										<MusicTransition Name="Root" ID="{1AAF3A60-58C6-4821-A054-B596990CC2CA}">
+											<PropertyList>
+												<Property Name="IsFolder" Type="bool" Value="True"/>
+											</PropertyList>
+											<TransitionInfo/>
+										</MusicTransition>
+									</TransitionList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{7C86A3DE-D724-4B5B-AF1B-4DE6FB0E7658}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="new_stinger_3" ID="{731A699F-D414-4ADD-835A-CBA36176FCB6}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="7742.5"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="new_stinger_3" ID="{62981FEB-A417-481E-BF98-0679AED999CD}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{1CDC3C4C-B5B6-4F48-B553-616DEC7C9042}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{558D8938-DA76-4AAF-BDB4-D1198CD52C0A}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="7742.5"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
 					</ChildrenList>
 					<TransitionList>
 						<MusicTransition Name="Root" ID="{5070135D-CC02-47F0-8EFD-CC530E567055}">

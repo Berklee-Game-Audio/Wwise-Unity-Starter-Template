@@ -11,6 +11,7 @@ public abstract class AkTriggerHandler : UnityEngine.MonoBehaviour
 	public const int START_TRIGGER_ID = 1281810935;
 	public const int DESTROY_TRIGGER_ID = unchecked((int)3936390293);
 	public const int ON_ENABLE_TRIGGER_ID = -320808462;
+	public const int ON_DISABLE_TRIGGER_ID = 716467161;
 
 	///Since our mask is a 32 bits integer, we can't have more than 32 triggers
 	public const int MAX_NB_TRIGGERS = 32;

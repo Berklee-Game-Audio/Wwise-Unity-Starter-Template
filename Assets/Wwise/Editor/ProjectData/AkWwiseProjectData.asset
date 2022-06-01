@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy/Default Work Unit
     guid: 4a2ec317fd444443b2cc12e372c82307
     GuidInternal: 
-    m_lastTime: -8585791791414775808
+    m_lastTime: -8585513007394775808
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks/Default Work Unit
     guid: dac3a449d5c89a43bf1e2c5b55839753
     GuidInternal: 
-    m_lastTime: -8585791791414775808
+    m_lastTime: -8585513010024775808
     List:
     - name: Game_Soundbank
       guid: f93298340c4491408cccd35a19a52aae
@@ -94,11 +94,11 @@ MonoBehaviour:
     ParentPath: Events/Default Work Unit
     guid: c6cd1bf54ee4d94fafa741d395989397
     GuidInternal: 
-    m_lastTime: -8585791791414775808
+    m_lastTime: -8585475209724775808
     List:
-    - name: empty_event
+    - name: Play_Stinger
       guid: d3405610386e00419588a5a7230c6ab5
-      id: 4037201921
+      id: 754369548
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -106,13 +106,13 @@ MonoBehaviour:
       - ElementName: Default Work Unit
         ObjectType: 12
         guid: c6cd1bf54ee4d94fafa741d395989397
-      - ElementName: empty_event
+      - ElementName: Play_Stinger
         ObjectType: 3
         guid: d3405610386e00419588a5a7230c6ab5
-      Path: Events/Default Work Unit/empty_event
+      Path: Events/Default Work Unit/Play_Stinger
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Set_State_Explore
       guid: 897e2afc8dd714448b919baa6e2928e8
       id: 4016583417
@@ -128,8 +128,8 @@ MonoBehaviour:
         guid: 897e2afc8dd714448b919baa6e2928e8
       Path: Events/Default Work Unit/Set_State_Explore
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Set_State_Suspense
       guid: 0b1b179ca47cf04eb157356b03404fe3
       id: 3548625176
@@ -145,8 +145,8 @@ MonoBehaviour:
         guid: 0b1b179ca47cf04eb157356b03404fe3
       Path: Events/Default Work Unit/Set_State_Suspense
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Start_Game
       guid: 935ae58e8c37f941bab1a40b856c9315
       id: 1114964412
@@ -179,8 +179,8 @@ MonoBehaviour:
         guid: 7e71085a26e9e14b96613952ceacdd26
       Path: Events/Default Work Unit/Stop_All
       maxAttenuation: 0
-      maxDuration: 0
-      minDuration: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
     PathAndIcons:
@@ -193,7 +193,7 @@ MonoBehaviour:
     ParentPath: Game Parameters/Default Work Unit
     guid: 948454c5e6a8da4b8ca0a69f4d8c2761
     GuidInternal: 
-    m_lastTime: -8585791791414775808
+    m_lastTime: -8585513007274775808
     List:
     - name: health
       guid: cd0098b86115c4409a062d18e9bd148f
@@ -209,6 +209,20 @@ MonoBehaviour:
         ObjectType: 13
         guid: cd0098b86115c4409a062d18e9bd148f
       Path: Game Parameters/Default Work Unit/health
+    - name: master_volume
+      guid: 95bb1f0d5ca417438e2da30ab7d0dec2
+      id: 4179668880
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 948454c5e6a8da4b8ca0a69f4d8c2761
+      - ElementName: master_volume
+        ObjectType: 13
+        guid: 95bb1f0d5ca417438e2da30ab7d0dec2
+      Path: Game Parameters/Default Work Unit/master_volume
   StateWwu:
   - PhysicalPath: States/Default Work Unit.wwu
     PathAndIcons:

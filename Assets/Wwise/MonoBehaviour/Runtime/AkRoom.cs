@@ -6,7 +6,7 @@
 /// @details The AkRoom component uses its required Collider component to determine when AkRoomAwareObjects enter and exit the room using the OnTriggerEnter and OnTriggerExit callbacks.
 public class AkRoom : AkTriggerHandler
 {
-	public static ulong INVALID_ROOM_ID = unchecked((ulong)-1.0f);
+	public static ulong INVALID_ROOM_ID = unchecked((ulong)(-1));
 
 	public static ulong GetAkRoomID(AkRoom room)
 	{
@@ -66,6 +66,8 @@ public class AkRoom : AkTriggerHandler
 	private float previousRoomGameObj_AuxSendLevelToSelf;
 	private bool previousRoomGameObj_KeepRegistered;
 	private ulong previousGeometryID;
+
+	private bool bSentToWwise = false;
 #endif
 
 	#endregion
@@ -110,7 +112,8 @@ public class AkRoom : AkTriggerHandler
 		ulong geometryID = GetGeometryID();
 
 #if UNITY_EDITOR
-		if (previousUp == transform.up &&
+		if (bSentToWwise &&
+			previousUp == transform.up &&
 			previousFront == transform.forward &&
 			previousReverbAuxBus == reverbAuxBus.Id &&
 			previousReverbLevel == reverbLevel &&
@@ -137,6 +140,7 @@ public class AkRoom : AkTriggerHandler
 		AkSoundEngine.SetRoom(GetID(), roomParams, geometryID, name);
 
 #if UNITY_EDITOR
+		bSentToWwise = true;
 		previousUp = transform.up;
 		previousFront = transform.forward;
 		previousReverbAuxBus = reverbAuxBus.Id;
@@ -363,10 +367,14 @@ public class AkRoom : AkTriggerHandler
 		previousColliderType = null;
 
 		// stop sounds applied to the room game object
-		AkSoundEngine.StopAll(GetID());
+		if (roomToneEvent.IsValid())
+			AkSoundEngine.StopAll(GetID());
 
 		RoomCount--;
 		AkSoundEngine.RemoveRoom(GetID());
+#if UNITY_EDITOR
+		bSentToWwise = false;
+#endif
 	}
 
 	private void OnTriggerEnter(UnityEngine.Collider in_other)
@@ -381,7 +389,7 @@ public class AkRoom : AkTriggerHandler
 
 	public void PostRoomTone()
 	{
-		if (roomToneEvent.IsValid())
+		if (roomToneEvent.IsValid() && isActiveAndEnabled)
 			AkSoundEngine.PostEventOnRoom(roomToneEvent.Id, GetID());
 	}
 
@@ -400,7 +408,7 @@ public class AkRoom : AkTriggerHandler
 		public ulong GetHighestPriorityActiveAndEnabledRoomID()
 		{
 			var room = GetHighestPriorityActiveAndEnabledRoom();
-			return room == null ? INVALID_ROOM_ID : room.GetID();
+			return GetAkRoomID(room);
 		}
 		public AkRoom GetHighestPriorityActiveAndEnabledRoom()
 		{

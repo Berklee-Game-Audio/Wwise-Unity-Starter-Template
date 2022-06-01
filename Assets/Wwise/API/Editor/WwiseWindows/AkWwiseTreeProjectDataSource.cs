@@ -34,7 +34,7 @@ public class AkWwiseTreeProjectDataSource : AkWwiseTreeDataSource
 		ProjectRoot.AddWwiseItemChild(BuildObjectTypeTree(WwiseObjectType.AuxBus));
 		ProjectRoot.AddWwiseItemChild(BuildObjectTypeTree(WwiseObjectType.AcousticTexture));
 
-		TreeUtility.TreeToList(ProjectRoot, Data);
+		TreeUtility.TreeToList(ProjectRoot, ref Data);
 	}
 
 	public override AkWwiseTreeViewItem GetComponentDataRoot(WwiseObjectType objectType)
@@ -107,7 +107,7 @@ public class AkWwiseTreeProjectDataSource : AkWwiseTreeDataSource
 
 	public AkWwiseTreeViewItem BuildTree(string name, List<AkWwiseProjectData.GroupValWorkUnit> workUnits)
 	{
-		var rootFolder = new AkWwiseTreeViewItem(name, 1, GenerateUniqueID(), System.Guid.Empty, WwiseObjectType.PhysicalFolder);
+		var rootFolder = new AkWwiseTreeViewItem(name, 1, GenerateUniqueID(), System.Guid.NewGuid(), WwiseObjectType.PhysicalFolder);
 		foreach (var wwu in workUnits)
 		{
 			var wwuItem = AddTreeItem(rootFolder, wwu.PathAndIcons);
@@ -127,7 +127,7 @@ public class AkWwiseTreeProjectDataSource : AkWwiseTreeDataSource
 
 	private AkWwiseTreeViewItem BuildTree(string name, List<AkWwiseProjectData.AkInfoWorkUnit> workUnits)
 	{
-		var rootFolder = new AkWwiseTreeViewItem(name, 1, GenerateUniqueID(), System.Guid.Empty, WwiseObjectType.PhysicalFolder);
+		var rootFolder = new AkWwiseTreeViewItem(name, 1, GenerateUniqueID(), System.Guid.NewGuid(), WwiseObjectType.PhysicalFolder);
 
 		foreach (var wwu in workUnits)
 		{
@@ -164,13 +164,16 @@ public class AkWwiseTreeProjectDataSource : AkWwiseTreeDataSource
 					newItem = Find(pathElem.ObjectGuid, pathElem.ElementName, path);
 				}
 				else
-					newItem = Find(pathElem.ObjectGuid, pathElem.ElementName);
+				{
+					newItem = FindByGuid(pathElem.ObjectGuid);
+				}
 
 				if (newItem == null)
 				{
 					newItem = new AkWwiseTreeViewItem(pathElem.ElementName, treeDepth - unaccountedDepth, GenerateUniqueID(), pathElem.ObjectGuid, pathElem.ObjectType);
 					parent.AddWwiseItemChild(newItem);
 					Data.Add(newItem);
+
 				}
 				parent = newItem;
 
@@ -178,7 +181,7 @@ public class AkWwiseTreeProjectDataSource : AkWwiseTreeDataSource
 		}
 
 		pathElem = pathAndIcons.Last();
-		newItem = Find(pathElem.ObjectGuid);
+		newItem = FindByGuid(pathElem.ObjectGuid);
 
 		if (newItem == null)
 		{
@@ -189,18 +192,26 @@ public class AkWwiseTreeProjectDataSource : AkWwiseTreeDataSource
 		return newItem;
 	}
 
-	public virtual AkWwiseTreeViewItem Find(System.Guid guid, string name, string path)
+	public AkWwiseTreeViewItem Find(System.Guid guid, string name, string path)
 	{
-		var results = Data.FindAll(element => element.objectGuid == guid && element.name == name);
-
-		foreach (var r in results)
+		if (guid.Equals(System.Guid.Empty))
 		{
-			var itemPath = GetProjectPath(r,"");
-			if (itemPath == path)
+			var results = Data.ItemDict.Values.ToList().FindAll(element => element.objectGuid == guid && element.name == name);
+
+			foreach (var r in results)
 			{
-				return r;
+				var itemPath = GetProjectPath(r, "");
+				if (itemPath == path)
+				{
+					return r;
+				}
 			}
 		}
+		else
+		{
+			return Data.ItemDict[guid];
+		}
+		
 
 		return null;
 	}

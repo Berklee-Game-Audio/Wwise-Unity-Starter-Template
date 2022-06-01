@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44303273393544ec18c2ef8d850eb034, type: 3}
   m_Name: 105640D3-6E38-4100-9588-A5A7230C6AB5
   m_EditorClassIdentifier: 
-  objectName: empty_event
-  id: 4037201921
+  objectName: Play_Stinger
+  id: 754369548
   guid: 105640D3-6E38-4100-9588-A5A7230C6AB5

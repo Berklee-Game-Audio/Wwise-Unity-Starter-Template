@@ -21,7 +21,6 @@ public static class AkWwiseProjectInfo
 	public static AkWwiseProjectData ProjectData;
 	private static AkWwiseTreeWAAPIDataSource _waapiPickerData = new AkWwiseTreeWAAPIDataSource();
 	private static AkWwiseTreeProjectDataSource _projectPickerData = new AkWwiseTreeProjectDataSource();
-	private static bool InInitializationState = false;
 
 	public enum DataSourceType
 	{

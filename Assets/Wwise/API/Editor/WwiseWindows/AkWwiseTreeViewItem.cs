@@ -15,6 +15,7 @@ public class AkWwiseTreeViewItem : TreeViewItem, System.IEquatable<AkWwiseTreeVi
 	public System.Guid objectGuid;
 	public WwiseObjectType objectType;
 	public int numChildren;
+	public bool isSorted;
 
 	public string name
 	{
@@ -23,7 +24,7 @@ public class AkWwiseTreeViewItem : TreeViewItem, System.IEquatable<AkWwiseTreeVi
 			displayName = value;
 			if (parent != null)
 			{
-				parent.children.Sort();
+				(parent as AkWwiseTreeViewItem).SortChildren();
 			}
 		}
 	}
@@ -95,7 +96,12 @@ public class AkWwiseTreeViewItem : TreeViewItem, System.IEquatable<AkWwiseTreeVi
 		child.depth = this.depth + 1;
 		child.parent = this;
 		children.Add(child);
+		isSorted = false;
+	}
+	public void SortChildren()
+	{
 		children.Sort();
+		isSorted = true;
 	}
 
 	public override int CompareTo(TreeViewItem B)

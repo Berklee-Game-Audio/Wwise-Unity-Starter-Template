@@ -27,6 +27,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 
 
 	public bool AutoSyncSelection;
+	public bool WaitingForSearchResults;
 
 	public AkWwiseTreeWAAPIDataSource() : base()
 	{
@@ -111,19 +112,23 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 
 	private void FireSearch(object sender, System.Timers.ElapsedEventArgs e)
 	{
+		if (WaitingForSearchResults) return;
 		if (SearchRoot == null)
 		{
 			SearchRoot = new AkWwiseTreeViewItem(ProjectRoot);
 		}
 
 		SearchRoot.children.Clear();
-		SearchItems = new List<AkWwiseTreeViewItem>(new[] { SearchRoot });
-		TreeUtility.TreeToList(SearchRoot, SearchItems);
+		SearchData = new TreeItems();
+		TreeUtility.TreeToList(SearchRoot, ref SearchData);
 		AkWaapiUtilities.GetResultListDelegate<WwiseObjectInfoJsonObject> callback = (List<WwiseObjectInfoJsonObject> items) =>
 		{
 			AddSearchResults(AkWaapiUtilities.ParseObjectInfo(items));
+			treeviewCommandQueue.Enqueue(new TreeViewCommand(() => Expand(SearchRoot.objectGuid, false)));
+			WaitingForSearchResults = false;
 		};
 		AkWaapiUtilities.Search(searchString, searchObjectTypeFilter, waapiWwiseObjectOptions, callback);
+		WaitingForSearchResults = true;
 	}
 
 	public override AkWwiseTreeViewItem GetSearchResults()
@@ -147,13 +152,13 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 					continue;
 				}
 
-				var match = Find(SearchItems, info.objectGUID);
+				var match = FindInSearchResults(info.objectGUID);
 				if (match != null)
 				{
 					continue;
 				}
 
-				var matchItem = Find(info.objectGUID);
+				var matchItem = FindByGuid(info.objectGUID);
 				if (matchItem == null)
 				{
 					AkWaapiUtilities.GetResultListDelegate<WwiseObjectInfoJsonObject> callback = (List<WwiseObjectInfoJsonObject> items) =>
@@ -165,7 +170,6 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 				}
 
 				AddItemToSearch(matchItem);
-				treeviewCommandQueue.Enqueue(new TreeViewCommand(() => Expand(matchItem.objectGuid, false)));
 			}
 		}
 		catch (System.Exception e)
@@ -178,10 +182,10 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 	private void AddItemToSearch(AkWwiseTreeViewItem sourceItem)
 	{
 		var matchItem = new AkWwiseTreeViewItem(sourceItem);
-		SearchItems.Add(matchItem);
+		SearchData.Add(matchItem);
 
 		var sourceParent = sourceItem.parent as AkWwiseTreeViewItem;
-		var parentCopy = Find(SearchItems, sourceParent.objectGuid);
+		var parentCopy = FindInSearchResults(sourceParent.objectGuid);
 		if (parentCopy != null)
 		{
 			parentCopy.AddWwiseItemChild(matchItem);
@@ -191,12 +195,11 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 		{
 			parentCopy = new AkWwiseTreeViewItem(sourceParent);
 			parentCopy.AddWwiseItemChild(matchItem);
-			SearchItems.Add(parentCopy);
-
+			SearchData.Add(parentCopy);
 			var nextParent = sourceParent.parent as AkWwiseTreeViewItem;
 			while (nextParent != null)
 			{
-				var parentInSearchItems = Find(SearchItems, nextParent.objectGuid);
+				var parentInSearchItems = FindInSearchResults(nextParent.objectGuid);
 				if (parentInSearchItems != null)
 				{
 					parentInSearchItems.AddWwiseItemChild(parentCopy);
@@ -204,7 +207,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 				}
 				parentInSearchItems = new AkWwiseTreeViewItem(nextParent);
 				parentInSearchItems.AddWwiseItemChild(parentCopy);
-				SearchItems.Add(parentInSearchItems);
+				SearchData.Add(parentInSearchItems);
 				parentCopy = parentInSearchItems;
 				nextParent = nextParent.parent as AkWwiseTreeViewItem;
 			}
@@ -217,7 +220,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 		//Items obtained from the WAAPI call are sorted by path so we can simply iterate over them
 		foreach (var infoItem in infoItems)
 		{
-			var newItem = Find(infoItem.objectGUID);
+			var newItem = FindByGuid(infoItem.objectGUID);
 			if (newItem == null)
 			{
 				newItem = new AkWwiseTreeViewItem(infoItem, GenerateUniqueID(), parent.depth + 1);
@@ -246,9 +249,8 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 	public void AddItemWithAncestorsToSearch(List<WwiseObjectInfo> infoItems)
 	{
 		AddItemWithAncestors(infoItems, false);
-		var item = Find(infoItems.Last().objectGUID);
+		var item = FindByGuid(infoItems.Last().objectGUID);
 		AddItemToSearch(item);
-		treeviewCommandQueue.Enqueue(new TreeViewCommand(() => Expand(item.objectGuid, false)));
 	}
 
 	public void AddItems(List<WwiseObjectInfo> infoItems)
@@ -260,13 +262,13 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 				continue;
 			}
 
-			var tParent = Find(infoItem.parentID);
+			var tParent = FindByGuid(infoItem.parentID);
 			if (tParent == null || tParent == ProjectRoot)
 			{
 				tParent = ProjectRoot;
 			}
 
-			var tChild = Find(infoItem.objectGUID);
+			var tChild = FindByGuid(infoItem.objectGUID);
 			if (tChild == null)
 			{
 				tChild = new AkWwiseTreeViewItem(infoItem, GenerateUniqueID(), tParent.depth + 1);
@@ -281,7 +283,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 		if (infoItems != null && infoItems.Count > 0)
 		{
 			AddItems(infoItems);
-			var folder = Find(infoItems[0].objectGUID);
+			var folder = FindByGuid(infoItems[0].objectGUID);
 			wwiseObjectFolders[oType] = folder;
 		}
 	}
@@ -293,7 +295,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 			return;
 		}
 
-		var parent = Find(parentGuid);
+		var parent = FindByGuid(parentGuid);
 		if (parent == null)
 		{
 			return;
@@ -322,7 +324,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 			return;
 		}
 
-		var parent = Find(parentGuid);
+		var parent = FindByGuid(parentGuid);
 		parent.children.Clear();
 		parent.children.Remove(null);
 
@@ -416,7 +418,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 		if (added.childInfo.type == WwiseObjectType.None)
 			return;
 
-		var parent = Find(added.parentInfo.objectGUID);
+		var parent = FindByGuid(added.parentInfo.objectGUID);
 
 		// New object created, but parent is not loaded yet, so we can ignore it
 		if (parent == null)
@@ -424,7 +426,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 			return;
 		}
 
-		var child = Find(added.childInfo.objectGUID);
+		var child = FindByGuid(added.childInfo.objectGUID);
 		if (child == null)
 		{
 			child = new AkWwiseTreeViewItem(added.childInfo, GenerateUniqueID(), parent.depth + 1);
@@ -483,7 +485,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 
 	public void Rename(System.Guid objectGuid, string newName)
 	{
-		var item = Find(objectGuid);
+		var item = FindByGuid(objectGuid);
 		if (item != null)
 		{
 			item.name = newName;
@@ -496,7 +498,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 
 	public void Remove(WwiseObjectInfo parentInfo, WwiseObjectInfo childInfo)
 	{
-		var parent = Find(parentInfo.objectGUID);
+		var parent = FindByGuid(parentInfo.objectGUID);
 
 		//Object removed, but it was never loaded so we can ignore it
 		if (parent == null)
@@ -534,7 +536,7 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 
 		if (!TreeView.ExpandItem(itemGuid, true))
 		{
-			var item = Find(itemGuid);
+			var item = FindByGuid(itemGuid);
 			treeviewCommandQueue.Enqueue(new TreeViewCommand(() => Expand(itemGuid, true)));
 
 			if (item == null)
@@ -626,10 +628,10 @@ public class AkWwiseTreeWAAPIDataSource : AkWwiseTreeDataSource
 			treeviewCommandQueue.Enqueue(toRequeue.Dequeue());
 		}
 
-		//Preemptively load items in heirarchy that are close to being exposed ( up to grandchildren of unexpanded items)
+		//Preemptively load items in hierarchy that are close to being exposed ( up to grandchildren of unexpanded items)
 		if (rebuildFlag)
 		{
-			TreeUtility.TreeToList(ProjectRoot, Data);
+			TreeUtility.TreeToList(ProjectRoot, ref Data);
 			if (TreeView != null)
 			{
 				Preload(ProjectRoot, TreeView.state);

@@ -76,7 +76,7 @@ public class AkWwiseComponentPicker : UnityEditor.EditorWindow
 				if (UnityEngine.GUILayout.Button("Ok"))
 				{
 					//Get the selected item
-					var selectedItem = m_treeView.dataSource.Find(m_treeView.state.lastClickedID);
+					var selectedItem = m_treeView.dataSource.FindById(m_treeView.state.lastClickedID);
 
 					SetGuid(selectedItem);
 				}

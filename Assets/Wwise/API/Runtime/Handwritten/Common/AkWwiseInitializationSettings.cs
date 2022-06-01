@@ -93,7 +93,9 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 		"AdvancedSettings.m_UseAsyncOpen",
 		"AdvancedSettings.m_SoundBankPersistentDataPath",
 		"AdvancedSettings.m_DebugOutOfRangeCheckEnabled",
-		"AdvancedSettings.m_DebugOutOfRangeLimit"
+		"AdvancedSettings.m_DebugOutOfRangeLimit",
+		"AdvancedSettings.m_MemoryAllocationSizeLimit",
+		"AdvancedSettings.m_MemoryDebugLevel"
 	};
 
 	public abstract class PlatformSettings : AkCommonPlatformSettings
@@ -303,9 +305,9 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 		}
 
 		AkSoundEngine.InitCommunication(ActivePlatformSettings.AkCommunicationSettings);
-		AkBasePathGetter.EvaluateGamePaths();
 
-		var soundBankBasePath = AkBasePathGetter.SoundBankBasePath;
+		var akBasePathGetterInstance =  AkBasePathGetter.Get();
+		var soundBankBasePath = akBasePathGetterInstance.SoundBankBasePath;
 		if (string.IsNullOrEmpty(soundBankBasePath))
 		{
 			// this is a nearly impossible situation
@@ -314,7 +316,7 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 			return false;
 		}
 
-		var persistentDataPath = AkBasePathGetter.PersistentDataPath;
+		var persistentDataPath = akBasePathGetterInstance.PersistentDataPath;
 		var isBasePathSameAsPersistentPath = soundBankBasePath == persistentDataPath;
 
 #if UNITY_ANDROID
@@ -344,7 +346,7 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 			AkSoundEngine.AddBasePath(persistentDataPath);
 		}
 
-		var decodedBankFullPath = AkBasePathGetter.DecodedBankFullPath;
+		var decodedBankFullPath = akBasePathGetterInstance.DecodedBankFullPath;
 		if (!string.IsNullOrEmpty(decodedBankFullPath))
 		{
 			// AkSoundEngine.SetDecodedBankPath creates the folders for writing to (if they don't exist)
@@ -394,6 +396,8 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 	{
 		if (!AkSoundEngine.IsInitialized())
 			return;
+
+		AkSoundEngine.SetOfflineRendering(false);
 
 		// Stop everything, and make sure the callback buffer is empty. We try emptying as much as possible, and wait 10 ms before retrying.
 		// Callbacks can take a long time to be posted after the call to RenderAudio().

@@ -243,7 +243,8 @@ public static class AkBankManager
 
 			// test language-specific decoded file path
 			var language = AkSoundEngine.GetCurrentLanguage();
-			var decodedBankFullPath = AkBasePathGetter.DecodedBankFullPath;
+			var akBasePathGetterInstance =  AkBasePathGetter.Get();
+			var decodedBankFullPath = akBasePathGetterInstance.DecodedBankFullPath;
 			decodedBankPath = System.IO.Path.Combine(decodedBankFullPath, language);
 			var decodedBankFilePath = System.IO.Path.Combine(decodedBankPath, bankFileName);
 
@@ -261,7 +262,7 @@ public static class AkBankManager
 				try
 				{
 					var decodedFileTime = System.IO.File.GetLastWriteTime(decodedBankFilePath);
-					var encodedBankFilePath = System.IO.Path.Combine(AkBasePathGetter.SoundBankBasePath, bankFileName);
+					var encodedBankFilePath = System.IO.Path.Combine(akBasePathGetterInstance.SoundBankBasePath, bankFileName);
 					var encodedFileTime = System.IO.File.GetLastWriteTime(encodedBankFilePath);
 
 					decodeBank = decodedFileTime <= encodedFileTime;
@@ -286,7 +287,7 @@ public static class AkBankManager
 			if (res == AKRESULT.AK_Success)
 			{
 				res = AkSoundEngine.LoadBank(bankName, out m_BankID);
-				AkSoundEngine.SetBasePath(AkBasePathGetter.SoundBankBasePath);
+				AkSoundEngine.SetBasePath(AkBasePathGetter.Get().SoundBankBasePath);
 			}
 			return res;
 		}

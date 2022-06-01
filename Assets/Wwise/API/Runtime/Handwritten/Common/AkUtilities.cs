@@ -1,4 +1,5 @@
 #if !(UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
+using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -816,18 +817,34 @@ public partial class AkUtilities
 		const string AssetWwisePathParent = "Assets/Wwise/API/";
 		const string PackageWwisePathParent = "Packages/com.audiokinetic.wwise.api/";
 
+		string rootpath = "";
 		if (System.IO.Directory.Exists(System.IO.Path.GetFullPath(PackageWwisePathParent)))
 		{
-			return System.IO.Path.Combine(PackageWwisePathParent, relativePath);
+			rootpath = PackageWwisePathParent;
 		}
 		else if (System.IO.Directory.Exists(System.IO.Path.GetFullPath(AssetWwisePathParent)))
 		{
-			return System.IO.Path.Combine(AssetWwisePathParent, relativePath);
+
+			rootpath = AssetWwisePathParent;
 		}
-		else
+		else 
 		{
 			return string.Empty;
+		} 
+
+		var relativePathFolders = new System.Collections.Generic.List<string>(relativePath.Split('/'));
+		var rootPathFolders = new System.Collections.Generic.List<string>(rootpath.Split('/'));
+		var overlap = relativePathFolders.Intersect(rootPathFolders);
+		if (overlap.Count() > 0)
+		{
+			UnityEngine.Debug.LogWarning("AkUtilities.GetPathInPackage(): relativePath contains overlapping folder names with root path.\nrelativePath: " 
+				+ relativePath
+				+ "\nroot path: "
+				+ rootpath
+				+ "\n This could cause issues with plugins activation and packaging.");
 		}
+
+		return System.IO.Path.Combine(rootpath, relativePath);
 	}
 
 	/// <summary>

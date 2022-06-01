@@ -10,14 +10,42 @@ using System.Collections.Generic;
 using UnityEditor.IMGUI.Controls;
 
 public abstract class AkWwiseTreeDataSource
-{
-	public List<AkWwiseTreeViewItem> Data { get; protected set; }
+{ 
+	public class TreeItems
+	{
+		public Dictionary<System.Guid, AkWwiseTreeViewItem> ItemDict;
+
+
+		public TreeItems()
+		{
+			ItemDict = new Dictionary<System.Guid, AkWwiseTreeViewItem>();
+		}
+
+		public void Clear()
+		{
+			ItemDict.Clear();
+		}
+		public void Add(AkWwiseTreeViewItem item)
+		{
+			try
+			{
+				ItemDict[item.objectGuid] = item;
+			}
+			catch (System.ArgumentException e)
+			{
+				UnityEngine.Debug.LogError(e.Message);
+			}
+		}
+	}
+
+	public TreeItems Data;
 
 	public AkWwiseTreeViewItem ProjectRoot { get; protected set; }
 	public Dictionary<WwiseObjectType, AkWwiseTreeViewItem> wwiseObjectFolders;
 
 	public AkWwiseTreeViewItem SearchRoot { get; protected set; }
-	public List<AkWwiseTreeViewItem> SearchItems { get; protected set; }
+
+	public TreeItems SearchData;
 
 	public AkWwiseTreeView TreeView { protected get; set; }
 
@@ -51,58 +79,46 @@ public abstract class AkWwiseTreeDataSource
 
 	public AkWwiseTreeDataSource()
 	{
-		Data = new List<AkWwiseTreeViewItem>(100);
+		Data = new TreeItems();
 		wwiseObjectFolders = new Dictionary<WwiseObjectType, AkWwiseTreeViewItem>();
 		ProjectRoot = CreateProjectRootItem();
 	}
 
-	public virtual AkWwiseTreeViewItem Find(IEnumerable<AkWwiseTreeViewItem> data, System.Guid guid)
+	public AkWwiseTreeViewItem FindById(int id)
 	{
-		return data.FirstOrDefault(element => element.objectGuid == guid);
+		if (m_MaxID < id)
+		{
+			return null;
+		}
+		return Data.ItemDict.Values.FirstOrDefault(element => element.id == id);
 	}
 
-	public virtual AkWwiseTreeViewItem Find(IEnumerable<AkWwiseTreeViewItem> data, System.Guid guid, string name)
+	public AkWwiseTreeViewItem FindByGuid(System.Guid guid)
 	{
-		return data.FirstOrDefault(element => element.objectGuid == guid && element.name ==name);
+		return TreeUtility.FindByGuid(Data, guid);
 	}
 
-
-	public virtual AkWwiseTreeViewItem Find(IEnumerable<AkWwiseTreeViewItem> data, int id)
+	public AkWwiseTreeViewItem FindInSearchResults(System.Guid guid)
 	{
-		return data.FirstOrDefault(element => element.id == id);
-	}
-
-	public virtual AkWwiseTreeViewItem Find(int id)
-	{
-		return Find(Data, id);
-	}
-
-	public virtual AkWwiseTreeViewItem Find(System.Guid guid)
-	{
-		return Find(Data, guid);
-	}
-
-	public virtual AkWwiseTreeViewItem Find(System.Guid guid, string name)
-	{
-		return Find(Data, guid, name);
+		return TreeUtility.FindByGuid(SearchData, guid);
 	}
 
 	public IEnumerable<System.Guid> GetGuidsFromIds(IEnumerable<int> ids)
 	{
-		if (Data.Count == 0) return new List<System.Guid>();
-		return Data.Where(el => ids.Contains(el.id)).Select(el => el.objectGuid);
+		if (Data.ItemDict.Count == 0) return new List<System.Guid>();
+		return Data.ItemDict.Values.Where(el => ids.Contains(el.id)).Select(el => el.objectGuid);
 	}
 
 	public IEnumerable<int> GetIdsFromGuids(IEnumerable<System.Guid> guids)
 	{
-		if (Data.Count == 0) return new List<int>();
-		return Data.Where(el => guids.Contains(el.objectGuid)).Select(el => el.id);
+		if (Data.ItemDict.Count == 0) return new List<int>();
+		return Data.ItemDict.Values.Where(el => guids.Contains(el.objectGuid)).Select(el => el.id);
 	}
 
 	public IList<int> GetAncestors(int id)
 	{
 		var parents = new List<int>();
-		TreeViewItem el = Find(id);
+		TreeViewItem el = FindById(id);
 		if (el != null)
 		{
 			while (el.parent != null)
@@ -116,7 +132,7 @@ public abstract class AkWwiseTreeDataSource
 
 	public IList<int> GetDescendantsThatHaveChildren(int id)
 	{
-		AkWwiseTreeViewItem searchFromThis = Find(id);
+		AkWwiseTreeViewItem searchFromThis = FindById(id);
 		if (searchFromThis != null)
 		{
 			return GetParentsBelowStackBased(searchFromThis);
@@ -182,7 +198,12 @@ public abstract class AkWwiseTreeDataSource
 	public abstract void UpdateSearchResults(string searchString, WwiseObjectType objectType);
 	public virtual void SelectItem(System.Guid itemGuid)
 	{
-		TreeView.ExpandItem(itemGuid, true);
+		bool success = TreeView.ExpandItem(itemGuid, true);
+		if (!success)
+		{
+			UnityEditor.EditorApplication.delayCall += () => { SelectItem(itemGuid); };
+		}
+		
 	}
 
 	public virtual void LoadComponentData(WwiseObjectType objectType) { }
@@ -205,7 +226,7 @@ public static class TreeUtility
 		}
 	}
 
-	public static void TreeToList(AkWwiseTreeViewItem root, IList<AkWwiseTreeViewItem> result)
+	public static void TreeToList(AkWwiseTreeViewItem root, ref AkWwiseTreeDataSource.TreeItems result)
 	{
 		if (root == null)
 			return;
@@ -234,6 +255,37 @@ public static class TreeUtility
 				}
 			}
 		}
+	}
+
+	public static void SortTreeIfNecessary(AkWwiseTreeViewItem rootElement)
+	{
+		if (rootElement.hasChildren)
+		{
+			if (!rootElement.isSorted)
+			{
+				rootElement.SortChildren();
+			}
+			foreach (AkWwiseTreeViewItem child in rootElement.children)
+			{
+				SortTreeIfNecessary(child);
+			}
+		}
+	}
+
+
+	public static AkWwiseTreeViewItem FindByGuid(IEnumerable<AkWwiseTreeViewItem> data, System.Guid guid)
+	{
+		return data.FirstOrDefault(element => element.objectGuid == guid);
+	}
+
+
+	public static AkWwiseTreeViewItem FindByGuid(AkWwiseTreeDataSource.TreeItems data, System.Guid guid)
+	{
+		if (!data.ItemDict.ContainsKey(guid))
+		{
+			return null;
+		}
+		return data.ItemDict[guid];
 	}
 }
 #endregion
