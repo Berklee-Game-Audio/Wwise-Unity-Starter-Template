@@ -111,8 +111,8 @@ MonoBehaviour:
         guid: d3405610386e00419588a5a7230c6ab5
       Path: Events/Default Work Unit/Play_Stinger
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 7.4
+      minDuration: 7.4
     - name: Set_State_Explore
       guid: 897e2afc8dd714448b919baa6e2928e8
       id: 4016583417
@@ -128,8 +128,8 @@ MonoBehaviour:
         guid: 897e2afc8dd714448b919baa6e2928e8
       Path: Events/Default Work Unit/Set_State_Explore
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Set_State_Suspense
       guid: 0b1b179ca47cf04eb157356b03404fe3
       id: 3548625176
@@ -145,8 +145,8 @@ MonoBehaviour:
         guid: 0b1b179ca47cf04eb157356b03404fe3
       Path: Events/Default Work Unit/Set_State_Suspense
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Start_Game
       guid: 935ae58e8c37f941bab1a40b856c9315
       id: 1114964412
@@ -179,8 +179,8 @@ MonoBehaviour:
         guid: 7e71085a26e9e14b96613952ceacdd26
       Path: Events/Default Work Unit/Stop_All
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
   RtpcWwu:
   - PhysicalPath: Game Parameters/Default Work Unit.wwu
     PathAndIcons:
@@ -335,5 +335,5 @@ MonoBehaviour:
   ExpandedWaapiItemIds: 
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
-  currentDataSource: 0
+  currentDataSource: 1
   CurrentPluginConfig: 
