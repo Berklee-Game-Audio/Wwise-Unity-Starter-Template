@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="iOS" BasePlatform="iOS" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/</ProjectRoot>
+		<SourceFilesRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/.cache/iOS/</SourceFilesRoot>
+		<SoundBanksRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/iOS/</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>/Users/michaelsweet/Library/Application Support/Wwise2019/Bottles/Wwise2019x64/dosdevices/y:/GoogleDrive/_CloudSync/Work/Berklee/GIT/Wwise-Unity-Starter-Template/Wwise Project/GeneratedSoundBanks/iOS</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="2974437535">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<GameParameters>
+				<GameParameter Id="4179668880" Name="master_volume" ObjectPath="\Game Parameters\Default Work Unit\master_volume"/>
+			</GameParameters>
+		</SoundBank>
+		<SoundBank Id="3626155605" Language="SFX" Hash="2158269292">
+			<ObjectPath>\SoundBanks\Default Work Unit\Game_Soundbank</ObjectPath>
+			<ShortName>Game_Soundbank</ShortName>
+			<Path>Game_Soundbank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="754369548" Name="Play_Stinger" ObjectPath="\Events\Default Work Unit\Play_Stinger">
+					<IncludedMemoryFiles>
+						<File Id="633351571" Language="SFX">
+							<ShortName>new_stinger_1.wav</ShortName>
+							<Path>SFX/new_stinger_1_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<ActionSetState>
+						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore">
+					<ActionSetState>
+						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense">
+					<ActionSetState>
+						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game">
+					<IncludedMemoryFiles>
+						<File Id="681948759" Language="SFX">
+							<ShortName>Season - Winter Late.wav</ShortName>
+							<Path>SFX/Season - Winter Late_D79FB2B7.wem</Path>
+						</File>
+						<File Id="740210912" Language="SFX">
+							<ShortName>Season - Winter Early.wav</ShortName>
+							<Path>SFX/Season - Winter Early_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All"/>
+			</IncludedEvents>
+			<GameParameters>
+				<GameParameter Id="3677180323" Name="health" ObjectPath="\Game Parameters\Default Work Unit\health"/>
+			</GameParameters>
+			<StateGroups>
+				<StateGroup Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore" GUID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense" GUID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="4071417932" Name="Player_State" ObjectPath="\States\Default Work Unit\Player_State" GUID="{739D5D8D-C8BD-4652-892F-6D0A25AA689D}">
+					<States>
+						<State Id="748895195" Name="None" ObjectPath="\States\Default Work Unit\Player_State\None" GUID="{AAAB2E3A-7D51-4CAA-A03B-704335F0F360}"/>
+						<State Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore" GUID="{45B823D6-AC15-419A-89B1-EB2F9FAB178D}"/>
+						<State Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense" GUID="{0627526A-A4B7-4F2E-A5D2-19A3E83EE8B6}"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ValidationCache Version="1" SchemaVersion="103">
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Wwise Project.wproj" DateLow="1629833330" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Wwise Project.crossover.wsettings" DateLow="1650309115" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Virtual Acoustics\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Triggers\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Switches\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\States\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\SoundBanks\Default Work Unit.wwu" DateLow="1650305883" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Queries\Factory Queries.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Queries\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Presets\Factory Spatial Audio.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Presets\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Modulators\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Mixing Sessions\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Metadata\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1650306146" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1650305883" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Game Parameters\Default Work Unit.wwu" DateLow="1650306158" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Events\Default Work Unit.wwu" DateLow="1650306132" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Effects\Factory Effects.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Effects\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Conversion Settings\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Control Surface Sessions\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Audio Devices\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Attenuations\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
-	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1622427744" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Wwise Project.wproj" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Wwise Project.crossover.wsettings" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Virtual Acoustics\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Triggers\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Switches\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\States\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\SoundBanks\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Queries\Factory Queries.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Queries\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Presets\Factory Spatial Audio.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Presets\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Modulators\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Mixing Sessions\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Metadata\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Game Parameters\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Events\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Effects\Factory Effects.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Effects\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Conversion Settings\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Control Surface Sessions\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Audio Devices\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Attenuations\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
+	<ValidationCacheItem File="Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1674762610" DateHigh="0"/>
 </ValidationCache>

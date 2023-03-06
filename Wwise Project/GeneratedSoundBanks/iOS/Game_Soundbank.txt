@@ -1,0 +1,23 @@
+Event	ID	Name			Wwise Object Path	Notes
+	452547817	Stop_All			\Default Work Unit\Stop_All	
+	754369548	Play_Stinger			\Default Work Unit\Play_Stinger	
+	1114964412	Start_Game			\Default Work Unit\Start_Game	
+	3548625176	Set_State_Suspense			\Default Work Unit\Set_State_Suspense	
+	4016583417	Set_State_Explore			\Default Work Unit\Set_State_Explore	
+
+State Group	ID	Name			Wwise Object Path	Notes
+	4071417932	Player_State			\Default Work Unit\Player_State	
+
+State	ID	Name	State Group			Notes
+	579523862	explore	Player_State			
+	748895195	None	Player_State			
+	1535707317	suspense	Player_State			
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	3677180323	health			\Default Work Unit\health	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	633351571	new_stinger_1	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\iOS\SFX\new_stinger_1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\new_stinger_1\new_stinger_1		1420864
+	681948759	Season - Winter Late	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\iOS\SFX\Season - Winter Late_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\Playlist_Explore\Season - Winter Late\Season - Winter Late		13403312
+	740210912	Season - Winter Early	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\iOS\SFX\Season - Winter Early_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\Playlist_Suspense\Season - Winter Early\Season - Winter Early		20848868
+

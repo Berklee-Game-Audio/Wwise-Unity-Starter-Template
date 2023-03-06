@@ -19,7 +19,7 @@
 				<GameParameter Id="4179668880" Name="master_volume" ObjectPath="\Game Parameters\Default Work Unit\master_volume"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="3626155605" Language="SFX" Hash="2540576173">
+		<SoundBank Id="3626155605" Language="SFX" Hash="2158269292">
 			<ObjectPath>\SoundBanks\Default Work Unit\Game_Soundbank</ObjectPath>
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
