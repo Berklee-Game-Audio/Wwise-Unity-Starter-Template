@@ -1,3 +1,19 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
 ﻿﻿public class AkBasePlatformSettings : UnityEngine.ScriptableObject
 {
 	public virtual AkInitializationSettings AkInitializationSettings
@@ -310,7 +326,7 @@ public partial class AkCommonUserSettings
 		public uint m_MaxSoundPropagationDepth = AkSoundEngine.AK_MAX_SOUND_PROPAGATION_DEPTH;
 
 		[UnityEngine.Tooltip("Distance (in game units) that an emitter or listener has to move to trigger a recalculation of reflections/diffraction. Larger values can reduce the CPU load at the cost of reduced accuracy.")]
-		public float m_MovementThreshold = 1.0f;
+		public float m_MovementThreshold = 0.1f;
 
 		[UnityEngine.Tooltip("The number of primary rays used in stochastic ray casting.")]
 		/// The number of primary rays used in stochastic ray casting.

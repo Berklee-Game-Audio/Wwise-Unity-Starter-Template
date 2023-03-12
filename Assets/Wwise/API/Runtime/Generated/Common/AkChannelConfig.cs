@@ -59,6 +59,26 @@ public class AkChannelConfig : global::System.IDisposable {
   public uint uChannelMask { set { AkSoundEnginePINVOKE.CSharp_AkChannelConfig_uChannelMask_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkChannelConfig_uChannelMask_get(swigCPtr); } 
   }
 
+  public static AkChannelConfig Standard(uint in_uChannelMask) {
+    AkChannelConfig ret = new AkChannelConfig(AkSoundEnginePINVOKE.CSharp_AkChannelConfig_Standard(in_uChannelMask), true);
+    return ret;
+  }
+
+  public static AkChannelConfig Anonymous(uint in_uNumChannels) {
+    AkChannelConfig ret = new AkChannelConfig(AkSoundEnginePINVOKE.CSharp_AkChannelConfig_Anonymous(in_uNumChannels), true);
+    return ret;
+  }
+
+  public static AkChannelConfig Ambisonic(uint in_uNumChannels) {
+    AkChannelConfig ret = new AkChannelConfig(AkSoundEnginePINVOKE.CSharp_AkChannelConfig_Ambisonic(in_uNumChannels), true);
+    return ret;
+  }
+
+  public static AkChannelConfig Object() {
+    AkChannelConfig ret = new AkChannelConfig(AkSoundEnginePINVOKE.CSharp_AkChannelConfig_Object(), true);
+    return ret;
+  }
+
   public AkChannelConfig() : this(AkSoundEnginePINVOKE.CSharp_new_AkChannelConfig__SWIG_0(), true) {
   }
 

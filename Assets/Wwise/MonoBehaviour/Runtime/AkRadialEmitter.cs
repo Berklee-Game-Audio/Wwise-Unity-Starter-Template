@@ -1,4 +1,21 @@
 #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 [UnityEngine.AddComponentMenu("Wwise/Spatial Audio/AkRadialEmitter")]
 [UnityEngine.RequireComponent(typeof(AkGameObj))]
 [UnityEngine.DisallowMultipleComponent]
@@ -25,26 +42,37 @@ public class AkRadialEmitter : UnityEngine.MonoBehaviour
 	/// To obtain accurate diffraction and transmission calculations for radial sources, where different parts of the volume may take different paths through or around geometry,
 	/// it is necessary to pass multiple sound positions into \c AK::SoundEngine::SetMultiplePositions to allow the engine to 'sample' the area at different points.
 	public float innerRadius = 0.0f;
+
+	private float previousOuterRadius = 0.0f;
+	private float previousInnerRadius = 0.0f;
 	#endregion
 
 	public void SetGameObjectOuterRadius(float in_outerRadius)
 	{
 		AkSoundEngine.SetGameObjectRadius(AkSoundEngine.GetAkGameObjectID(gameObject), in_outerRadius, innerRadius);
+		previousOuterRadius = outerRadius = in_outerRadius;
+		previousInnerRadius = innerRadius;
 	}
 
 	public void SetGameObjectInnerRadius(float in_innerRadius)
 	{
 		AkSoundEngine.SetGameObjectRadius(AkSoundEngine.GetAkGameObjectID(gameObject), outerRadius, in_innerRadius);
+		previousOuterRadius = outerRadius;
+		previousInnerRadius = innerRadius = in_innerRadius;
 	}
 
 	public void SetGameObjectRadius(float in_outerRadius, float in_innerRadius)
 	{
 		AkSoundEngine.SetGameObjectRadius(AkSoundEngine.GetAkGameObjectID(gameObject), in_outerRadius, in_innerRadius);
+		previousOuterRadius = outerRadius = in_outerRadius;
+		previousInnerRadius = innerRadius = in_innerRadius;
 	}
 
 	public void SetGameObjectRadius()
 	{
 		AkSoundEngine.SetGameObjectRadius(AkSoundEngine.GetAkGameObjectID(gameObject), outerRadius, innerRadius);
+		previousOuterRadius = outerRadius;
+		previousInnerRadius = innerRadius;
 	}
 
 	public void SetGameObjectRadius(UnityEngine.GameObject in_gameObject)
@@ -61,7 +89,11 @@ public class AkRadialEmitter : UnityEngine.MonoBehaviour
 	private void Update()
 	{
 		if (UnityEditor.EditorApplication.isPlaying)
-			SetGameObjectRadius();
+		{
+			if (previousOuterRadius != outerRadius ||
+				previousInnerRadius != innerRadius)
+				SetGameObjectRadius();
+		}
 	}
 
 	private void OnDrawGizmosSelected()

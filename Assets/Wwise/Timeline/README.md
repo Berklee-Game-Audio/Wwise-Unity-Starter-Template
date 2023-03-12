@@ -12,4 +12,4 @@ See [Unity Wwise Timeline Documentation](https://www.audiokinetic.com/library/ed
 
 ## Legal
 
-Copyright © 2020 Audiokinetic Inc. All rights reserved.
+Copyright © 2023 Audiokinetic Inc. All rights reserved.
