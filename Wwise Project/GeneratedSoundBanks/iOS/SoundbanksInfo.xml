@@ -24,7 +24,7 @@
 			<ShortName>Game_Soundbank</ShortName>
 			<Path>Game_Soundbank.bnk</Path>
 			<IncludedEvents>
-				<Event Id="754369548" Name="Play_Stinger" ObjectPath="\Events\Default Work Unit\Play_Stinger" DurationType="OneShot" DurationMin="7.4" DurationMax="7.4">
+				<Event Id="754369548" Name="Play_Stinger" ObjectPath="\Events\Default Work Unit\Play_Stinger">
 					<IncludedMemoryFiles>
 						<File Id="633351571" Language="SFX">
 							<ShortName>new_stinger_1.wav</ShortName>
@@ -35,17 +35,17 @@
 						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0.">
+				<Event Id="4016583417" Name="Set_State_Explore" ObjectPath="\Events\Default Work Unit\Set_State_Explore">
 					<ActionSetState>
 						<ActionSetStateEntry Id="579523862" Name="explore" ObjectPath="\States\Default Work Unit\Player_State\explore"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0.">
+				<Event Id="3548625176" Name="Set_State_Suspense" ObjectPath="\Events\Default Work Unit\Set_State_Suspense">
 					<ActionSetState>
 						<ActionSetStateEntry Id="1535707317" Name="suspense" ObjectPath="\States\Default Work Unit\Player_State\suspense"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game" DurationType="Infinite">
+				<Event Id="1114964412" Name="Start_Game" ObjectPath="\Events\Default Work Unit\Start_Game">
 					<IncludedMemoryFiles>
 						<File Id="681948759" Language="SFX">
 							<ShortName>Season - Winter Late.wav</ShortName>
@@ -57,7 +57,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All" MaxAttenuation="0." DurationType="OneShot" DurationMin="0." DurationMax="0."/>
+				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All"/>
 			</IncludedEvents>
 			<GameParameters>
 				<GameParameter Id="3677180323" Name="health" ObjectPath="\Game Parameters\Default Work Unit\health"/>
