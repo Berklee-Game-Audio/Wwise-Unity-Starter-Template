@@ -1,9 +1,20 @@
 #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
-//////////////////////////////////////////////////////////////////////
-//
-// Copyright (c) 2019 Audiokinetic Inc. / All Rights Reserved
-//
-//////////////////////////////////////////////////////////////////////
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
 
 /// @brief This manager tracks AkRoomPortals and the rooms that they connect (front and back room).
 /// @details At the end of the frame, the AkRoomPortals which rooms might have changed are updated and sent to Spatial Audio.
@@ -26,13 +37,17 @@ public class AkRoomManager
 	public static void Init()
 	{
 		if (m_Instance == null)
+		{
 			m_Instance = new AkRoomManager();
+		}
 	}
 
 	public static void Terminate()
 	{
 		if (m_Instance != null)
+		{
 			m_Instance = null;
+		}
 	}
 
 	public static void RegisterPortal(AkRoomPortal portal)
@@ -105,14 +120,6 @@ public class AkRoomManager
 					(room == portal.frontRoom || room == portal.backRoom || portal.Overlaps(room)))
 				{
 					m_Instance.m_PortalsToUpdate.Add(portal);
-				}
-			}
-			for (var i = 0; i < m_Instance.m_Reflectors.Count; ++i)
-			{
-				var reflector = m_Instance.m_Reflectors[i];
-				if (!m_Instance.m_ReflectorsToUpdate.Contains(reflector) && (reflector.AssociatedRoom == room))
-				{
-					m_Instance.m_ReflectorsToUpdate.Add(reflector);
 				}
 			}
 		}

@@ -1,3 +1,20 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -11,6 +28,11 @@ public class AkWwisePostImportCallbackSetup
 
 	static AkWwisePostImportCallbackSetup()
 	{
+		if (UnityEditor.AssetDatabase.IsAssetImportWorkerProcess())
+		{
+			return;
+		}
+
 		var arguments = System.Environment.GetCommandLineArgs();
 		if (UnityEngine.Application.isBatchMode
 			&& System.Array.IndexOf(arguments, "-wwiseEnableWithNoGraphics") == -1)
@@ -222,30 +244,48 @@ public class AkWwisePostImportCallbackSetup
 		string className = null;
 		string methodName = null;
 
-		var r = new System.Text.RegularExpressions.Regex("(.+)\\.(.+)",
+		var regex = new System.Text.RegularExpressions.Regex("(.+)\\.(.+)",
 			System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
-		var m = r.Match(method);
+		var regexMatchResult = regex.Match(method);
 
-		if (!m.Success || m.Groups.Count < 3 || m.Groups[1].Captures.Count < 1 || m.Groups[2].Captures.Count < 1)
+		if (!regexMatchResult.Success || regexMatchResult.Groups.Count < 3 || regexMatchResult.Groups[1].Captures.Count < 1 || regexMatchResult.Groups[2].Captures.Count < 1)
 		{
 			UnityEngine.Debug.LogError("WwiseUnity: Error parsing wwiseExecuteMethod parameter: " + method);
 			return;
 		}
 
-		className = m.Groups[1].Captures[0].ToString();
-		methodName = m.Groups[2].Captures[0].ToString();
+		className = regexMatchResult.Groups[1].Captures[0].ToString();
+		methodName = regexMatchResult.Groups[2].Captures[0].ToString();
 
 		try
 		{
-			var type = System.Type.GetType(className);
-			if(type == null)
+			System.Reflection.MethodInfo methodToExecute = null;
+
+			if (className == "AkTestUtilities")
 			{
-				type = System.Type.GetType(className + ", Assembly-CSharp-Editor");
+				var assembly = System.Reflection.Assembly.Load("Ak.Wwise.IntegrationTestsEditor");
+				methodToExecute = assembly.GetType(className).GetMethod(methodName,
+					System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
 			}
-			var clearMethod = type.GetMethod(methodName,
-				System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-			clearMethod.Invoke(null, null);
+			else
+			{
+				var type = System.Type.GetType(className);
+				if (type == null)
+				{
+					type = System.Type.GetType(className + ", Assembly-CSharp-Editor");
+				}
+				methodToExecute = type.GetMethod(methodName,
+					System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+			}
+
+			if (methodToExecute == null)
+			{
+				UnityEngine.Debug.LogError("WwiseUnity: Error in AkWwisePostImportCallbackSetup::ExecuteMethod(): Could not find method: " + method);
+				return;
+			}
+
+			methodToExecute.Invoke(null, null);
 		}
 		catch (System.Exception e)
 		{
@@ -306,13 +346,23 @@ public class AkWwisePostImportCallbackSetup
 			}
 		}
 		
-		if (bankHolder!=null && bankHolder.InitBank ==null)
+		if (bankHolder!=null && bankHolder.InitBank == null)
 		{
-			
+#if WWISE_ADDRESABLES_2022_1_0_OR_NEWER
+			var initBankPath = System.IO.Path.Combine(AkWwiseEditorSettings.WwiseScriptableObjectRelativePath, "InitBank.asset");
+			var initbank = UnityEditor.AssetDatabase.LoadAssetAtPath<AK.Wwise.Unity.WwiseAddressables.WwiseInitBankReference>(initBankPath);
+			if (initbank)
+			{
+				bankHolder.InitBank = initbank;
+				EditorUtility.SetDirty(bankHolder);
+			}
+#else
 			var initBankPath = System.IO.Path.Combine("Assets",settings.GeneratedSoundbanksPath,"Init.asset");
 			var initbank = UnityEditor.AssetDatabase.LoadAssetAtPath<AK.Wwise.Unity.WwiseAddressables.WwiseAddressableSoundBank>(initBankPath);
 			bankHolder.InitBank = initbank;
 			EditorUtility.SetDirty(bankHolder);
+#endif
+
 		}
 #endif
 
@@ -320,7 +370,6 @@ public class AkWwisePostImportCallbackSetup
 		{
 			WwiseSetupWizard.AddAkAudioListenerToMainCamera(true);
 		}
-
 
 		s_CurrentScene = activeSceneName;
 	}

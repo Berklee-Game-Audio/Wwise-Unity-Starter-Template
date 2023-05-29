@@ -1,11 +1,22 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 
 using System.Collections.Generic;
-//////////////////////////////////////////////////////////////////////
-//
-// Copyright (c) 2014 Audiokinetic Inc. / All Rights Reserved
-//
-//////////////////////////////////////////////////////////////////////
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
 
 #pragma warning disable 0168
 [UnityEditor.InitializeOnLoad]
@@ -26,6 +37,11 @@ public class AkWwiseWWUBuilder
 
 	static AkWwiseWWUBuilder()
 	{
+		if (UnityEditor.AssetDatabase.IsAssetImportWorkerProcess())
+		{
+			return;
+		}
+
 		// This method gets called from InitializeOnLoad and uses the AkWwiseProjectInfo later on so it needs to check if it can run right now
 		InitializeWwiseProjectData();
 
@@ -40,24 +56,42 @@ public class AkWwiseWWUBuilder
 
 	private static void Tick()
 	{
-		if (AkWwiseProjectInfo.GetData() != null)
+		if (System.DateTime.Now.Subtract(s_lastFileCheck).Seconds < s_SecondsBetweenChecks)
 		{
-			if (System.DateTime.Now.Subtract(s_lastFileCheck).Seconds > s_SecondsBetweenChecks &&
-				!UnityEditor.EditorApplication.isCompiling && !UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode &&
-				AkWwiseProjectInfo.GetData().autoPopulateEnabled)
-			{
-				if (Populate())
-				{
-					AkWwiseXMLBuilder.Populate();
-					//check if WAAPI or not
-					AkWwisePicker.Refresh(ignoreIfWaapi: true);
-					//Make sure that the Wwise picker and the inspector are updated
-					AkUtilities.RepaintInspector();
-				}
-
-				s_lastFileCheck = System.DateTime.Now;
-			}
+			return;
 		}
+
+		if (AkWwiseProjectInfo.GetData() == null)
+		{
+			return;
+		}
+
+		if (UnityEditor.EditorApplication.isCompiling)
+		{
+			return;
+		}
+
+		if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+		{
+			return;
+		}
+
+		if (!AkWwiseProjectInfo.GetData().autoPopulateEnabled)
+		{
+			return;
+		}
+
+		if (Populate())
+		{
+			AkWwiseXMLBuilder.Populate();
+			//check if WAAPI or not
+			AkWwisePicker.Refresh(ignoreIfWaapi: true);
+			//Make sure that the Wwise picker and the inspector are updated
+			AkUtilities.RepaintInspector();
+		}
+
+		AkUtilities.SoundBankDestinationsUpdated(AkWwiseEditorSettings.Instance.WwiseProjectPath);
+		s_lastFileCheck = System.DateTime.Now;
 	}
 
 	public static void InitializeWwiseProjectData()
@@ -286,6 +320,11 @@ public class AkWwiseWWUBuilder
 	{
 		if (isTicking)
 			return;
+
+		if (!AkWwiseProjectInfo.GetData().autoPopulateEnabled || !AkUtilities.IsWwiseProjectAvailable)
+		{
+			return;
+		}
 
 		isTicking = true;
 		Tick();

@@ -65,25 +65,25 @@ public class AkSpatialAudioInitSettings : global::System.IDisposable {
   public uint uMaxReflectionOrder { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uMaxReflectionOrder_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uMaxReflectionOrder_get(swigCPtr); } 
   }
 
+  public uint uMaxDiffractionOrder { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uMaxDiffractionOrder_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uMaxDiffractionOrder_get(swigCPtr); } 
+  }
+
+  public uint uDiffractionOnReflectionsOrder { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uDiffractionOnReflectionsOrder_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uDiffractionOnReflectionsOrder_get(swigCPtr); } 
+  }
+
   public float fMaxPathLength { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_fMaxPathLength_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_fMaxPathLength_get(swigCPtr); } 
   }
 
   public float fCPULimitPercentage { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_fCPULimitPercentage_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_fCPULimitPercentage_get(swigCPtr); } 
   }
 
-  public bool bEnableDiffractionOnReflection { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bEnableDiffractionOnReflection_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bEnableDiffractionOnReflection_get(swigCPtr); } 
+  public uint uLoadBalancingSpread { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uLoadBalancingSpread_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_uLoadBalancingSpread_get(swigCPtr); } 
   }
 
   public bool bEnableGeometricDiffractionAndTransmission { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bEnableGeometricDiffractionAndTransmission_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bEnableGeometricDiffractionAndTransmission_get(swigCPtr); } 
   }
 
   public bool bCalcEmitterVirtualPosition { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bCalcEmitterVirtualPosition_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bCalcEmitterVirtualPosition_get(swigCPtr); } 
-  }
-
-  public bool bUseObstruction { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bUseObstruction_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bUseObstruction_get(swigCPtr); } 
-  }
-
-  public bool bUseOcclusion { set { AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bUseOcclusion_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkSpatialAudioInitSettings_bUseOcclusion_get(swigCPtr); } 
   }
 
 }

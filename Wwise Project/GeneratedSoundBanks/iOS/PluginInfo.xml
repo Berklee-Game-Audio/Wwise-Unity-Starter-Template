@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PluginInfo Project="Wwise Project" Platform="iOS" BasePlatform="iOS">
-	<Plugins>
-		<Plugin Name="System" ID="11403271"/>
-		<Plugin Name="No Output" ID="11862023"/>
-	</Plugins>
+<PluginInfo Platform="iOS" BasePlatform="iOS">
+	<PluginLibs>
+		<PluginLib LibName="System" LibId="11403271" Type="AudioDevice"/>
+		<PluginLib LibName="No Output" LibId="11862023" Type="AudioDevice"/>
+	</PluginLibs>
+	<FileHash>{8CB3618D-DD81-7D30-5186-C091F2DCF93D}</FileHash>
 </PluginInfo>

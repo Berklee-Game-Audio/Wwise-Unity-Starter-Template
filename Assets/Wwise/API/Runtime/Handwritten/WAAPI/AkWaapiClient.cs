@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
 
 The content of this file includes portions of the AUDIOKINETIC Wwise Technology
 released in source code form as part of the SDK installer package.

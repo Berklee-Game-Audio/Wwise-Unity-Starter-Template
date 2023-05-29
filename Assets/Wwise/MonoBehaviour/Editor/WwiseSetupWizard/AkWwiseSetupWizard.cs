@@ -1,3 +1,20 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 ﻿#if UNITY_EDITOR
 public class WwiseSetupWizard
 {
@@ -218,6 +235,15 @@ public class WwiseSetupWizard
 
 	private static void MigratePrefabs()
 	{
+		// The only migration operation done in this method is to call MigrateObject on MonoBehaviours attached to prefabs.
+		// MigrateObject only runs if a migration is required for the "WwiseTypes_v2018_1_6" migration step.
+		// Add an early return here to avoid lots of potentially slow code if we are in a case where MigrateObject would
+		// do nothing.
+		if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.WwiseTypes_v2018_1_6))
+		{
+			return;
+		}
+
 		var guids = UnityEditor.AssetDatabase.FindAssets("t:Prefab", new[] { "Assets" });
 		for (var i = 0; i < guids.Length; i++)
 		{
@@ -234,8 +260,15 @@ public class WwiseSetupWizard
 			}
 
 			var objects = prefabObject.GetComponents<UnityEngine.MonoBehaviour>();
-
-#if UNITY_2018_3_OR_NEWER
+			// The rather convoluted way of iterating through all objects here has a very specific reason.
+			// The call to MigrateObject ends up calling SerializedObject.ApplyModifiedPropertiesWithoutUndo.
+			// This function call will invalidate all references that are held by the code that is running
+			// (the objects array here).
+			// In order to iterate properly on all MonoBehaviours available, we get their instance IDs,
+			// which do not change when Applying modified properties. Then, for each iteration of the 
+			// migration loop, we need to get a valid array of MonoBehaviours again, because it might
+			// have been invalidated by the call to MigrateObject. We then migrate the objects that
+			// need migration by making sure their InstanceID is in the list of unmigrated MonoBehaviours.
 			var instanceIds = new System.Collections.Generic.List<int>();
 			foreach (var obj in objects)
 			{
@@ -250,20 +283,12 @@ public class WwiseSetupWizard
 			for (; instanceIds.Count > 0; instanceIds.RemoveAt(0))
 			{
 				var id = instanceIds[0];
-				objects = prefabObject.GetComponents<UnityEngine.MonoBehaviour>();
-				foreach (var obj in objects)
+				var obj = UnityEditor.EditorUtility.InstanceIDToObject(id);
+				if (obj && obj.GetInstanceID() == id)
 				{
-					if (obj && obj.GetInstanceID() == id)
-					{
-						MigrateObject(obj);
-						break;
-					}
+					MigrateObject(obj);
 				}
 			}
-#else
-			foreach (var obj in objects)
-				MigrateObject(obj);
-#endif
 		}
 	}
 
@@ -344,9 +369,25 @@ public class WwiseSetupWizard
 
 			MigrateCurrentScene(wwiseComponentTypes);
 
+			// From this point on, the only migration operation done in this loop is to call MigrateObject on MonoBehaviours.
+			// MigrateObject only runs if a migration is required for the "WwiseTypes_v2018_1_6" migration step. Simply
+			// continue the loop here to avoid lots of potentially slow code if we are in a case where MigrateObject would
+			// do nothing.
+			if (!AkUtilities.IsMigrationRequired(AkUtilities.MigrationStep.WwiseTypes_v2018_1_6))
+			{
+				continue;
+			}
 			var objects = UnityEngine.Resources.FindObjectsOfTypeAll<UnityEngine.MonoBehaviour>();
 
-#if UNITY_2018_3_OR_NEWER
+			// The rather convoluted way of iterating through all objects here has a very specific reason.
+			// The call to MigrateObject ends up calling SerializedObject.ApplyModifiedPropertiesWithoutUndo.
+			// This function call will invalidate all references that are held by the code that is running
+			// (the objects array here).
+			// In order to iterate properly on all MonoBehaviours available, we get their instance IDs,
+			// which do not change when Applying modified properties. Then, for each iteration of the 
+			// migration loop, we need to get a valid array of MonoBehaviours again, because it might
+			// have been invalidated by the call to MigrateObject. We then migrate the objects that
+			// need migration by making sure their InstanceID is in the list of unmigrated MonoBehaviours.
 			var instanceIds = new System.Collections.Generic.List<int>();
 			foreach (var obj in objects)
 			{
@@ -361,43 +402,12 @@ public class WwiseSetupWizard
 			for (; instanceIds.Count > 0; instanceIds.RemoveAt(0))
 			{
 				var id = instanceIds[0];
-				objects = UnityEngine.Resources.FindObjectsOfTypeAll<UnityEngine.MonoBehaviour>();
-				foreach (var obj in objects)
+				var obj = UnityEditor.EditorUtility.InstanceIDToObject(id);
+				if (obj && obj.GetInstanceID() == id)
 				{
-					if (obj && obj.GetInstanceID() == id)
-					{
-						MigrateObject(obj);
-						break;
-					}
+					MigrateObject(obj);
 				}
 			}
-#else
-			foreach (var obj in objects)
-			{
-				var isPrefabInstance = false;
-				if (obj != null)
-				{
-#if UNITY_2018_2
-					isPrefabInstance = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(obj) != null;
-#else
-					isPrefabInstance = UnityEditor.PrefabUtility.GetPrefabParent(obj) != null;
-#endif
-
-					if (!isPrefabInstance)
-					{
-						var isSceneObject = !UnityEditor.EditorUtility.IsPersistent(obj);
-						var isEditableAndSavable = (obj.hideFlags & (UnityEngine.HideFlags.NotEditable | UnityEngine.HideFlags.DontSave)) == 0;
-						if (!isSceneObject || !isEditableAndSavable)
-							continue;
-					}
-				}
-
-				MigrateObject(obj);
-
-				if (isPrefabInstance)
-					UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(obj);
-			}
-#endif
 
 			if (UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene))
 				if (!UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene))

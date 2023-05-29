@@ -1,3 +1,20 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 {
 	[UnityEngine.HideInInspector]
@@ -73,10 +90,10 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 		"UserSettings.m_SpatialAudioSettings.m_CalcEmitterVirtualPosition",
 		"UserSettings.m_SpatialAudioSettings.m_UseObstruction",
 		"UserSettings.m_SpatialAudioSettings.m_UseOcclusion",
+		"UserSettings.m_SpatialAudioSettings.m_LoadBalancingSpread",
 		"CommsSettings.m_PoolSize",
 		"CommsSettings.m_DiscoveryBroadcastPort",
 		"CommsSettings.m_CommandPort",
-		"CommsSettings.m_NotificationPort",
 		"CommsSettings.m_InitializeSystemComms",
 		"CommsSettings.m_NetworkName",
 		"AdvancedSettings.m_IOMemorySize",
@@ -327,15 +344,18 @@ public class AkWwiseInitializationSettings : AkCommonPlatformSettings
 		var canSetPersistentDataPath = !isBasePathSameAsPersistentPath;
 #endif
 
+//We don't use the standard base path with addressables, only the persistentdatapath for streaming media 
+#if AK_WWISE_ADDRESSABLES && UNITY_ADDRESSABLES
+		canSetBasePath=false;
+#endif
 		if (canSetBasePath && AkSoundEngine.SetBasePath(soundBankBasePath) != AKRESULT.AK_Success)
 		{
+#if !UNITY_ANDROID || UNITY_EDITOR
 #if UNITY_EDITOR
 			var format = "WwiseUnity: Failed to set SoundBanks base path to <{0}>. Make sure SoundBank path is correctly set under Edit > Project Settings > Wwise > Editor > Asset Management.";
 #else
 			var format = "WwiseUnity: Failed to set SoundBanks base path to <{0}>. Make sure SoundBank path is correctly set under Edit > Project Settings > Wwise > Initialization.";
 #endif
-
-#if !UNITY_ANDROID || UNITY_EDITOR
 			// It might be normal for SetBasePath to return AK_PathNotFound on Android. Silence the error log to avoid confusion.
 			UnityEngine.Debug.LogErrorFormat(format, soundBankBasePath);
 #endif

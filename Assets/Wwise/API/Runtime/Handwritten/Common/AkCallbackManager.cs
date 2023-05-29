@@ -1,9 +1,20 @@
 #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
-//////////////////////////////////////////////////////////////////////
-//
-// Copyright (c) 2012 Audiokinetic Inc. / All Rights Reserved
-//
-//////////////////////////////////////////////////////////////////////
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
 
 /// <summary>
 ///     This class manages the callback queue.  All callbacks from the native Wwise SDK go through this queue.
@@ -217,11 +228,8 @@ public static class AkCallbackManager
 	{
 		IsLoggingEnabled = settings.IsLoggingEnabled;
 
-#if UNITY_EDITOR
-		AkCallbackSerializer.SetLocalOutput((uint)AkMonitorErrorLevel.ErrorLevel_All);
-#endif
-
 		AkCallbackSerializer.Init();
+		SetLocalOutput(AkMonitorErrorLevel.ErrorLevel_All);
 	}
 
 	public static void Term()
@@ -232,8 +240,30 @@ public static class AkCallbackManager
 	/// Call this to set a function to call whenever Wwise prints a message (warnings or errors).
 	public static void SetMonitoringCallback(AkMonitorErrorLevel in_Level, MonitoringCallback in_CB)
 	{
-		AkCallbackSerializer.SetLocalOutput(in_CB != null ? (uint) in_Level : 0);
+		SetLocalOutput(in_CB != null ? in_Level : 0);
 		m_MonitoringCB = in_CB;
+	}
+
+	private static void SetLocalOutput(AkMonitorErrorLevel in_Level)
+	{
+#if UNITY_EDITOR
+		try
+		{
+			uint XmlTimeout = uint.Parse(AkWwiseEditorSettings.Instance.XMLTranslatorTimeout);
+			uint WaapiTimeout = uint.Parse(AkWwiseEditorSettings.Instance.WaapiTranslatorTimeout);
+			uint portAsInt = uint.Parse(AkWwiseEditorSettings.Instance.WaapiPort);
+			string baseSoundBankPath = AkBasePathGetter.GetPlatformBasePath();
+			baseSoundBankPath += "SoundbanksInfo.xml";
+			AkCallbackSerializer.SetLocalOutput((uint)in_Level,
+				AkWwiseEditorSettings.Instance.WaapiIP, portAsInt,
+				baseSoundBankPath,
+				XmlTimeout, WaapiTimeout);
+		}
+		catch (System.Exception)
+		{
+			UnityEngine.Debug.LogWarning("Error parsing WaapiPort, XMLTranslatorTimeout or WaapiTranslatorTimeout. Must be an integer.");
+		}
+#endif
 	}
 
 #if UNITY_IOS && !UNITY_EDITOR
@@ -248,6 +278,62 @@ public static class AkCallbackManager
 	public static void SetBGMCallback(BGMCallback in_CB, object in_cookie)
 	{
 		ms_sourceChangeCallbackPkg = new BGMCallbackPackage { m_Callback = in_CB, m_Cookie = in_cookie };
+	}
+
+	public static void ParseCallbackInfoMessage(ref string in_message)
+	{
+		if(in_message.Contains("$g"))
+		{
+			int currentPos = in_message.IndexOf("$g", 0);
+			while (currentPos > 0)
+			{
+				if (currentPos == -1)
+					break;
+				int spacePos = in_message.IndexOf(' ', currentPos);
+				int idStringSize = (spacePos == -1 ? in_message.Length : spacePos )- currentPos - 2;
+				string s_gID = in_message.Substring(currentPos + 2, idStringSize);
+				ulong gId = AkSoundEngine.AK_INVALID_GAME_OBJECT;
+				try
+				{
+					gId = ulong.Parse(s_gID);
+				}
+				catch (System.ArgumentNullException)
+				{
+					UnityEngine.Debug.LogWarning(s_gID + " was null.");
+				}
+				catch (System.ArgumentException)
+				{
+					UnityEngine.Debug.LogWarning(s_gID + " is not a number.");
+				}
+				catch (System.FormatException)
+				{
+					UnityEngine.Debug.LogWarning("Unable to parse " + s_gID + ".");
+				}
+				catch (System.OverflowException)
+				{
+					UnityEngine.Debug.LogWarning(s_gID + " is out of range of the UInt64 type.");
+				}
+				bool gameIdResolved = false;
+#if UNITY_EDITOR
+				if (gId != AkSoundEngine.AK_INVALID_GAME_OBJECT)
+				{
+					var obj =
+						UnityEditor.EditorUtility.InstanceIDToObject((int)AkMonitoringCallbackInfo.gameObjID) as
+							UnityEngine.GameObject;
+					if (obj != null)
+					{
+						in_message = in_message.Replace(in_message.Substring(currentPos, idStringSize + 2), obj.name);
+						in_message += " (Instance ID: " + AkMonitoringCallbackInfo.gameObjID + ")";
+						gameIdResolved = true;
+					}
+				}
+#endif
+				if(!gameIdResolved)
+					in_message = in_message.Replace(in_message.Substring(currentPos, idStringSize + 2), in_message.Substring(currentPos + 2, idStringSize));
+				currentPos += 1;
+				currentPos = in_message.IndexOf("$g", currentPos);
+			}
+		}
 	}
 
 	/// This function dispatches all the accumulated callbacks from the native sound engine. 
@@ -300,16 +386,7 @@ public static class AkCallbackManager
 							AkMonitoringCallbackInfo.setCPtr(pData);
 
 							var msg = "Wwise: " + AkMonitoringCallbackInfo.message;
-							if (AkMonitoringCallbackInfo.gameObjID != AkSoundEngine.AK_INVALID_GAME_OBJECT)
-							{
-								var obj =
-									UnityEditor.EditorUtility.InstanceIDToObject((int) AkMonitoringCallbackInfo.gameObjID) as
-										UnityEngine.GameObject;
-								if (obj != null)
-									msg += " (GameObject: " + obj + ")";
-
-								msg += " (Instance ID: " + AkMonitoringCallbackInfo.gameObjID + ")";
-							}
+							ParseCallbackInfoMessage(ref msg);
 
 							if (AkMonitoringCallbackInfo.errorLevel == AkMonitorErrorLevel.ErrorLevel_Error)
 								UnityEngine.Debug.LogError(msg);

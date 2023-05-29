@@ -86,6 +86,8 @@ public class AkPlaylistArray : global::System.IDisposable {
 
   public AKRESULT Reserve(uint in_ulReserve) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_AkPlaylistArray_Reserve(swigCPtr, in_ulReserve); }
 
+  public AKRESULT ReserveExtra(uint in_ulReserve) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_AkPlaylistArray_ReserveExtra(swigCPtr, in_ulReserve); }
+
   public uint Reserved() { return AkSoundEnginePINVOKE.CSharp_AkPlaylistArray_Reserved(swigCPtr); }
 
   public void Term() { AkSoundEnginePINVOKE.CSharp_AkPlaylistArray_Term(swigCPtr); }

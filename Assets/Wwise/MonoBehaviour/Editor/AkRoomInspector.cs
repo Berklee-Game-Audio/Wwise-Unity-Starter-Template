@@ -1,9 +1,20 @@
 #if UNITY_EDITOR
-//////////////////////////////////////////////////////////////////////
-//
-// Copyright (c) 2014 Audiokinetic Inc. / All Rights Reserved
-//
-//////////////////////////////////////////////////////////////////////
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
 
 [UnityEditor.CustomEditor(typeof(AkRoom))]
 public class AkRoomInspector : UnityEditor.Editor
@@ -34,13 +45,24 @@ public class AkRoomInspector : UnityEditor.Editor
 
 	public override void OnInspectorGUI()
 	{
+		bool roomNeedsUpdate = false;
+
 		serializedObject.Update();
 
 		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
 		{
+			// Start a code block to check for GUI changes
+			UnityEditor.EditorGUI.BeginChangeCheck();
+
 			UnityEditor.EditorGUILayout.PropertyField(reverbAuxBus);
 			UnityEditor.EditorGUILayout.PropertyField(reverbLevel);
 			UnityEditor.EditorGUILayout.PropertyField(transmissionLoss);
+
+			if (UnityEditor.EditorGUI.EndChangeCheck())
+			{
+				roomNeedsUpdate = true;
+			}
+
 			UnityEditor.EditorGUILayout.PropertyField(priority);
 
 			WetTransmissionCheck(m_AkRoom.gameObject);
@@ -50,8 +72,17 @@ public class AkRoomInspector : UnityEditor.Editor
 		using (new UnityEditor.EditorGUILayout.VerticalScope("box"))
 		{
 			m_PostEventHandlerInspector.OnGUI();
+
+			// Start a code block to check for GUI changes
+			UnityEditor.EditorGUI.BeginChangeCheck();
+
 			UnityEditor.EditorGUILayout.PropertyField(roomToneEvent);
 			UnityEditor.EditorGUILayout.PropertyField(roomToneAuxSend);
+
+			if (UnityEditor.EditorGUI.EndChangeCheck())
+			{
+				roomNeedsUpdate = true;
+			}
 
 			TriggerCheck(m_AkRoom);
 		}
@@ -59,6 +90,11 @@ public class AkRoomInspector : UnityEditor.Editor
 		AkRoomAwareObjectInspector.RigidbodyCheck(m_AkRoom.gameObject);
 
 		serializedObject.ApplyModifiedProperties();
+
+		if (roomNeedsUpdate)
+		{
+			m_AkRoom.SetRoom();
+		}
 	}
 
 	public static void WetTransmissionCheck(UnityEngine.GameObject gameObject)
@@ -74,7 +110,9 @@ public class AkRoomInspector : UnityEditor.Editor
 				gameObject.GetComponent<UnityEngine.CapsuleCollider>() != null ||
 				gameObject.GetComponent<UnityEngine.MeshCollider>() != null ||
 				(gameObject.GetComponent<AkSurfaceReflector>() != null && gameObject.GetComponent<AkSurfaceReflector>().enabled))
+			{
 				bSupported = true;
+			}
 
 			if (bSupported == false)
 			{

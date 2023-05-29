@@ -1,5 +1,23 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
+using System.IO;
 
 public partial class AkBuildPreprocessor
 {
@@ -12,7 +30,26 @@ public partial class AkBuildPreprocessor
 
 	public static CustomPlatformNameGetter GetCustomPlatformName;
 
-	public static Dictionary<UnityEditor.BuildTarget, string> BuildTargetToPlatformName = new Dictionary<UnityEditor.BuildTarget, string>();
+	public delegate void OnBuildCallback(string path);
+
+	public static void BuildCallbackNoOp(string path)
+	{
+		// No-op
+	}
+
+	public class PlatformConfiguration
+	{
+		public string WwisePlatformName;
+		public OnBuildCallback OnPreprocessBuild = BuildCallbackNoOp;
+		public OnBuildCallback OnPostprocessBuild = BuildCallbackNoOp;
+	}
+
+	private static Dictionary<UnityEditor.BuildTarget, PlatformConfiguration> PlatformConfigurations = new Dictionary<UnityEditor.BuildTarget, PlatformConfiguration>();
+
+	public static void RegisterBuildTarget(UnityEditor.BuildTarget target, PlatformConfiguration config)
+	{
+		PlatformConfigurations.Add(target, config);
+	}
 
 	public static string GetPlatformName(UnityEditor.BuildTarget target)
 	{
@@ -22,9 +59,9 @@ public partial class AkBuildPreprocessor
 		if (!string.IsNullOrEmpty(platformSubDir))
 			return platformSubDir;
 
-		if (BuildTargetToPlatformName.ContainsKey(target))
+		if (PlatformConfigurations.ContainsKey(target))
 		{
-			return BuildTargetToPlatformName[target];
+			return PlatformConfigurations[target].WwisePlatformName;
 		}
 		return target.ToString();
 	}
@@ -95,6 +132,10 @@ public partial class AkBuildPreprocessor : UnityEditor.Build.IPreprocessBuild, U
 			}
 		}
 #endif
+		if (PlatformConfigurations.TryGetValue(target, out var config))
+		{
+			config.OnPreprocessBuild(path);
+		}
 		// @todo sjl - only update for target platform
 		AkPluginActivator.Update(true);
 		AkPluginActivator.ActivatePluginsForDeployment(target, true);
@@ -103,6 +144,10 @@ public partial class AkBuildPreprocessor : UnityEditor.Build.IPreprocessBuild, U
 	public void OnPostprocessBuildInternal(UnityEditor.BuildTarget target, string path)
 	{
 		AkPluginActivator.ActivatePluginsForDeployment(target, false);
+		if (PlatformConfigurations.TryGetValue(target, out var config))
+		{
+			config.OnPostprocessBuild(path);
+		}
 #if !(AK_WWISE_ADDRESSABLES && UNITY_ADDRESSABLES)
 		DeleteSoundbanks(destinationSoundBankFolder);
 #endif

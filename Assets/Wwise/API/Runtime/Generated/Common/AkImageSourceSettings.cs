@@ -53,12 +53,10 @@ public class AkImageSourceSettings : global::System.IDisposable {
   public AkImageSourceSettings() : this(AkSoundEnginePINVOKE.CSharp_new_AkImageSourceSettings__SWIG_0(), true) {
   }
 
-  public AkImageSourceSettings(UnityEngine.Vector3 in_sourcePosition, float in_fDistanceScalingFactor, float in_fLevel) : this(AkSoundEnginePINVOKE.CSharp_new_AkImageSourceSettings__SWIG_1(in_sourcePosition, in_fDistanceScalingFactor, in_fLevel), true) {
+  public AkImageSourceSettings(AkVector64 in_sourcePosition, float in_fDistanceScalingFactor, float in_fLevel) : this(AkSoundEnginePINVOKE.CSharp_new_AkImageSourceSettings__SWIG_1(in_sourcePosition, in_fDistanceScalingFactor, in_fLevel), true) {
   }
 
   public void SetOneTexture(uint in_texture) { AkSoundEnginePINVOKE.CSharp_AkImageSourceSettings_SetOneTexture(swigCPtr, in_texture); }
-
-  public void SetName(string in_pName) { AkSoundEnginePINVOKE.CSharp_AkImageSourceSettings_SetName(swigCPtr, in_pName); }
 
   public AkImageSourceParams params_ { set { AkSoundEnginePINVOKE.CSharp_AkImageSourceSettings_params__set(swigCPtr, AkImageSourceParams.getCPtr(value)); } 
     get {

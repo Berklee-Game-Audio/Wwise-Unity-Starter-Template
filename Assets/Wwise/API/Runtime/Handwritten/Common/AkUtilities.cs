@@ -1,3 +1,20 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 #if !(UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
 using System.Linq;
 #if UNITY_EDITOR
@@ -87,7 +104,7 @@ public partial class AkUtilities
 
 	public static bool IsSoundbankGenerationAvailable()
 	{
-		return GetWwiseCLI() != null;
+		return GetWwiseConsole() != null;
 	}
 
 	/// Executes a command-line. Blocks the calling thread until the new process has completed. Returns the logged stdout in one big string.
@@ -115,7 +132,7 @@ public partial class AkUtilities
 		return output;
 	}
 
-	private static string GetWwiseCLI()
+	private static string GetWwiseConsole()
 	{
 		string result = null;
 
@@ -124,14 +141,14 @@ public partial class AkUtilities
 #if UNITY_EDITOR_WIN
 		if (!string.IsNullOrEmpty(settings.WwiseInstallationPathWindows))
 		{
-			result = System.IO.Path.Combine(settings.WwiseInstallationPathWindows, @"Authoring\x64\Release\bin\WwiseCLI.exe");
+			result = System.IO.Path.Combine(settings.WwiseInstallationPathWindows, @"Authoring\x64\Release\bin\WwiseConsole.exe");
 
 			if (!System.IO.File.Exists(result))
-				result = System.IO.Path.Combine(settings.WwiseInstallationPathWindows, @"Authoring\Win32\Release\bin\WwiseCLI.exe");
+				result = System.IO.Path.Combine(settings.WwiseInstallationPathWindows, @"Authoring\Win32\Release\bin\WwiseConsole.exe");
 		}
 #elif UNITY_EDITOR_OSX
 		if (!string.IsNullOrEmpty(settings.WwiseInstallationPathMac))
-			result = System.IO.Path.Combine(settings.WwiseInstallationPathMac, "Contents/Tools/WwiseCLI.sh");
+			result = System.IO.Path.Combine(settings.WwiseInstallationPathMac, "Contents/Tools/WwiseConsole.sh");
 #endif
 
 		if (result != null && System.IO.File.Exists(result))
@@ -155,36 +172,36 @@ public partial class AkUtilities
 				"The SoundBank generation process ignores the SoundBank Settings' Overrides currently enabled in the User settings. The project's SoundBank settings will be used.");
 		}
 
-		var wwiseCli = GetWwiseCLI();
-		if (wwiseCli == null)
+		var wwiseConsole = GetWwiseConsole();
+		if (wwiseConsole == null)
 		{
-			UnityEngine.Debug.LogError("Couldn't locate WwiseCLI, unable to generate SoundBanks.");
+			UnityEngine.Debug.LogError("Couldn't locate WwiseConsole, unable to generate SoundBanks.");
 			return;
 		}
 
 #if UNITY_EDITOR_WIN
-		var command = wwiseCli;
+		var command = wwiseConsole;
 		var arguments = "";
 #elif UNITY_EDITOR_OSX
 		var command = "/bin/sh";
-		var arguments = "\"" + wwiseCli + "\"";
+		var arguments = "\"" + wwiseConsole + "\"";
 #else
 		var command = "";
 		var arguments = "";
 #endif
+		arguments += " generate-soundbank";
 
-		arguments += " \"" + wwiseProjectFullPath + "\"";
+		arguments += " \"" + wwiseProjectFullPath.Replace("\"","") + "\"";
 
-		if (platforms != null)
+		if (platforms != null && platforms.Count() >0)
 		{
+			arguments += " --platform";
 			foreach (var platform in platforms)
 			{
 				if (!string.IsNullOrEmpty(platform))
-					arguments += " -Platform " + platform;
+					arguments += " " + platform;
 			}
 		}
-
-		arguments += " -GenerateSoundBanks";
 
 		var output = ExecuteCommandLine(command, arguments);
 		if (output.Contains("Process completed successfully."))
@@ -264,7 +281,7 @@ public partial class AkUtilities
 			if (WwiseProjectPath.Length == 0)
 				return;
 
-			if (!System.IO.File.Exists(WwiseProjectPath))
+			if (!AkUtilities.IsWwiseProjectAvailable)
 				return;
 
 			var t = System.IO.File.GetLastWriteTime(WwiseProjectPath);
@@ -663,37 +680,6 @@ public partial class AkUtilities
 
 		UnityEngine.Debug.LogWarningFormat("WwiseUnity: Error while attempting to move folder <{0}> to <{1}>: {2}", oldPath, newPath, error);
 		return false;
-	}
-
-	///This function returns the absolute position and the width and height of the last drawn GuiLayout(or EditorGuiLayout) element in the inspector window.
-	///This function must be called in the OnInspectorGUI function
-	/// 
-	///The inspector must be in repaint mode in order to get the correct position 
-	///Example => if(Event.current.type == EventType.Repaint) Rect pos = AkUtilities.GetLastRectAbsolute();
-	public static UnityEngine.Rect GetLastRectAbsolute(UnityEngine.Rect relativePos)
-	{
-		var lastRectAbsolute = relativePos;
-		try
-		{
-			lastRectAbsolute.x += UnityEditor.EditorWindow.focusedWindow.position.x;
-			lastRectAbsolute.y += UnityEditor.EditorWindow.focusedWindow.position.y;
-
-			var inspectorType = UnityEditor.EditorWindow.focusedWindow.GetType();
-			var currentInspectorFieldInfo = inspectorType.GetField("s_CurrentInspectorWindow",
-				System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-			var scrollPosInfo = inspectorType.GetField("m_ScrollPosition",
-				System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-			var scrollPos = (UnityEngine.Vector2)scrollPosInfo.GetValue(currentInspectorFieldInfo.GetValue(null));
-			lastRectAbsolute.x -= scrollPos.x;
-			lastRectAbsolute.y -= scrollPos.y;
-		}
-		catch
-		{
-		}
-
-		return lastRectAbsolute;
 	}
 
 	public static void RepaintInspector()

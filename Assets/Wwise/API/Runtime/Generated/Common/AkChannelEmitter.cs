@@ -50,15 +50,18 @@ public class AkChannelEmitter : global::System.IDisposable {
     }
   }
 
-  public AkTransform position { set { AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_position_set(swigCPtr, AkTransform.getCPtr(value)); } 
+  public AkWorldTransform position { set { AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_position_set(swigCPtr, AkWorldTransform.getCPtr(value)); } 
     get {
       global::System.IntPtr cPtr = AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_position_get(swigCPtr);
-      AkTransform ret = (cPtr == global::System.IntPtr.Zero) ? null : new AkTransform(cPtr, false);
+      AkWorldTransform ret = (cPtr == global::System.IntPtr.Zero) ? null : new AkWorldTransform(cPtr, false);
       return ret;
     } 
   }
 
   public uint uInputChannels { set { AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_uInputChannels_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_uInputChannels_get(swigCPtr); } 
+  }
+
+  public string padding { set { AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_padding_set(swigCPtr, value); }  get { return AkSoundEngine.StringFromIntPtrString(AkSoundEnginePINVOKE.CSharp_AkChannelEmitter_padding_get(swigCPtr)); } 
   }
 
 }

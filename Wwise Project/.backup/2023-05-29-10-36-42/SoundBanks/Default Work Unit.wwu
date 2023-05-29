@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{49A4C3DA-C8D5-439A-BF1E-2C5B55839753}" SchemaVersion="103">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{49A4C3DA-C8D5-439A-BF1E-2C5B55839753}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Game_Soundbank" ID="{349832F9-440C-4091-8CCC-D35A19A52AAE}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_Stinger" ID="{105640D3-6E38-4100-9588-A5A7230C6AB5}" WorkUnitID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Start_Game" ID="{8EE55A93-378C-41F9-BAB1-A40B856C9315}" WorkUnitID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Set_State_Explore" ID="{FC2A7E89-D78D-4414-8B91-9BAA6E2928E8}" WorkUnitID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_All" ID="{5A08717E-E926-4BE1-9661-3952CEACDD26}" WorkUnitID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Set_State_Suspense" ID="{9C171B0B-7CA4-4EF0-B157-356B03404FE3}" WorkUnitID="{F51BCDC6-E44E-4FD9-AFA7-41D395989397}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

@@ -50,7 +50,7 @@ public class AkReflectionPathInfo : global::System.IDisposable {
     }
   }
 
-  public UnityEngine.Vector3 imageSource { set { AkSoundEnginePINVOKE.CSharp_AkReflectionPathInfo_imageSource_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkReflectionPathInfo_imageSource_get(swigCPtr); } 
+  public AkVector64 imageSource { set { AkSoundEnginePINVOKE.CSharp_AkReflectionPathInfo_imageSource_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkReflectionPathInfo_imageSource_get(swigCPtr); } 
   }
 
   public uint numPathPoints { set { AkSoundEnginePINVOKE.CSharp_AkReflectionPathInfo_numPathPoints_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkReflectionPathInfo_numPathPoints_get(swigCPtr); } 

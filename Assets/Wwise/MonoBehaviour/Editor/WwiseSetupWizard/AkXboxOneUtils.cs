@@ -1,3 +1,20 @@
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 public static class AkXboxOneUtils
 {
 	private static readonly int[] Usages = { 0, 1, 4, 7 };
@@ -10,8 +27,7 @@ public static class AkXboxOneUtils
 		var definitions = new[]
 		{
 			new SocketDefinition("WwiseDiscoverySocket", "24024", 1, "WwiseDiscovery"),
-			new SocketDefinition("WwiseCommandSocket", "24025", 0, "WwiseCommand"),
-			new SocketDefinition("WwiseNotificationSocket", "24026", 0, "WwiseNotification")
+			new SocketDefinition("WwiseCommandSocket", "24025", 0, "WwiseCommand")
 		};
 
 		foreach (var def in definitions)

@@ -17,7 +17,7 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	3677180323	health			\Default Work Unit\health	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	633351571	new_stinger_1	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\Mac\SFX\new_stinger_1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\new_stinger_1\new_stinger_1		1420864
-	681948759	Season - Winter Late	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\Mac\SFX\Season - Winter Late_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\Playlist_Explore\Season - Winter Late\Season - Winter Late		13403312
-	740210912	Season - Winter Early	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\Mac\SFX\Season - Winter Early_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\Playlist_Suspense\Season - Winter Early\Season - Winter Early		20848868
+	633351571	new_stinger_1	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\Mac\SFX\new_stinger_1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\new_stinger_1\new_stinger_1		1420896
+	681948759	Season - Winter Late	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\Mac\SFX\Season - Winter Late_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\Playlist_Explore\Season - Winter Late\Season - Winter Late		13403344
+	740210912	Season - Winter Early	Y:\GoogleDrive\_CloudSync\Work\Berklee\GIT\Wwise-Unity-Starter-Template\Wwise Project\.cache\Mac\SFX\Season - Winter Early_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\New Music Switch Container\Playlist_Suspense\Season - Winter Early\Season - Winter Early		20848900
 

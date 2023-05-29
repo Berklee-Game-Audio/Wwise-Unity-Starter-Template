@@ -68,6 +68,9 @@ public class AkInitSettings : global::System.IDisposable {
   public uint uMonitorQueuePoolSize { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_uMonitorQueuePoolSize_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkInitSettings_uMonitorQueuePoolSize_get(swigCPtr); } 
   }
 
+  public uint uCpuMonitorQueueMaxSize { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_uCpuMonitorQueueMaxSize_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkInitSettings_uCpuMonitorQueueMaxSize_get(swigCPtr); } 
+  }
+
   public AkOutputSettings settingsMainOutput { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_settingsMainOutput_set(swigCPtr, AkOutputSettings.getCPtr(value)); } 
     get {
       global::System.IntPtr cPtr = AkSoundEnginePINVOKE.CSharp_AkInitSettings_settingsMainOutput_get(swigCPtr);

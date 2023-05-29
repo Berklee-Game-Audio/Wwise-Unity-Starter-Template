@@ -62,9 +62,6 @@ public class AkCommunicationSettings : global::System.IDisposable {
   public ushort uCommandPort { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_uCommandPort_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_uCommandPort_get(swigCPtr); } 
   }
 
-  public ushort uNotificationPort { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_uNotificationPort_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_uNotificationPort_get(swigCPtr); } 
-  }
-
   public AkCommunicationSettings.AkCommSystem commSystem { set { AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_commSystem_set(swigCPtr, (int)value); }  get { return (AkCommunicationSettings.AkCommSystem)AkSoundEnginePINVOKE.CSharp_AkCommunicationSettings_commSystem_get(swigCPtr); } 
   }
 

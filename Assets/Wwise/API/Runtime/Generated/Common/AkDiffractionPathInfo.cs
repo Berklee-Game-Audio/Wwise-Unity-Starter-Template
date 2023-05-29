@@ -50,13 +50,13 @@ public class AkDiffractionPathInfo : global::System.IDisposable {
     }
   }
 
-  public UnityEngine.Vector3 emitterPos { set { AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_emitterPos_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_emitterPos_get(swigCPtr); } 
+  public AkVector64 emitterPos { set { AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_emitterPos_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_emitterPos_get(swigCPtr); } 
   }
 
-  public AkTransform virtualPos { set { AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_virtualPos_set(swigCPtr, AkTransform.getCPtr(value)); } 
+  public AkWorldTransform virtualPos { set { AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_virtualPos_set(swigCPtr, AkWorldTransform.getCPtr(value)); } 
     get {
       global::System.IntPtr cPtr = AkSoundEnginePINVOKE.CSharp_AkDiffractionPathInfo_virtualPos_get(swigCPtr);
-      AkTransform ret = (cPtr == global::System.IntPtr.Zero) ? null : new AkTransform(cPtr, false);
+      AkWorldTransform ret = (cPtr == global::System.IntPtr.Zero) ? null : new AkWorldTransform(cPtr, false);
       return ret;
     } 
   }

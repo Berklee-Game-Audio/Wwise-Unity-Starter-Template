@@ -1,4 +1,21 @@
 #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
+/*******************************************************************************
+The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
+Technology released in source code form as part of the game integration package.
+The content of this file may not be used without valid licenses to the
+AUDIOKINETIC Wwise Technology.
+Note that the use of the game engine is subject to the Unity(R) Terms of
+Service at https://unity3d.com/legal/terms-of-service
+ 
+License Usage
+ 
+Licensees holding valid licenses to the AUDIOKINETIC Wwise Technology may use
+this file in accordance with the end user license agreement provided with the
+software or, alternatively, in accordance with the terms contained
+in a written agreement between you and Audiokinetic Inc.
+Copyright (c) 2023 Audiokinetic Inc.
+*******************************************************************************/
+
 [UnityEngine.AddComponentMenu("Wwise/Spatial Audio/AkRoom")]
 [UnityEngine.RequireComponent(typeof(UnityEngine.Collider))]
 [UnityEngine.DisallowMultipleComponent]
@@ -50,25 +67,11 @@ public class AkRoom : AkTriggerHandler
 	private UnityEngine.Collider roomCollider = null;
 	private System.Type previousColliderType;
 
-#if UNITY_EDITOR
 	private UnityEngine.Vector3 previousPosition;
 	private UnityEngine.Vector3 previousScale;
 	private UnityEngine.Quaternion previousRotation;
-	private UnityEngine.MeshCollider previousMeshCollider;
-	private UnityEngine.BoxCollider previousBoxCollider;
-	private UnityEngine.CapsuleCollider previousCapsuleCollider;
-
-	private UnityEngine.Vector3 previousUp;
-	private UnityEngine.Vector3 previousFront;
-	private uint previousReverbAuxBus;
-	private float previousReverbLevel;
-	private float previousTransmissionLoss;
-	private float previousRoomGameObj_AuxSendLevelToSelf;
-	private bool previousRoomGameObj_KeepRegistered;
-	private ulong previousGeometryID;
-
 	private bool bSentToWwise = false;
-#endif
+	private ulong geometryID = AkSurfaceReflector.INVALID_GEOMETRY_ID;
 
 	#endregion
 
@@ -79,13 +82,17 @@ public class AkRoom : AkTriggerHandler
 			if (isActiveAndEnabled)
 			{
 				if(!roomAwareObjectsEntered.Contains(roomAwareObject))
+				{
 					roomAwareObjectsEntered.Add(roomAwareObject);
+				}
 				return true;
 			}
 			else
 			{
 				if (!roomAwareObjectsDetectedWhileDisabled.Contains(roomAwareObject))
+				{
 					roomAwareObjectsDetectedWhileDisabled.Add(roomAwareObject);
+				}
 				return false;
 			}
 		}
@@ -107,22 +114,145 @@ public class AkRoom : AkTriggerHandler
 		return AkSoundEngine.GetAkGameObjectID(gameObject);
 	}
 
+	public ulong GetGeometryID()
+	{
+		return geometryID;
+	}
+
+	public void SetGeometryID(ulong id)
+	{
+		if (geometryID != id)
+		{
+			// if the associated geometry used to be from the collider
+			if (IsAssociatedGeometryFromCollider())
+			{
+				AkSoundEngine.RemoveGeometry(geometryID);
+			}
+			geometryID = id;
+		}
+	}
+
+	public bool IsAssociatedGeometryFromCollider()
+	{
+		return geometryID == GetID();
+	}
+
+	private void SetGeometryFromCollider()
+	{
+		_SetGeometryFromCollider(true);
+	}
+
+	private void UpdateGeometryFromCollider()
+	{
+		_SetGeometryFromCollider(false);
+	}
+
+	private void _SetGeometryFromCollider(bool needSetGeometry)
+	{
+		if (roomCollider == null)
+		{
+			roomCollider = GetComponent<UnityEngine.Collider>();
+		}
+
+		if (roomCollider.GetType() == typeof(UnityEngine.MeshCollider))
+		{
+			geometryID = GetID();
+			UnityEngine.MeshCollider meshCollider = GetComponent<UnityEngine.MeshCollider>();
+
+			if (needSetGeometry)
+			{
+				AkSurfaceReflector.SetGeometryFromMesh(meshCollider.sharedMesh, geometryID, false, false, false);
+			}
+			AkSurfaceReflector.SetGeometryInstance(geometryID, geometryID, INVALID_ROOM_ID, transform);
+
+			previousColliderType = typeof(UnityEngine.MeshCollider);
+		}
+		else if (roomCollider.GetType() == typeof(UnityEngine.BoxCollider))
+		{
+			geometryID = GetID();
+			UnityEngine.BoxCollider boxCollider = GetComponent<UnityEngine.BoxCollider>();
+			UnityEngine.GameObject tempGameObject = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);
+			UnityEngine.Mesh mesh = tempGameObject.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
+
+			tempGameObject.transform.position = boxCollider.bounds.center;
+			tempGameObject.transform.rotation = transform.rotation;
+			UnityEngine.Vector3 roomScale = new UnityEngine.Vector3();
+			roomScale.x = transform.lossyScale.x * boxCollider.size.x;
+			roomScale.y = transform.lossyScale.y * boxCollider.size.y;
+			roomScale.z = transform.lossyScale.z * boxCollider.size.z;
+			tempGameObject.transform.localScale = roomScale;
+
+			if (needSetGeometry)
+			{
+				AkSurfaceReflector.SetGeometryFromMesh(mesh, geometryID, false, false, false);
+			}
+			AkSurfaceReflector.SetGeometryInstance(geometryID, geometryID, INVALID_ROOM_ID, tempGameObject.transform);
+
+			previousColliderType = typeof(UnityEngine.BoxCollider);
+			UnityEngine.GameObject.Destroy(tempGameObject);
+		}
+		else if (roomCollider.GetType() == typeof(UnityEngine.CapsuleCollider))
+		{
+			geometryID = GetID();
+			UnityEngine.CapsuleCollider capsuleCollider = GetComponent<UnityEngine.CapsuleCollider>();
+			UnityEngine.GameObject tempGameObject = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);
+			UnityEngine.Mesh mesh = tempGameObject.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
+
+			tempGameObject.transform.position = capsuleCollider.bounds.center;
+			tempGameObject.transform.rotation = transform.rotation;
+			tempGameObject.transform.localScale = GetCubeScaleFromCapsule(transform.lossyScale, capsuleCollider.radius, capsuleCollider.height, capsuleCollider.direction);
+
+			if (needSetGeometry)
+			{
+				AkSurfaceReflector.SetGeometryFromMesh(mesh, geometryID, false, false, false);
+			}
+			AkSurfaceReflector.SetGeometryInstance(geometryID, geometryID, INVALID_ROOM_ID, tempGameObject.transform);
+
+			previousColliderType = typeof(UnityEngine.CapsuleCollider);
+			UnityEngine.GameObject.Destroy(tempGameObject);
+		}
+		else if (roomCollider.GetType() == typeof(UnityEngine.SphereCollider))
+		{
+			geometryID = GetID();
+			UnityEngine.GameObject tempGameObject = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
+			UnityEngine.Mesh mesh = tempGameObject.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
+
+			tempGameObject.transform.position = roomCollider.bounds.center;
+			tempGameObject.transform.localScale = roomCollider.bounds.size;
+
+			if (needSetGeometry)
+			{
+				AkSurfaceReflector.SetGeometryFromMesh(mesh, geometryID, false, false, false);
+			}
+			AkSurfaceReflector.SetGeometryInstance(geometryID, geometryID, INVALID_ROOM_ID, tempGameObject.transform);
+
+			previousColliderType = typeof(UnityEngine.SphereCollider);
+			UnityEngine.GameObject.Destroy(tempGameObject);
+		}
+		else
+		{
+			UnityEngine.Debug.LogWarning(name + " has an invalid collider for wet transmission. Wet Transmission will be disabled.");
+			// in case a geometry was added with the room's ID, remove it
+			if (previousColliderType == typeof(UnityEngine.MeshCollider) ||
+				previousColliderType == typeof(UnityEngine.BoxCollider) ||
+				previousColliderType == typeof(UnityEngine.SphereCollider) ||
+				previousColliderType == typeof(UnityEngine.CapsuleCollider))
+			{
+				AkSoundEngine.RemoveGeometry(GetID());
+			}
+
+			previousColliderType = roomCollider.GetType();
+			geometryID = AkSurfaceReflector.INVALID_GEOMETRY_ID;
+		}
+	}
+
 	public void SetRoom()
 	{
-		ulong geometryID = GetGeometryID();
-
-#if UNITY_EDITOR
-		if (bSentToWwise &&
-			previousUp == transform.up &&
-			previousFront == transform.forward &&
-			previousReverbAuxBus == reverbAuxBus.Id &&
-			previousReverbLevel == reverbLevel &&
-			previousTransmissionLoss == transmissionLoss &&
-			previousRoomGameObj_AuxSendLevelToSelf == roomToneAuxSend &&
-			previousRoomGameObj_KeepRegistered == roomToneEvent.IsValid() &&
-			previousGeometryID == geometryID)
+		if (!AkSoundEngine.IsInitialized())
+		{
 			return;
-#endif
+		}
+
 		var roomParams = new AkRoomParams
 		{
 			Up = transform.up,
@@ -136,214 +266,108 @@ public class AkRoom : AkTriggerHandler
 			RoomGameObj_KeepRegistered = roomToneEvent.IsValid(),
 		};
 
-		RoomCount++;
+		if (bSentToWwise == false)
+		{
+			RoomCount++;
+		}
+
+		if (geometryID == AkSurfaceReflector.INVALID_GEOMETRY_ID)
+		{
+			SetGeometryFromCollider();
+		}
+
 		AkSoundEngine.SetRoom(GetID(), roomParams, geometryID, name);
-
-#if UNITY_EDITOR
 		bSentToWwise = true;
-		previousUp = transform.up;
-		previousFront = transform.forward;
-		previousReverbAuxBus = reverbAuxBus.Id;
-		previousReverbLevel = reverbLevel;
-		previousTransmissionLoss = transmissionLoss;
-		previousRoomGameObj_AuxSendLevelToSelf = roomToneAuxSend;
-		previousRoomGameObj_KeepRegistered = roomToneEvent.IsValid();
-		previousGeometryID = geometryID;
-#endif
 
-		/// In case a room is disabled and re-enabled. 
 		AkRoomManager.RegisterRoomUpdate(this);
 	}
 
-#if UNITY_EDITOR
 	private void Update()
 	{
-		if (UnityEditor.EditorApplication.isPlaying)
-			SetRoom();
-	}
-#endif
-
-	private UnityEngine.Vector3 GetCapsuleScale(UnityEngine.Vector3 localScale, float radius, float height, int direction)
-	{
-		UnityEngine.Vector3 scale = new UnityEngine.Vector3();
-
-		switch (direction)
+		if (previousPosition != transform.position ||
+			previousScale != transform.lossyScale ||
+			previousRotation != transform.rotation)
 		{
-			case 0:
-				scale.y = UnityEngine.Mathf.Max(localScale.y, localScale.z) * (radius * 2);
-				scale.z = scale.y;
-				scale.x = UnityEngine.Mathf.Max(scale.y, localScale.x * height);
-				break;
-			case 2:
-				scale.x = UnityEngine.Mathf.Max(localScale.x, localScale.y) * (radius * 2);
-				scale.y = scale.x;
-				scale.z = UnityEngine.Mathf.Max(scale.x, localScale.z * height);
-				break;
-			case 1:
-			default:
-				scale.x = UnityEngine.Mathf.Max(localScale.x, localScale.z) * (radius * 2);
-				scale.y = UnityEngine.Mathf.Max(scale.x, localScale.y * height);
-				scale.z = scale.x;
-				break;
-		}
-
-		return scale;
-	}
-
-	private ulong GetGeometryID()
-	{
-		ulong geometryID = AkSurfaceReflector.INVALID_GEOMETRY_ID;
-
-		AkSurfaceReflector surfaceReflector = GetComponent<AkSurfaceReflector>();
-		if (surfaceReflector && surfaceReflector.enabled)
-			geometryID = surfaceReflector.GetID();
-		else
-		{
-			if (roomCollider == null)
-				roomCollider = GetComponent<UnityEngine.Collider>();
-
-			if (roomCollider.GetType() == typeof(UnityEngine.MeshCollider))
+			if (IsAssociatedGeometryFromCollider())
 			{
-				geometryID = GetID();
-				UnityEngine.MeshCollider meshCollider = GetComponent<UnityEngine.MeshCollider>();
-#if UNITY_EDITOR
-				if (previousColliderType == typeof(UnityEngine.MeshCollider) &&
-					previousMeshCollider != null &&
-					previousMeshCollider.sharedMesh == meshCollider.sharedMesh &&
-					previousPosition == transform.position &&
-					previousRotation == transform.rotation &&
-					previousScale == transform.localScale)
-					return geometryID;
-#endif
-				AkSurfaceReflector.SetGeometryFromMesh(meshCollider.sharedMesh, transform, geometryID, INVALID_ROOM_ID, false, false, false);
-#if UNITY_EDITOR
-				previousMeshCollider = meshCollider;
-				previousPosition = transform.position;
-				previousRotation = transform.rotation;
-				previousScale = transform.localScale;
-#endif
-				previousColliderType = typeof(UnityEngine.MeshCollider);
+				UpdateGeometryFromCollider();
 			}
-			else if (roomCollider.GetType() == typeof(UnityEngine.BoxCollider))
+
+			if (previousRotation != transform.rotation)
 			{
-				geometryID = GetID();
-				UnityEngine.BoxCollider boxCollider = GetComponent<UnityEngine.BoxCollider>();
-#if UNITY_EDITOR
-				if (previousColliderType == typeof(UnityEngine.BoxCollider) &&
-					previousBoxCollider != null &&
-					previousPosition == roomCollider.bounds.center &&
-					previousRotation == transform.rotation &&
-					previousScale == new UnityEngine.Vector3(transform.localScale.x * boxCollider.size.x,
-															transform.localScale.y * boxCollider.size.y,
-															transform.localScale.z * boxCollider.size.z))
-					return geometryID;
-#endif
-				UnityEngine.GameObject tempGameObject = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);
-				UnityEngine.Mesh mesh = tempGameObject.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
-
-				tempGameObject.transform.position = boxCollider.bounds.center;
-				tempGameObject.transform.rotation = transform.rotation;
-				UnityEngine.Vector3 roomScale = new UnityEngine.Vector3();
-				roomScale.x = transform.localScale.x * boxCollider.size.x;
-				roomScale.y = transform.localScale.y * boxCollider.size.y;
-				roomScale.z = transform.localScale.z * boxCollider.size.z;
-				tempGameObject.transform.localScale = roomScale;
-
-				AkSurfaceReflector.SetGeometryFromMesh(mesh, tempGameObject.transform, geometryID, INVALID_ROOM_ID, false, false, false);
-#if UNITY_EDITOR
-				previousBoxCollider = boxCollider;
-				previousPosition = tempGameObject.transform.position;
-				previousRotation = tempGameObject.transform.rotation;
-				previousScale = tempGameObject.transform.localScale;
-#endif
-				previousColliderType = typeof(UnityEngine.BoxCollider);
-				UnityEngine.GameObject.Destroy(tempGameObject);
-			}
-			else if (roomCollider.GetType() == typeof(UnityEngine.CapsuleCollider))
-			{
-				geometryID = GetID();
-				UnityEngine.CapsuleCollider capsuleCollider = GetComponent<UnityEngine.CapsuleCollider>();
-#if UNITY_EDITOR
-				if (previousColliderType == typeof(UnityEngine.CapsuleCollider) &&
-					previousCapsuleCollider != null &&
-					previousPosition == capsuleCollider.bounds.center &&
-					previousRotation == transform.rotation &&
-					previousScale == GetCapsuleScale(transform.localScale, capsuleCollider.radius, capsuleCollider.height, capsuleCollider.direction))
-					return geometryID;
-#endif
-				UnityEngine.GameObject tempGameObject = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);
-				UnityEngine.Mesh mesh = tempGameObject.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
-
-				tempGameObject.transform.position = capsuleCollider.bounds.center;
-				tempGameObject.transform.rotation = transform.rotation;
-				tempGameObject.transform.localScale = GetCapsuleScale(transform.localScale, capsuleCollider.radius, capsuleCollider.height, capsuleCollider.direction);
-
-				AkSurfaceReflector.SetGeometryFromMesh(mesh, tempGameObject.transform, geometryID, INVALID_ROOM_ID, false, false, false);
-#if UNITY_EDITOR
-				previousCapsuleCollider = capsuleCollider;
-				previousPosition = tempGameObject.transform.position;
-				previousRotation = tempGameObject.transform.rotation;
-				previousScale = tempGameObject.transform.localScale;
-#endif
-				previousColliderType = typeof(UnityEngine.CapsuleCollider);
-				UnityEngine.GameObject.Destroy(tempGameObject);
-			}
-			else if (roomCollider.GetType() == typeof(UnityEngine.SphereCollider))
-			{
-				geometryID = GetID();
-#if UNITY_EDITOR
-				if (previousColliderType == typeof(UnityEngine.SphereCollider) &&
-					previousPosition == roomCollider.bounds.center &&
-					previousScale == roomCollider.bounds.size)
-					return geometryID;
-#endif
-				UnityEngine.GameObject tempGameObject = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
-				UnityEngine.Mesh mesh = tempGameObject.GetComponent<UnityEngine.MeshFilter>().sharedMesh;
-
-				tempGameObject.transform.position = roomCollider.bounds.center;
-				tempGameObject.transform.localScale = roomCollider.bounds.size;
-
-				AkSurfaceReflector.SetGeometryFromMesh(mesh, tempGameObject.transform, geometryID, INVALID_ROOM_ID, false, false, false);
-#if UNITY_EDITOR
-				previousColliderType = typeof(UnityEngine.SphereCollider);
-				previousPosition = tempGameObject.transform.position;
-				previousScale = tempGameObject.transform.localScale;
-#endif
-				previousColliderType = typeof(UnityEngine.SphereCollider);
-				UnityEngine.GameObject.Destroy(tempGameObject);
+				SetRoom();
 			}
 			else
 			{
-				if (previousColliderType == roomCollider.GetType())
-					return geometryID;
-
-				UnityEngine.Debug.LogWarning(name + " has an invalid collider for wet transmission. Wet Transmission will be disabled.");
-				// in case a geometry was added with the room's ID, remove it
-				if (previousColliderType == typeof(UnityEngine.MeshCollider) ||
-					previousColliderType == typeof(UnityEngine.BoxCollider) ||
-					previousColliderType == typeof(UnityEngine.SphereCollider) ||
-					previousColliderType == typeof(UnityEngine.CapsuleCollider))
-				AkSoundEngine.RemoveGeometry(GetID());
-
-				previousColliderType = roomCollider.GetType();
+				AkRoomManager.RegisterRoomUpdate(this);
 			}
+
+			previousPosition = transform.position;
+			previousScale = transform.lossyScale;
+			previousRotation = transform.rotation;
+		}
+	}
+
+	private UnityEngine.Vector3 GetCubeScaleFromCapsule(UnityEngine.Vector3 capsuleScale, float capsuleRadius, float capsuleHeight, int capsuleDirection)
+	{
+		UnityEngine.Vector3 cubeScale = new UnityEngine.Vector3();
+
+		capsuleScale.x = UnityEngine.Mathf.Abs(capsuleScale.x);
+		capsuleScale.y = UnityEngine.Mathf.Abs(capsuleScale.y);
+		capsuleScale.z = UnityEngine.Mathf.Abs(capsuleScale.z);
+
+		switch (capsuleDirection)
+		{
+			case 0:
+				cubeScale.y = UnityEngine.Mathf.Max(capsuleScale.y, capsuleScale.z) * (capsuleRadius * 2);
+				cubeScale.z = cubeScale.y;
+				cubeScale.x = UnityEngine.Mathf.Max(cubeScale.y, capsuleScale.x * capsuleHeight);
+				break;
+			case 2:
+				cubeScale.x = UnityEngine.Mathf.Max(capsuleScale.x, capsuleScale.y) * (capsuleRadius * 2);
+				cubeScale.y = cubeScale.x;
+				cubeScale.z = UnityEngine.Mathf.Max(cubeScale.x, capsuleScale.z * capsuleHeight);
+				break;
+			case 1:
+			default:
+				cubeScale.x = UnityEngine.Mathf.Max(capsuleScale.x, capsuleScale.z) * (capsuleRadius * 2);
+				cubeScale.y = UnityEngine.Mathf.Max(cubeScale.x, capsuleScale.y * capsuleHeight);
+				cubeScale.z = cubeScale.x;
+				break;
 		}
 
-		return geometryID;
+		return cubeScale;
 	}
 
 	public override void OnEnable()
 	{
 		roomCollider = GetComponent<UnityEngine.Collider>();
 
+		AkSurfaceReflector surfaceReflectorComponent = gameObject.GetComponent<AkSurfaceReflector>();
+		if (surfaceReflectorComponent != null && surfaceReflectorComponent.enabled)
+		{
+			SetGeometryID(surfaceReflectorComponent.GetID());
+		}
+		else
+		{
+			SetGeometryFromCollider();
+		}
+
 		SetRoom();
 
 		// if objects entered the room while disabled, enter them now
 		for (var i = 0; i < roomAwareObjectsDetectedWhileDisabled.Count; ++i)
+		{
 			AkRoomAwareManager.ObjectEnteredRoom(roomAwareObjectsDetectedWhileDisabled[i], this);
+		}
 
 		roomAwareObjectsDetectedWhileDisabled.Clear();
 		base.OnEnable();
+
+		// init update condition
+		previousPosition = transform.position;
+		previousScale = transform.lossyScale;
+		previousRotation = transform.rotation;
 	}
 
 	private void OnDisable()
@@ -363,18 +387,20 @@ public class AkRoom : AkTriggerHandler
 			previousColliderType == typeof(UnityEngine.BoxCollider) ||
 			previousColliderType == typeof(UnityEngine.SphereCollider) ||
 			previousColliderType == typeof(UnityEngine.CapsuleCollider))
+		{
 			AkSoundEngine.RemoveGeometry(GetID());
+		}
 		previousColliderType = null;
 
 		// stop sounds applied to the room game object
 		if (roomToneEvent.IsValid())
+		{
 			AkSoundEngine.StopAll(GetID());
+		}
 
 		RoomCount--;
 		AkSoundEngine.RemoveRoom(GetID());
-#if UNITY_EDITOR
 		bSentToWwise = false;
-#endif
 	}
 
 	private void OnTriggerEnter(UnityEngine.Collider in_other)
@@ -390,7 +416,9 @@ public class AkRoom : AkTriggerHandler
 	public void PostRoomTone()
 	{
 		if (roomToneEvent.IsValid() && isActiveAndEnabled)
-			AkSoundEngine.PostEventOnRoom(roomToneEvent.Id, GetID());
+		{
+			roomToneEvent.Post(GetID());
+		}
 	}
 
 	public override void HandleEvent(UnityEngine.GameObject in_gameObject)
@@ -415,7 +443,9 @@ public class AkRoom : AkTriggerHandler
 			for (int i = 0; i < rooms.Count; i++)
 			{
 				if (rooms[i].isActiveAndEnabled)
+				{
 					return rooms[i];
+				}
 			}
 
 			return null;
@@ -432,7 +462,9 @@ public class AkRoom : AkTriggerHandler
 		{
 			var index = BinarySearch(room);
 			if (index < 0)
+			{
 				rooms.Insert(~index, room);
+			}
 		}
 
 		public void Remove(AkRoom room)
@@ -461,14 +493,16 @@ public class AkRoom : AkTriggerHandler
 			{
 				var result = a.priority.CompareTo(b.priority);
 				if (result == 0 && a != b)
+				{
 					return 1;
+				}
 
 				return -result; // inverted to have highest priority first
 			}
 		}
 	}
 
-	#region Obsolete
+#region Obsolete
 	[System.Obsolete(AkSoundEngine.Deprecation_2021_1_0)]
 	public float wallOcclusion
 	{
@@ -481,6 +515,6 @@ public class AkRoom : AkTriggerHandler
 			transmissionLoss = value;
 		}
 	}
-	#endregion
+#endregion
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_WIIU || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.

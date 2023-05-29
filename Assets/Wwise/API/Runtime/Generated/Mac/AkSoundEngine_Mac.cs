@@ -11,6 +11,9 @@
 
 
 public partial class AkSoundEngine {
+  public static uint AK_INVALID_SHARE_SET_ID { get { return AkSoundEnginePINVOKE.CSharp_AK_INVALID_SHARE_SET_ID_get(); } 
+  }
+
   public static uint AK_INVALID_PIPELINE_ID { get { return AkSoundEnginePINVOKE.CSharp_AK_INVALID_PIPELINE_ID_get(); } 
   }
 
@@ -18,6 +21,32 @@ public partial class AkSoundEngine {
   }
 
   public static uint AK_SOUNDBANK_VERSION { get { return AkSoundEnginePINVOKE.CSharp_AK_SOUNDBANK_VERSION_get(); } 
+  }
+
+  public static uint AkJobType_Generic { get { return AkSoundEnginePINVOKE.CSharp_AkJobType_Generic_get(); } 
+  }
+
+  public static uint AkJobType_AudioProcessing { get { return AkSoundEnginePINVOKE.CSharp_AkJobType_AudioProcessing_get(); } 
+  }
+
+  public static uint AkJobType_SpatialAudio { get { return AkSoundEnginePINVOKE.CSharp_AkJobType_SpatialAudio_get(); } 
+  }
+
+  public static uint AK_NUM_JOB_TYPES { get { return AkSoundEnginePINVOKE.CSharp_AK_NUM_JOB_TYPES_get(); } 
+  }
+
+  public static UnityEngine.Vector3 ConvertAkVector64ToAkVector(AkVector64 in_) { return AkSoundEnginePINVOKE.CSharp_ConvertAkVector64ToAkVector(in_); }
+
+  public static AkTransform ConvertAkWorldTransformToAkTransform(AkWorldTransform in_) {
+    AkTransform ret = new AkTransform(AkSoundEnginePINVOKE.CSharp_ConvertAkWorldTransformToAkTransform(AkWorldTransform.getCPtr(in_)), true);
+    return ret;
+  }
+
+  public static AkVector64 ConvertAkVectorToAkVector64(UnityEngine.Vector3 in_) { return AkSoundEnginePINVOKE.CSharp_ConvertAkVectorToAkVector64(in_); }
+
+  public static AkWorldTransform ConvertAkTransformToAkWorldTransform(AkTransform in_) {
+    AkWorldTransform ret = new AkWorldTransform(AkSoundEnginePINVOKE.CSharp_ConvertAkTransformToAkWorldTransform(AkTransform.getCPtr(in_)), true);
+    return ret;
   }
 
   public static ushort AK_INT { get { return AkSoundEnginePINVOKE.CSharp_AK_INT_get(); } 
@@ -40,6 +69,8 @@ public partial class AkSoundEngine {
 
   public static uint AK_LE_NATIVE_INTERLEAVE { get { return AkSoundEnginePINVOKE.CSharp_AK_LE_NATIVE_INTERLEAVE_get(); } 
   }
+
+  public static bool IsBankCodecID(uint in_codecID) { return AkSoundEnginePINVOKE.CSharp_IsBankCodecID(in_codecID); }
 
   public static uint DynamicSequenceOpen(ulong in_gameObjectID, uint in_uFlags, AkCallbackManager.EventCallback in_pfnCallback, object in_pCookie, AkDynamicSequenceType in_eDynamicSequenceType) {
 	in_pCookie = AkCallbackManager.EventCallbackPackage.Create(in_pfnCallback, in_pCookie, ref in_uFlags);
@@ -142,6 +173,8 @@ public partial class AkSoundEngine {
   public static AKRESULT SetVolumeThreshold(float in_fVolumeThresholdDB) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetVolumeThreshold(in_fVolumeThresholdDB); }
 
   public static AKRESULT SetMaxNumVoicesLimit(ushort in_maxNumberVoices) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMaxNumVoicesLimit(in_maxNumberVoices); }
+
+  public static AKRESULT SetJobMgrMaxActiveWorkers(uint in_jobType, uint in_uNewMaxActiveWorkers) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetJobMgrMaxActiveWorkers(in_jobType, in_uNewMaxActiveWorkers); }
 
   public static AKRESULT RenderAudio(bool in_bAllowSyncRender) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RenderAudio__SWIG_0(in_bAllowSyncRender); }
 
@@ -355,92 +388,149 @@ public partial class AkSoundEngine {
 
   public static AKRESULT UnregisterAllGameObj() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnregisterAllGameObj(); }
 
-  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkPositionArray in_pPositions, ushort in_NumPositions, AkMultiPositionType in_eMultiPositionType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_0(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions, (int)in_eMultiPositionType); }
+  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkPositionArray in_pPositions, ushort in_NumPositions, AkMultiPositionType in_eMultiPositionType, AkSetPositionFlags in_eFlags) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_0(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions, (int)in_eMultiPositionType, (int)in_eFlags); }
 
-  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkPositionArray in_pPositions, ushort in_NumPositions) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_1(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions); }
+  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkPositionArray in_pPositions, ushort in_NumPositions, AkMultiPositionType in_eMultiPositionType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_1(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions, (int)in_eMultiPositionType); }
 
-  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkChannelEmitterArray in_pPositions, ushort in_NumPositions, AkMultiPositionType in_eMultiPositionType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_2(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions, (int)in_eMultiPositionType); }
+  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkPositionArray in_pPositions, ushort in_NumPositions) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_2(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions); }
 
-  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkChannelEmitterArray in_pPositions, ushort in_NumPositions) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_3(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions); }
+  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkChannelEmitterArray in_pPositions, ushort in_NumPositions, AkMultiPositionType in_eMultiPositionType, AkSetPositionFlags in_eFlags) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_3(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions, (int)in_eMultiPositionType, (int)in_eFlags); }
+
+  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkChannelEmitterArray in_pPositions, ushort in_NumPositions, AkMultiPositionType in_eMultiPositionType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_4(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions, (int)in_eMultiPositionType); }
+
+  public static AKRESULT SetMultiplePositions(ulong in_GameObjectID, AkChannelEmitterArray in_pPositions, ushort in_NumPositions) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetMultiplePositions__SWIG_5(in_GameObjectID, in_pPositions.m_Buffer, in_NumPositions); }
 
   public static AKRESULT SetScalingFactor(ulong in_GameObjectID, float in_fAttenuationScalingFactor) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetScalingFactor(in_GameObjectID, in_fAttenuationScalingFactor); }
+
+  public static AKRESULT SetDistanceProbe(ulong in_listenerGameObjectID, ulong in_distanceProbeGameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetDistanceProbe(in_listenerGameObjectID, in_distanceProbeGameObjectID); }
 
   public static AKRESULT ClearBanks() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_ClearBanks(); }
 
   public static AKRESULT SetBankLoadIOSettings(float in_fThroughput, sbyte in_priority) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetBankLoadIOSettings(in_fThroughput, in_priority); }
 
-  public static AKRESULT LoadBank(string in_pszString, out uint out_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_0(in_pszString, out out_bankID); }
+  public static AKRESULT LoadBank(string in_pszString, out uint out_bankID, uint in_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_0(in_pszString, out out_bankID, in_bankType); }
 
-  public static AKRESULT LoadBank(uint in_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_2(in_bankID); }
+  public static AKRESULT LoadBank(string in_pszString, out uint out_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_1(in_pszString, out out_bankID); }
+
+  public static AKRESULT LoadBank(uint in_bankID, uint in_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_4(in_bankID, in_bankType); }
+
+  public static AKRESULT LoadBank(uint in_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_5(in_bankID); }
 
   public static AKRESULT LoadBankMemoryView(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, out uint out_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryView__SWIG_0(in_pInMemoryBankPtr, in_uInMemoryBankSize, out out_bankID); }
 
+  public static AKRESULT LoadBankMemoryView(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, out uint out_bankID, out uint out_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryView__SWIG_1(in_pInMemoryBankPtr, in_uInMemoryBankSize, out out_bankID, out out_bankType); }
+
   public static AKRESULT LoadBankMemoryCopy(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, out uint out_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryCopy__SWIG_0(in_pInMemoryBankPtr, in_uInMemoryBankSize, out out_bankID); }
+
+  public static AKRESULT LoadBankMemoryCopy(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, out uint out_bankID, out uint out_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryCopy__SWIG_1(in_pInMemoryBankPtr, in_uInMemoryBankSize, out out_bankID, out out_bankType); }
+
+  public static AKRESULT LoadBank(string in_pszString, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, out uint out_bankID, uint in_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_6(in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID, in_bankType); }
+  }
 
   public static AKRESULT LoadBank(string in_pszString, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, out uint out_bankID) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_3(in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_7(in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID); }
+  }
+
+  public static AKRESULT LoadBank(uint in_bankID, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, uint in_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_10(in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, in_bankType); }
   }
 
   public static AKRESULT LoadBank(uint in_bankID, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_5(in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBank__SWIG_11(in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
   }
 
   public static AKRESULT LoadBankMemoryView(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, out uint out_bankID) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryView__SWIG_1(in_pInMemoryBankPtr, in_uInMemoryBankSize, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryView__SWIG_2(in_pInMemoryBankPtr, in_uInMemoryBankSize, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID); }
   }
 
-  public static AKRESULT LoadBankMemoryCopy(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, out uint out_bankID) {
+  public static AKRESULT LoadBankMemoryView(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, out uint out_bankID, out uint out_bankType) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryCopy__SWIG_1(in_pInMemoryBankPtr, in_uInMemoryBankSize, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryView__SWIG_3(in_pInMemoryBankPtr, in_uInMemoryBankSize, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID, out out_bankType); }
   }
 
-  public static AKRESULT UnloadBank(string in_pszString, global::System.IntPtr in_pInMemoryBankPtr) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_0(in_pszString, in_pInMemoryBankPtr); }
+  public static AKRESULT LoadBankMemoryCopy(global::System.IntPtr in_pInMemoryBankPtr, uint in_uInMemoryBankSize, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, out uint out_bankID, out uint out_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_LoadBankMemoryCopy__SWIG_2(in_pInMemoryBankPtr, in_uInMemoryBankSize, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, out out_bankID, out out_bankType); }
+  }
 
-  public static AKRESULT UnloadBank(uint in_bankID, global::System.IntPtr in_pInMemoryBankPtr) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_2(in_bankID, in_pInMemoryBankPtr); }
+  public static AKRESULT UnloadBank(string in_pszString, global::System.IntPtr in_pInMemoryBankPtr, uint in_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_0(in_pszString, in_pInMemoryBankPtr, in_bankType); }
+
+  public static AKRESULT UnloadBank(string in_pszString, global::System.IntPtr in_pInMemoryBankPtr) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_1(in_pszString, in_pInMemoryBankPtr); }
+
+  public static AKRESULT UnloadBank(uint in_bankID, global::System.IntPtr in_pInMemoryBankPtr, uint in_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_4(in_bankID, in_pInMemoryBankPtr, in_bankType); }
+
+  public static AKRESULT UnloadBank(uint in_bankID, global::System.IntPtr in_pInMemoryBankPtr) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_5(in_bankID, in_pInMemoryBankPtr); }
+
+  public static AKRESULT UnloadBank(string in_pszString, global::System.IntPtr in_pInMemoryBankPtr, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, uint in_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_6(in_pszString, in_pInMemoryBankPtr, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, in_bankType); }
+  }
 
   public static AKRESULT UnloadBank(string in_pszString, global::System.IntPtr in_pInMemoryBankPtr, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_3(in_pszString, in_pInMemoryBankPtr, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_7(in_pszString, in_pInMemoryBankPtr, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+  }
+
+  public static AKRESULT UnloadBank(uint in_bankID, global::System.IntPtr in_pInMemoryBankPtr, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, uint in_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_10(in_bankID, in_pInMemoryBankPtr, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, in_bankType); }
   }
 
   public static AKRESULT UnloadBank(uint in_bankID, global::System.IntPtr in_pInMemoryBankPtr, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_5(in_bankID, in_pInMemoryBankPtr, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnloadBank__SWIG_11(in_bankID, in_pInMemoryBankPtr, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
   }
 
   public static void CancelBankCallbackCookie(object in_pCookie) {
 		AkCallbackManager.RemoveBankCallback(in_pCookie);
 	}
 
-  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString, AkBankContent in_uFlags) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_0((int)in_PreparationType, in_pszString, (int)in_uFlags); }
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString, AkBankContent in_uFlags, uint in_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_0((int)in_PreparationType, in_pszString, (int)in_uFlags, in_bankType); }
 
-  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_1((int)in_PreparationType, in_pszString); }
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString, AkBankContent in_uFlags) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_1((int)in_PreparationType, in_pszString, (int)in_uFlags); }
 
-  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID, AkBankContent in_uFlags) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_4((int)in_PreparationType, in_bankID, (int)in_uFlags); }
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_2((int)in_PreparationType, in_pszString); }
 
-  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_5((int)in_PreparationType, in_bankID); }
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID, AkBankContent in_uFlags, uint in_bankType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_6((int)in_PreparationType, in_bankID, (int)in_uFlags, in_bankType); }
+
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID, AkBankContent in_uFlags) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_7((int)in_PreparationType, in_bankID, (int)in_uFlags); }
+
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_8((int)in_PreparationType, in_bankID); }
+
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, AkBankContent in_uFlags, uint in_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_9((int)in_PreparationType, in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, (int)in_uFlags, in_bankType); }
+  }
 
   public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, AkBankContent in_uFlags) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_6((int)in_PreparationType, in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, (int)in_uFlags); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_10((int)in_PreparationType, in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, (int)in_uFlags); }
   }
 
   public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, string in_pszString, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_7((int)in_PreparationType, in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_11((int)in_PreparationType, in_pszString, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+  }
+
+  public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, AkBankContent in_uFlags, uint in_bankType) {
+		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_15((int)in_PreparationType, in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, (int)in_uFlags, in_bankType); }
   }
 
   public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie, AkBankContent in_uFlags) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_10((int)in_PreparationType, in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, (int)in_uFlags); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_16((int)in_PreparationType, in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero, (int)in_uFlags); }
   }
 
   public static AKRESULT PrepareBank(AkPreparationType in_PreparationType, uint in_bankID, AkCallbackManager.BankCallback in_pfnBankCallback, object in_pCookie) {
 		in_pCookie = new AkCallbackManager.BankCallbackPackage(in_pfnBankCallback, in_pCookie);
-    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_11((int)in_PreparationType, in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
+    { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PrepareBank__SWIG_17((int)in_PreparationType, in_bankID, global::System.IntPtr.Zero, in_pCookie != null ? (global::System.IntPtr)in_pCookie.GetHashCode() : global::System.IntPtr.Zero); }
   }
 
   public static AKRESULT ClearPreparedEvents() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_ClearPreparedEvents(); }
@@ -721,11 +811,15 @@ public partial class AkSoundEngine {
 
   public static AKRESULT GetDeviceSpatialAudioSupport(uint in_idDevice) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetDeviceSpatialAudioSupport(in_idDevice); }
 
-  public static AKRESULT Suspend(bool in_bRenderAnyway) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_Suspend__SWIG_0(in_bRenderAnyway); }
+  public static AKRESULT Suspend(bool in_bRenderAnyway, bool in_bFadeOut) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_Suspend__SWIG_0(in_bRenderAnyway, in_bFadeOut); }
 
-  public static AKRESULT Suspend() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_Suspend__SWIG_1(); }
+  public static AKRESULT Suspend(bool in_bRenderAnyway) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_Suspend__SWIG_1(in_bRenderAnyway); }
 
-  public static AKRESULT WakeupFromSuspend() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_WakeupFromSuspend(); }
+  public static AKRESULT Suspend() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_Suspend__SWIG_2(); }
+
+  public static AKRESULT WakeupFromSuspend(uint in_uDelayMs) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_WakeupFromSuspend__SWIG_0(in_uDelayMs); }
+
+  public static AKRESULT WakeupFromSuspend() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_WakeupFromSuspend__SWIG_1(); }
 
   public static uint GetBufferTick() { return AkSoundEnginePINVOKE.CSharp_GetBufferTick(); }
 
@@ -751,6 +845,8 @@ public partial class AkSoundEngine {
 
   public static AKRESULT PostCode(AkMonitorErrorCode in_eError, AkMonitorErrorLevel in_eErrorLevel) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode__SWIG_4((int)in_eError, (int)in_eErrorLevel); }
 
+  public static AKRESULT PostCodeVarArg(AkMonitorErrorCode in_eError, AkMonitorErrorLevel in_eErrorLevel, MsgContext msgContext) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCodeVarArg((int)in_eError, (int)in_eErrorLevel, MsgContext.getCPtr(msgContext)); }
+
   public static AKRESULT PostString(string in_pszError, AkMonitorErrorLevel in_eErrorLevel, uint in_playingID, ulong in_gameObjID, uint in_audioNodeID, bool in_bIsBus) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_0(in_pszError, (int)in_eErrorLevel, in_playingID, in_gameObjID, in_audioNodeID, in_bIsBus); }
 
   public static AKRESULT PostString(string in_pszError, AkMonitorErrorLevel in_eErrorLevel, uint in_playingID, ulong in_gameObjID, uint in_audioNodeID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_1(in_pszError, (int)in_eErrorLevel, in_playingID, in_gameObjID, in_audioNodeID); }
@@ -760,6 +856,8 @@ public partial class AkSoundEngine {
   public static AKRESULT PostString(string in_pszError, AkMonitorErrorLevel in_eErrorLevel, uint in_playingID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_3(in_pszError, (int)in_eErrorLevel, in_playingID); }
 
   public static AKRESULT PostString(string in_pszError, AkMonitorErrorLevel in_eErrorLevel) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_4(in_pszError, (int)in_eErrorLevel); }
+
+  public static AKRESULT ResetTranslator() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_ResetTranslator(); }
 
   public static int GetTimeStamp() { return AkSoundEnginePINVOKE.CSharp_GetTimeStamp(); }
 
@@ -789,9 +887,9 @@ public partial class AkSoundEngine {
 
   public static AKRESULT GetDialogueEventCustomPropertyValue(uint in_eventID, uint in_uPropID, out float out_fValue) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetDialogueEventCustomPropertyValue__SWIG_1(in_eventID, in_uPropID, out out_fValue); }
 
-  public static AKRESULT GetPosition(ulong in_GameObjectID, AkTransform out_rPosition) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetPosition(in_GameObjectID, AkTransform.getCPtr(out_rPosition)); }
+  public static AKRESULT GetPosition(ulong in_GameObjectID, AkWorldTransform out_rPosition) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetPosition(in_GameObjectID, AkWorldTransform.getCPtr(out_rPosition)); }
 
-  public static AKRESULT GetListenerPosition(ulong in_uIndex, AkTransform out_rPosition) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetListenerPosition(in_uIndex, AkTransform.getCPtr(out_rPosition)); }
+  public static AKRESULT GetListenerPosition(ulong in_uIndex, AkWorldTransform out_rPosition) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetListenerPosition(in_uIndex, AkWorldTransform.getCPtr(out_rPosition)); }
 
   public static AKRESULT GetRTPCValue(uint in_rtpcID, ulong in_gameObjectID, uint in_playingID, out float out_rValue, ref int io_rValueType) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetRTPCValue__SWIG_0(in_rtpcID, in_gameObjectID, in_playingID, out out_rValue, ref io_rValueType); }
 
@@ -855,9 +953,6 @@ public partial class AkSoundEngine {
 
   public static uint StdChannelIndexToDisplayIndex(AkChannelOrdering in_eOrdering, uint in_uChannelMask, uint in_uChannelIdx) { return AkSoundEnginePINVOKE.CSharp_StdChannelIndexToDisplayIndex((int)in_eOrdering, in_uChannelMask, in_uChannelIdx); }
 
-  public static float kDefaultMaxPathLength { get { return AkSoundEnginePINVOKE.CSharp_kDefaultMaxPathLength_get(); } 
-  }
-
   public static uint kDefaultDiffractionMaxEdges { get { return AkSoundEnginePINVOKE.CSharp_kDefaultDiffractionMaxEdges_get(); } 
   }
 
@@ -878,9 +973,17 @@ public partial class AkSoundEngine {
 
   public static AKRESULT SetGameObjectRadius(ulong in_gameObjectID, float in_outerRadius, float in_innerRadius) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetGameObjectRadius(in_gameObjectID, in_outerRadius, in_innerRadius); }
 
-  public static AKRESULT SetImageSource(uint in_srcID, AkImageSourceSettings in_info, uint in_AuxBusID, ulong in_roomID, ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetImageSource(in_srcID, AkImageSourceSettings.getCPtr(in_info), in_AuxBusID, in_roomID, in_gameObjectID); }
+  public static AKRESULT SetImageSource(uint in_srcID, AkImageSourceSettings in_info, string in_name, uint in_AuxBusID, ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetImageSource__SWIG_0(in_srcID, AkImageSourceSettings.getCPtr(in_info), in_name, in_AuxBusID, in_gameObjectID); }
 
-  public static AKRESULT RemoveImageSource(uint in_srcID, uint in_AuxBusID, ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveImageSource(in_srcID, in_AuxBusID, in_gameObjectID); }
+  public static AKRESULT SetImageSource(uint in_srcID, AkImageSourceSettings in_info, string in_name, uint in_AuxBusID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetImageSource__SWIG_1(in_srcID, AkImageSourceSettings.getCPtr(in_info), in_name, in_AuxBusID); }
+
+  public static AKRESULT SetImageSource(uint in_srcID, AkImageSourceSettings in_info, string in_name) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetImageSource__SWIG_2(in_srcID, AkImageSourceSettings.getCPtr(in_info), in_name); }
+
+  public static AKRESULT RemoveImageSource(uint in_srcID, uint in_AuxBusID, ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveImageSource__SWIG_0(in_srcID, in_AuxBusID, in_gameObjectID); }
+
+  public static AKRESULT RemoveImageSource(uint in_srcID, uint in_AuxBusID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveImageSource__SWIG_1(in_srcID, in_AuxBusID); }
+
+  public static AKRESULT RemoveImageSource(uint in_srcID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveImageSource__SWIG_2(in_srcID); }
 
   public static AKRESULT ClearImageSources(uint in_AuxBusID, ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_ClearImageSources__SWIG_0(in_AuxBusID, in_gameObjectID); }
 
@@ -890,7 +993,7 @@ public partial class AkSoundEngine {
 
   public static AKRESULT RemoveGeometry(ulong in_SetID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveGeometry(in_SetID); }
 
-  public static AKRESULT QueryReflectionPaths(ulong in_gameObjectID, uint in_positionIndex, ref UnityEngine.Vector3 out_listenerPos, ref UnityEngine.Vector3 out_emitterPos, AkReflectionPathInfoArray out_aPaths, out uint io_uArraySize) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_QueryReflectionPaths(in_gameObjectID, in_positionIndex, ref out_listenerPos, ref out_emitterPos, out_aPaths.GetBuffer(), out io_uArraySize); }
+  public static AKRESULT RemoveGeometryInstance(ulong in_GeometryInstanceID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveGeometryInstance(in_GeometryInstanceID); }
 
   public static AKRESULT RemoveRoom(ulong in_RoomID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RemoveRoom(in_RoomID); }
 
@@ -900,7 +1003,11 @@ public partial class AkSoundEngine {
 
   public static AKRESULT SetReflectionsOrder(uint in_uReflectionsOrder, bool in_bUpdatePaths) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetReflectionsOrder(in_uReflectionsOrder, in_bUpdatePaths); }
 
+  public static AKRESULT SetDiffractionOrder(uint in_uDiffractionOrder, bool in_bUpdatePaths) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetDiffractionOrder(in_uDiffractionOrder, in_bUpdatePaths); }
+
   public static AKRESULT SetNumberOfPrimaryRays(uint in_uNbPrimaryRays) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetNumberOfPrimaryRays(in_uNbPrimaryRays); }
+
+  public static AKRESULT SetLoadBalancingSpread(uint in_uNbFrames) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetLoadBalancingSpread(in_uNbFrames); }
 
   public static AKRESULT SetEarlyReflectionsAuxSend(ulong in_gameObjectID, uint in_auxBusID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetEarlyReflectionsAuxSend(in_gameObjectID, in_auxBusID); }
 
@@ -913,8 +1020,6 @@ public partial class AkSoundEngine {
   public static AKRESULT SetPortalToPortalObstruction(ulong in_PortalID0, ulong in_PortalID1, float in_fObstruction) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetPortalToPortalObstruction(in_PortalID0, in_PortalID1, in_fObstruction); }
 
   public static AKRESULT QueryWetDiffraction(ulong in_portal, out float out_wetDiffraction) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_QueryWetDiffraction(in_portal, out out_wetDiffraction); }
-
-  public static AKRESULT QueryDiffractionPaths(ulong in_gameObjectID, uint in_positionIndex, ref UnityEngine.Vector3 out_listenerPos, ref UnityEngine.Vector3 out_emitterPos, AkDiffractionPathInfoArray out_aPaths, out uint io_uArraySize) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_QueryDiffractionPaths(in_gameObjectID, in_positionIndex, ref out_listenerPos, ref out_emitterPos, out_aPaths.GetBuffer(), out io_uArraySize); }
 
   public static AKRESULT ResetStochasticEngine() { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_ResetStochasticEngine(); }
 
@@ -1043,13 +1148,15 @@ public partial class AkSoundEngine {
 
   public static AKRESULT SetRoomPortal(ulong in_PortalID, ulong FrontRoom, ulong BackRoom, AkTransform Transform, AkExtent Extent, bool bEnabled, string in_pName) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetRoomPortal(in_PortalID, FrontRoom, BackRoom, AkTransform.getCPtr(Transform), AkExtent.getCPtr(Extent), bEnabled, in_pName); }
 
-  public static AKRESULT SetRoom(ulong in_RoomID, AkRoomParams in_roomParams, ulong GeometryID, string in_pName) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetRoom(in_RoomID, AkRoomParams.getCPtr(in_roomParams), GeometryID, in_pName); }
+  public static AKRESULT SetRoom(ulong in_RoomID, AkRoomParams in_roomParams, ulong GeometryInstanceID, string in_pName) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetRoom(in_RoomID, AkRoomParams.getCPtr(in_roomParams), GeometryInstanceID, in_pName); }
 
   public static AKRESULT RegisterSpatialAudioListener(ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_RegisterSpatialAudioListener(in_gameObjectID); }
 
   public static AKRESULT UnregisterSpatialAudioListener(ulong in_gameObjectID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_UnregisterSpatialAudioListener(in_gameObjectID); }
 
-  public static AKRESULT SetGeometry(ulong in_GeomSetID, AkTriangleArray Triangles, uint NumTriangles, UnityEngine.Vector3[] Vertices, uint NumVertices, AkAcousticSurfaceArray Surfaces, uint NumSurfaces, ulong RoomID, bool EnableDiffraction, bool EnableDiffractionOnBoundaryEdges, bool EnableTriangles) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetGeometry(in_GeomSetID, Triangles.GetBuffer(), NumTriangles, Vertices, NumVertices, Surfaces.GetBuffer(), NumSurfaces, RoomID, EnableDiffraction, EnableDiffractionOnBoundaryEdges, EnableTriangles); }
+  public static AKRESULT SetGeometry(ulong in_GeomSetID, AkTriangleArray Triangles, uint NumTriangles, UnityEngine.Vector3[] Vertices, uint NumVertices, AkAcousticSurfaceArray Surfaces, uint NumSurfaces, bool EnableDiffraction, bool EnableDiffractionOnBoundaryEdges, bool EnableTriangles) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetGeometry(in_GeomSetID, Triangles.GetBuffer(), NumTriangles, Vertices, NumVertices, Surfaces.GetBuffer(), NumSurfaces, EnableDiffraction, EnableDiffractionOnBoundaryEdges, EnableTriangles); }
+
+  public static AKRESULT SetGeometryInstance(ulong in_GeomInstanceID, AkTransform Transform, UnityEngine.Vector3 Scale, ulong GeometrySetID, ulong RoomID) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetGeometryInstance(in_GeomInstanceID, AkTransform.getCPtr(Transform), Scale, GeometrySetID, RoomID); }
 
   public static uint PostEventOnRoom(uint in_eventID, ulong in_roomID, uint in_uFlags, AkCallbackManager.EventCallback in_pfnCallback, object in_pCookie, uint in_cExternals, AkExternalSourceInfoArray in_pExternalSources, uint in_PlayingID) {
 	in_pCookie = AkCallbackManager.EventCallbackPackage.Create(in_pfnCallback, in_pCookie, ref in_uFlags);
@@ -1083,6 +1190,12 @@ public partial class AkSoundEngine {
 		AkCallbackManager.SetLastAddedPlayingID(ret);
 		return ret;
 	}
+
+  public static AKRESULT QueryReflectionPaths(ulong in_gameObjectID, uint in_positionIndex, ref UnityEngine.Vector3 out_listenerPos, ref UnityEngine.Vector3 out_emitterPos, AkReflectionPathInfoArray out_aPaths, out uint io_uArraySize) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_QueryReflectionPaths(in_gameObjectID, in_positionIndex, ref out_listenerPos, ref out_emitterPos, out_aPaths.GetBuffer(), out io_uArraySize); }
+
+  public static AKRESULT QueryDiffractionPaths(ulong in_gameObjectID, uint in_positionIndex, ref UnityEngine.Vector3 out_listenerPos, ref UnityEngine.Vector3 out_emitterPos, AkDiffractionPathInfoArray out_aPaths, out uint io_uArraySize) { return (AKRESULT)AkSoundEnginePINVOKE.CSharp_QueryDiffractionPaths(in_gameObjectID, in_positionIndex, ref out_listenerPos, ref out_emitterPos, out_aPaths.GetBuffer(), out io_uArraySize); }
+
+  public static void PerformStreamMgrIO() { AkSoundEnginePINVOKE.CSharp_PerformStreamMgrIO(); }
 
   public const int AK_SIMD_ALIGNMENT = 16;
   public const int AK_BUFFER_ALIGNMENT = 16;
@@ -1146,7 +1259,6 @@ public partial class AkSoundEngine {
   public const int AKCODECID_PCMEX = (7);
   public const int AKCODECID_EXTERNAL_SOURCE = (8);
   public const int AKCODECID_XWMA = (9);
-  public const int AKCODECID_AAC = (10);
   public const int AKCODECID_FILE_PACKAGE = (11);
   public const int AKCODECID_ATRAC9 = (12);
   public const int AKCODECID_VAG = (13);
@@ -1158,17 +1270,21 @@ public partial class AkSoundEngine {
   public const int AKCODECID_AKOPUS = (19);
   public const int AKCODECID_AKOPUS_WEM = (20);
   public const int AKCODECID_MEMORYMGR_DUMP = (21);
+  public const int AKCODECID_SONY360 = (22);
+  public const int AKCODECID_BANK_EVENT = (30);
+  public const int AKCODECID_BANK_BUS = (31);
   public const int AKPLUGINID_METER = (129);
   public const int AKPLUGINID_RECORDER = (132);
   public const int AKPLUGINID_IMPACTER = (184);
   public const int AKPLUGINID_SYSTEM_OUTPUT_META = (900);
+  public const int AKPLUGINID_AUDIO_OBJECT_ATTENUATION_META = (901);
+  public const int AKPLUGINID_AUDIO_OBJECT_PRIORITY_META = (902);
   public const int AKEXTENSIONID_SPATIALAUDIO = (800);
   public const int AKEXTENSIONID_INTERACTIVEMUSIC = (801);
-  public const int AKEXTENSIONID_EVENTMGRTHREAD = (900);
+  public const int AKEXTENSIONID_MIDIDEVICEMGR = (802);
   public const int AK_WAVE_FORMAT_VAG = 0xFFFB;
   public const int AK_WAVE_FORMAT_AT9 = 0xFFFC;
   public const int AK_WAVE_FORMAT_VORBIS = 0xFFFF;
-  public const int AK_WAVE_FORMAT_AAC = 0xAAC0;
   public const int AK_WAVE_FORMAT_OPUSNX = 0x3039;
   public const int AK_WAVE_FORMAT_OPUS = 0x3040;
   public const int AK_WAVE_FORMAT_OPUS_WEM = 0x3041;
@@ -1436,15 +1552,22 @@ public partial class AkSoundEngine {
   public const int AK_MAX_REFLECT_ORDER = 4;
   public const int AK_MAX_REFLECTION_PATH_LENGTH = (4+4);
   public const int AK_MAX_SOUND_PROPAGATION_DEPTH = 8;
-  public const double AK_DEFAULT_DIFFR_SHADOW_DEGREES = (30.0);
-  public const double AK_DEFAULT_DIFFR_SHADOW_ATTEN = (1.0);
+  public const int AK_MAX_SOUND_PROPAGATION_WIDTH = 8;
   public const double AK_DEFAULT_MOVEMENT_THRESHOLD = (1.0);
-  public const int AK_DEFAULT_REFLECTIONS_ORDER = (1);
   public const double AK_SA_EPSILON = (0.001);
   public const double AK_SA_DIFFRACTION_EPSILON = (0.002);
   public const double AK_SA_DIFFRACTION_DOT_EPSILON = (0.000002);
   public const double AK_SA_PLANE_THICKNESS_RATIO = (0.005);
   public const double AK_SA_MIN_ENVIRONMENT_ABSORPTION = (0.1);
   public const double AK_SA_MIN_ENVIRONMENT_SURFACE_AREA = (1.0);
+  public const double AK_DEFAULT_GEOMETRY_POSITION_X = (0.0);
+  public const double AK_DEFAULT_GEOMETRY_POSITION_Y = (0.0);
+  public const double AK_DEFAULT_GEOMETRY_POSITION_Z = (0.0);
+  public const double AK_DEFAULT_GEOMETRY_FRONT_X = (0.0);
+  public const double AK_DEFAULT_GEOMETRY_FRONT_Y = (0.0);
+  public const double AK_DEFAULT_GEOMETRY_FRONT_Z = (1.0);
+  public const double AK_DEFAULT_GEOMETRY_TOP_X = (0.0);
+  public const double AK_DEFAULT_GEOMETRY_TOP_Y = (1.0);
+  public const double AK_DEFAULT_GEOMETRY_TOP_Z = (0.0);
 }
 #endif // #if (UNITY_STANDALONE_OSX && !UNITY_EDITOR) || UNITY_EDITOR_OSX
